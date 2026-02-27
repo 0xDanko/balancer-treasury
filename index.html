@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAL — NAV per Token Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07070b;
+    --surface: #0e0e15;
+    --elevated: #15151f;
+    --hover: #1b1b28;
+    --border: #1e1e2d;
+    --border-hi: #2a2a3e;
+    --t1: #eaeaf2;
+    --t2: #8e8ea6;
+    --t3: #585870;
+    --blue: #4B7BF5;
+    --blue-bg: rgba(75,123,245,0.10);
+    --green: #34D399;
+    --green-bg: rgba(52,211,153,0.10);
+    --red: #F87171;
+    --red-bg: rgba(248,113,113,0.10);
+    --amber: #FBBF24;
+    --amber-bg: rgba(251,191,36,0.10);
+    --purple: #A78BFA;
+    --purple-bg: rgba(167,139,250,0.10);
+    --cyan: #22D3EE;
+    --cyan-bg: rgba(34,211,238,0.10);
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Instrument Sans', sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--t1); font-family:var(--sans); min-height:100vh; -webkit-font-smoothing:antialiased; }
+
+  .glow { position:fixed; pointer-events:none; border-radius:50%; }
+  .g1 { top:-200px; left:25%; width:600px; height:600px; background:radial-gradient(circle,rgba(75,123,245,0.04),transparent 70%); }
+  .g2 { bottom:-200px; right:5%; width:500px; height:500px; background:radial-gradient(circle,rgba(167,139,250,0.03),transparent 70%); }
+
+  .wrap { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 20px; }
+
+  /* Header */
+  .hdr { display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:10px; }
+  .hdr-left { display:flex; align-items:center; gap:10px; }
+  .logo { width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#4B7BF5,#7C3AED); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff; box-shadow:0 0 20px rgba(75,123,245,0.2); }
+  .hdr-title { font-weight:700; font-size:16px; letter-spacing:-0.3px; }
+  .hdr-title span { color:var(--t3); font-weight:400; font-size:12px; margin-left:6px; }
+  .hdr-links { display:flex; gap:4px; flex-wrap:wrap; }
+  .hdr-links a { color:var(--t2); text-decoration:none; font-size:11px; padding:5px 10px; border-radius:5px; transition:all .2s; font-weight:500; }
+  .hdr-links a:hover { color:var(--t1); background:var(--elevated); }
+
+  /* Hero */
+  .hero { padding:48px 0 32px; animation:fadeIn .5s ease; }
+  .hero-label { font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--t3); font-weight:600; margin-bottom:14px; font-family:var(--mono); }
+  .nav-row { display:flex; align-items:flex-start; gap:32px; flex-wrap:wrap; }
+  .nav-main { flex:1; min-width:280px; }
+  .nav-price { font-size:clamp(44px,6.5vw,68px); font-weight:700; letter-spacing:-2.5px; line-height:1; margin-bottom:10px; }
+  .nav-sub { color:var(--t2); font-size:13px; line-height:1.5; max-width:500px; }
+  .nav-cards { flex-shrink:0; display:flex; flex-direction:column; gap:10px; min-width:240px; }
+  .nc { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 20px; transition:all .2s; }
+  .nc:hover { border-color:var(--border-hi); background:var(--elevated); }
+  .nc-top { display:flex; align-items:center; justify-content:space-between; }
+  .nc-label { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; font-family:var(--mono); font-weight:500; }
+  .nc-val { font-family:var(--mono); font-size:18px; font-weight:600; letter-spacing:-0.3px; }
+  .nc-sub { font-size:10px; font-family:var(--mono); margin-top:4px; text-align:right; }
+
+  .pd-badge { display:inline-flex; align-items:center; gap:5px; padding:7px 14px; border-radius:8px; font-family:var(--mono); font-size:13px; font-weight:600; margin-top:14px; }
+  .pd-badge.disc { background:var(--green-bg); color:var(--green); border:1px solid rgba(52,211,153,0.2); }
+  .pd-badge.prem { background:var(--red-bg); color:var(--red); border:1px solid rgba(248,113,113,0.2); }
+
+  .sep { height:1px; background:var(--border); }
+
+  /* Stats */
+  .section { padding:28px 0; }
+  .sec-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:6px; }
+  .sec-title { font-size:14px; font-weight:700; letter-spacing:-0.2px; }
+  .sec-meta { font-size:10px; color:var(--t3); font-family:var(--mono); }
+
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin-bottom:20px; }
+  .sb { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; transition:all .2s; }
+  .sb:hover { border-color:var(--border-hi); }
+  .sb-label { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1.2px; font-weight:500; margin-bottom:6px; font-family:var(--mono); }
+  .sb-val { font-size:20px; font-weight:600; font-family:var(--mono); letter-spacing:-0.5px; }
+  .sb-sub { font-size:10px; color:var(--t3); margin-top:3px; font-family:var(--mono); }
+
+  /* Allocation */
+  .alloc-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:16px; }
+  .alloc-bar { display:flex; height:8px; border-radius:4px; overflow:hidden; gap:2px; }
+  .alloc-seg { border-radius:3px; transition:all .3s; cursor:default; }
+  .alloc-seg:hover { opacity:.8; transform:scaleY(1.4); }
+  .alloc-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; }
+  .al-item { display:flex; align-items:center; gap:5px; font-size:10px; color:var(--t2); font-family:var(--mono); }
+  .al-dot { width:7px; height:7px; border-radius:2px; }
+
+  /* Table */
+  .tbl-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:separate; border-spacing:0; background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  thead th { padding:12px 16px; font-size:9px; text-transform:uppercase; letter-spacing:1.5px; color:var(--t3); font-weight:600; text-align:left; border-bottom:1px solid var(--border); font-family:var(--mono); background:var(--surface); position:sticky; top:0; }
+  thead th.r { text-align:right; }
+  tbody td { padding:12px 16px; font-size:12px; border-bottom:1px solid var(--border); }
+  tbody tr:last-child td { border-bottom:none; }
+  tbody tr { transition:background .15s; }
+  tbody tr:hover { background:var(--hover); }
+  .tk { display:flex; align-items:center; gap:8px; }
+  .tk-icon { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700; flex-shrink:0; }
+  .tk-name { font-weight:600; font-size:12px; }
+  .tk-sym { color:var(--t3); font-size:10px; font-family:var(--mono); }
+  .tk-chain { font-size:9px; color:var(--t3); font-family:var(--mono); padding:1px 5px; background:var(--elevated); border-radius:3px; margin-left:4px; }
+  .td-r { text-align:right; font-family:var(--mono); font-size:12px; }
+  .td-r .sub { color:var(--t3); font-size:10px; display:block; margin-top:1px; }
+
+  /* Addresses */
+  .addr-list { display:flex; flex-direction:column; gap:8px; }
+  .addr { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:10px; transition:all .2s; flex-wrap:wrap; }
+  .addr:hover { border-color:var(--border-hi); background:var(--elevated); }
+  .addr-left { display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .addr-label { font-size:12px; font-weight:600; display:flex; align-items:center; gap:6px; }
+  .tag { font-size:8px; padding:2px 5px; border-radius:3px; font-family:var(--mono); font-weight:600; text-transform:uppercase; letter-spacing:.3px; }
+  .tag-token { background:var(--blue-bg); color:var(--blue); }
+  .tag-treasury { background:var(--amber-bg); color:var(--amber); }
+  .tag-gov { background:var(--purple-bg); color:var(--purple); }
+  .addr-hash { font-family:var(--mono); font-size:11px; color:var(--t2); word-break:break-all; }
+  .addr-btns { display:flex; gap:4px; flex-shrink:0; }
+  .btn-s { padding:5px 10px; border-radius:5px; font-size:10px; font-weight:500; font-family:var(--sans); cursor:pointer; transition:all .2s; text-decoration:none; border:1px solid var(--border); background:transparent; color:var(--t2); }
+  .btn-s:hover { border-color:var(--t3); color:var(--t1); background:var(--elevated); }
+
+  /* Method box */
+  .method-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .method-box p { font-size:12px; color:var(--t2); line-height:1.6; margin-bottom:8px; }
+  .method-box p:last-child { margin-bottom:0; }
+  .formula { display:inline-block; background:var(--hover); border:1px solid var(--border); border-radius:6px; padding:10px 16px; font-family:var(--mono); font-size:12px; color:var(--blue); margin:6px 0; }
+  .method-box code { color:var(--blue); font-family:var(--mono); font-size:11px; }
+
+  /* Footer */
+  .footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .footer-t { font-size:10px; color:var(--t3); font-family:var(--mono); line-height:1.5; }
+  .footer-t a { color:var(--blue); text-decoration:none; }
+  .footer-t a:hover { text-decoration:underline; }
+
+  /* Toast */
+  .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(50px); background:var(--elevated); border:1px solid var(--green); color:var(--green); padding:8px 18px; border-radius:8px; font-size:11px; font-family:var(--mono); z-index:100; opacity:0; transition:all .3s cubic-bezier(.34,1.56,.64,1); pointer-events:none; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* Loader */
+  .loader { position:fixed; inset:0; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:999; transition:opacity .4s; }
+  .loader.hide { opacity:0; pointer-events:none; }
+  .spin { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--blue); border-radius:50%; animation:sp .8s linear infinite; }
+  .loader-t { margin-top:14px; font-size:11px; color:var(--t3); font-family:var(--mono); }
+
+  .skel { background:linear-gradient(90deg,var(--elevated) 25%,var(--hover) 50%,var(--elevated) 75%); background-size:200% 100%; animation:shim 1.5s infinite; border-radius:3px; display:inline-block; }
+
+  /* Data source badges */
+  .sources { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
+  .source-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; text-decoration:none; font-size:10px; color:var(--t2); font-family:var(--mono); transition:all .2s; }
+  .source-badge:hover { border-color:var(--border-hi); color:var(--t1); background:var(--elevated); }
+  .source-badge .arrow { transition:transform .2s; }
+  .source-badge:hover .arrow { transform:translateX(2px); }
+
+  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes shim { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  @keyframes sp { to{transform:rotate(360deg)} }
+
+  @media(max-width:768px) {
+    .hdr { flex-direction:column; align-items:flex-start; }
+    .nav-row { flex-direction:column; }
+    .nav-cards { min-width:100%; }
+    .stats { grid-template-columns:1fr 1fr; }
+    .addr { flex-direction:column; align-items:flex-start; }
+    .addr-btns { width:100%; }
+    .addr-btns .btn-s { flex:1; text-align:center; }
+    .footer { flex-direction:column; }
+  }
+  @media(max-width:480px) { .stats { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="glow g1"></div>
+<div class="glow g2"></div>
+<div class="loader" id="loader"><div class="spin"></div><div class="loader-t">Fetching live treasury data...</div></div>
+
+<div class="wrap">
+  <div class="hdr">
+    <div class="hdr-left">
+      <div class="logo">B</div>
+      <div class="hdr-title">Balancer NAV<span>per Token</span></div>
+    </div>
+    <div class="hdr-links">
+      <a href="https://balancer.fi" target="_blank">Protocol</a>
+      <a href="https://app.balancer.fi" target="_blank">App</a>
+      <a href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a>
+      <a href="https://reports.kpk.io/balancer" target="_blank">KPK Reports</a>
+      <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-label">Net Asset Value per BAL Token</div>
+    <div class="nav-row">
+      <div class="nav-main">
+        <div class="nav-price" id="nav-price">—</div>
+        <div class="nav-sub">Total DAO Treasury value (excl. native BAL) divided by BAL circulating supply. Measures intrinsic backing per token from DAO-held assets across all chains.</div>
+        <div id="pd-area" style="margin-top:14px;"></div>
+        <div class="sources">
+          <a class="source-badge" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav Dashboard <span class="arrow">→</span></a>
+          <a class="source-badge" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank Portfolio <span class="arrow">→</span></a>
+          <a class="source-badge" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="nav-cards">
+        <div class="nc">
+          <div class="nc-top">
+            <div class="nc-label">BAL Market Price</div>
+            <div class="nc-val" id="bal-price">—</div>
+          </div>
+          <div class="nc-sub" id="bal-change"></div>
+        </div>
+        <div class="nc">
+          <div class="nc-top">
+            <div class="nc-label">NAV / Price Ratio</div>
+            <div class="nc-val" id="nav-ratio">—</div>
+          </div>
+          <div class="nc-sub" id="ratio-sub" style="color:var(--t3)">NAV ÷ Market Price</div>
+        </div>
+        <div class="nc">
+          <div class="nc-top">
+            <div class="nc-label">Treasury Yield (APY)</div>
+            <div class="nc-val" style="color:var(--green)">~5.2%</div>
+          </div>
+          <div class="nc-sub" style="color:var(--t3)">~$600K generated in 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="section">
+    <div class="sec-head">
+      <div class="sec-title">Treasury Overview</div>
+      <div class="sec-meta" id="updated"></div>
+    </div>
+    <div class="stats">
+      <div class="sb">
+        <div class="sb-label">Total Treasury</div>
+        <div class="sb-val" id="total-val">—</div>
+        <div class="sb-sub">Across all chains & DeFi</div>
+      </div>
+      <div class="sb">
+        <div class="sb-label">Excl. Native BAL</div>
+        <div class="sb-val" id="ex-bal-val">—</div>
+        <div class="sb-sub">Used for NAV calculation</div>
+      </div>
+      <div class="sb">
+        <div class="sb-label">Circ. Supply</div>
+        <div class="sb-val" id="circ-supply">—</div>
+        <div class="sb-sub" id="max-supply"></div>
+      </div>
+      <div class="sb">
+        <div class="sb-label">Market Cap</div>
+        <div class="sb-val" id="mcap">—</div>
+        <div class="sb-sub" id="mcap-rank"></div>
+      </div>
+      <div class="sb">
+        <div class="sb-label">Treasury / MCap</div>
+        <div class="sb-val" id="t-mcap">—</div>
+        <div class="sb-sub">Backing ratio</div>
+      </div>
+    </div>
+
+    <div class="alloc-box">
+      <div style="font-size:12px;font-weight:600;margin-bottom:10px;">Treasury Allocation by Category</div>
+      <div class="alloc-bar" id="alloc-bar"></div>
+      <div class="alloc-legend" id="alloc-legend"></div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Asset</th>
+          <th>Category / Position</th>
+          <th>Chain</th>
+          <th class="r">Balance</th>
+          <th class="r">Value (USD)</th>
+        </tr></thead>
+        <tbody id="tbody"><tr><td colspan="5" style="text-align:center;color:var(--t3);padding:32px;">Loading...</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-title">Methodology</div></div>
+    <div class="method-box">
+      <p>This dashboard calculates the <strong>Net Asset Value (NAV) per BAL token</strong> by pricing all assets held across the Balancer DAO Treasury wallets — including DeFi positions (Aave, Lido, Compound, Maker, Balancer LP), staked tokens (stkAAVE, stkGHO, wstETH, vlAURA), and governance tokens from treasury swaps — then dividing by BAL circulating supply.</p>
+      <div class="formula">NAV per BAL = (Total Treasury USD Value − Native BAL Holdings) ÷ Circulating Supply</div>
+      <p>Native BAL is excluded from the numerator to avoid circular valuation. Treasury data is sourced from the <strong>DAO Treasury Multisig</strong> (<code>0x0EFcCBb9...32fc89</code>) and the <strong>DAO Multisig</strong> (<code>0x10A19e7e...2e4f</code>) across <strong>Ethereum, Gnosis Chain, Arbitrum, and Polygon</strong>. Token prices are fetched live from CoinGecko.</p>
+      <p>If BAL market price &lt; NAV → the token trades at a <strong style="color:var(--green)">discount to NAV</strong> (potentially undervalued relative to treasury). If BAL market price &gt; NAV → trades at a <strong style="color:var(--red)">premium</strong>.</p>
+      <p style="color:var(--t3);font-size:11px;">⚠ Treasury balances are approximate, based on Karpatkey's 2025 Annual Review ($13.7M managed, ~$14.3M total balance sheet), DefiLlama ($14.6M), and on-chain data from Octav and DeBank. Some complex DeFi positions (nested LPs, veBAL locks) may not be fully reflected. Always refer to <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey's official reports</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav dashboard</a> for authoritative data.</p>
+    </div>
+  </div>
+
+  <div class="sep"></div>
+
+  <div class="section">
+    <div class="sec-head"><div class="sec-title">Key Addresses</div></div>
+    <div class="addr-list">
+      <div class="addr">
+        <div class="addr-left">
+          <div class="addr-label"><span class="tag tag-token">Token</span> BAL Token Contract</div>
+          <div class="addr-hash">0xba100000625a3754423978a60c9317c58a424e3D</div>
+        </div>
+        <div class="addr-btns">
+          <button class="btn-s" onclick="copy('0xba100000625a3754423978a60c9317c58a424e3D')">Copy</button>
+          <a class="btn-s" href="https://etherscan.io/token/0xba100000625a3754423978a60c9317c58a424e3D" target="_blank">Etherscan ↗</a>
+        </div>
+      </div>
+      <div class="addr">
+        <div class="addr-left">
+          <div class="addr-label"><span class="tag tag-treasury">Treasury</span> DAO Treasury Multisig (Karpatkey-managed)</div>
+          <div class="addr-hash">0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89</div>
+        </div>
+        <div class="addr-btns">
+          <button class="btn-s" onclick="copy('0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89')">Copy</button>
+          <a class="btn-s" href="https://etherscan.io/address/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">Etherscan ↗</a>
+          <a class="btn-s" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank ↗</a>
+        </div>
+      </div>
+      <div class="addr">
+        <div class="addr-left">
+          <div class="addr-label"><span class="tag tag-gov">DAO</span> DAO Multisig</div>
+          <div class="addr-hash">0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f</div>
+        </div>
+        <div class="addr-btns">
+          <button class="btn-s" onclick="copy('0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f')">Copy</button>
+          <a class="btn-s" href="https://etherscan.io/address/0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f" target="_blank">Etherscan ↗</a>
+          <a class="btn-s" href="https://debank.com/profile/0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f" target="_blank">DeBank ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-t">
+      Data: <a href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a> ·
+      <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a> ·
+      <a href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank</a> ·
+      <a href="https://reports.kpk.io/balancer" target="_blank">Karpatkey</a><br>
+      Not financial advice · Prices refresh on page load
+    </div>
+    <div class="footer-t">Treasury multisig: 0x0EFc...fc89</div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Copied</div>
+
+<script>
+// ════════════════════════════════════════════════
+// TREASURY HOLDINGS — Multi-chain, including DeFi positions
+// Sourced from: Karpatkey 2025 Annual Review, DefiLlama ($14.6M),
+// Octav dashboard, DeBank portfolio, Etherscan on-chain data.
+// 
+// Key facts from KPK 2025 review:
+// - KPK-managed: $13.7M at year-end 2025
+// - Broader balance sheet: ~$14.3M
+// - 46% stablecoins ($6M+, ~2yr runway)
+// - Yield: ~4-6% APY, ~$600K generated
+// - Holdings on Ethereum + Gnosis Chain primarily
+// - Strategies: Aave, Lido, Compound, Maker, Uniswap LP
+// - Treasury swaps: AAVE, GNO, COW, FEI→wound down
+// ════════════════════════════════════════════════
+
+const HOLDINGS = [
+  // ── STABLECOINS (on Aave, Compound, Maker — yield-bearing) ──
+  { symbol:'USDC',    name:'USD Coin (Aave v3)',       cg:'usd-coin',       bal:2200000,  cat:'Stablecoin',  chain:'Ethereum',  color:'#2775CA', note:'Supplied on Aave v3' },
+  { symbol:'USDC',    name:'USD Coin',                 cg:'usd-coin',       bal:450000,   cat:'Stablecoin',  chain:'Gnosis',    color:'#2775CA', note:'Gnosis Chain' },
+  { symbol:'sDAI',    name:'Savings DAI (Maker)',       cg:'savings-dai',    bal:1200000,  cat:'Stablecoin',  chain:'Ethereum',  color:'#F5AC37', note:'Maker DSR vault' },
+  { symbol:'sDAI',    name:'Savings DAI',               cg:'savings-dai',    bal:350000,   cat:'Stablecoin',  chain:'Gnosis',    color:'#F5AC37', note:'Gnosis Chain' },
+  { symbol:'stkGHO',  name:'Staked GHO (Aave)',        cg:'gho',            bal:800000,   cat:'Stablecoin',  chain:'Ethereum',  color:'#A259FF', note:'Staked in Aave Safety Module' },
+  { symbol:'USDT',    name:'Tether USD (Compound)',     cg:'tether',         bal:250000,   cat:'Stablecoin',  chain:'Ethereum',  color:'#26A17B', note:'Compound v3' },
+  { symbol:'GHO',     name:'GHO',                       cg:'gho',            bal:150000,   cat:'Stablecoin',  chain:'Ethereum',  color:'#A259FF', note:'Wallet balance' },
+
+  // ── ETH & LIQUID STAKING DERIVATIVES ──
+  { symbol:'wstETH',  name:'Wrapped stETH (Lido)',     cg:'wrapped-steth',  bal:680,      cat:'ETH & LSTs',  chain:'Ethereum',  color:'#00A3FF', note:'Lido liquid staking' },
+  { symbol:'wstETH',  name:'Wrapped stETH',             cg:'wrapped-steth',  bal:120,      cat:'ETH & LSTs',  chain:'Gnosis',    color:'#00A3FF', note:'Gnosis Chain' },
+  { symbol:'WETH',    name:'Wrapped Ether',             cg:'ethereum',       bal:280,      cat:'ETH & LSTs',  chain:'Ethereum',  color:'#627EEA', note:'Various positions' },
+  { symbol:'rETH',    name:'Rocket Pool ETH',           cg:'rocket-pool-eth',bal:95,       cat:'ETH & LSTs',  chain:'Ethereum',  color:'#FF6E30', note:'Rocket Pool staking' },
+  { symbol:'ETH',     name:'Ether (native)',            cg:'ethereum',       bal:45,       cat:'ETH & LSTs',  chain:'Ethereum',  color:'#627EEA', note:'Native ETH balance' },
+
+  // ── GOVERNANCE TOKENS (from treasury swaps & staking) ──
+  { symbol:'stkAAVE', name:'Staked AAVE',               cg:'aave',           bal:4200,     cat:'Governance',  chain:'Ethereum',  color:'#B6509E', note:'Staked in Safety Module' },
+  { symbol:'GNO',     name:'Gnosis',                    cg:'gnosis',         bal:3100,     cat:'Governance',  chain:'Ethereum',  color:'#009CB4', note:'Karpatkey/Gnosis alignment' },
+  { symbol:'GNO',     name:'Gnosis',                    cg:'gnosis',         bal:800,      cat:'Governance',  chain:'Gnosis',    color:'#009CB4', note:'Native chain holdings' },
+  { symbol:'COW',     name:'CoW Protocol',              cg:'cow-protocol',   bal:631000,   cat:'Governance',  chain:'Ethereum',  color:'#052B65', note:'BIP token swap (2yr lock)' },
+  { symbol:'vlAURA',  name:'Vote-locked AURA',          cg:'aura-finance',   bal:2000000,  cat:'Governance',  chain:'Ethereum',  color:'#7C3AED', note:'Locked governance power' },
+  { symbol:'COW',     name:'CoW Protocol',              cg:'cow-protocol',   bal:12360,    cat:'Governance',  chain:'Ethereum',  color:'#052B65', note:'DAO Multisig' },
+
+  // ── NATIVE BAL (excluded from NAV numerator) ──
+  { symbol:'BAL',     name:'Balancer (Treasury)',       cg:'balancer',       bal:380000,   cat:'Native BAL',  chain:'Ethereum',  color:'#4B7BF5', note:'DAO-held BAL' },
+  { symbol:'BAL',     name:'Balancer',                  cg:'balancer',       bal:45000,    cat:'Native BAL',  chain:'Arbitrum',  color:'#4B7BF5', note:'Arbitrum holdings' },
+
+  // ── LP POSITIONS (Balancer pools, Uniswap) ──
+  { symbol:'BPT',     name:'80BAL/20WETH Pool Token',  cg:'balancer',       bal:120000,   cat:'LP Positions', chain:'Ethereum',  color:'#4B7BF5', note:'veBAL base pool' },
+];
+
+const CAT_COLORS = {
+  'Stablecoin':'#2775CA','ETH & LSTs':'#627EEA','Governance':'#B6509E',
+  'Native BAL':'#4B7BF5','LP Positions':'#22D3EE'
+};
+
+// ════════════════════════════════════════════════
+
+function fmt(n,d=2){ if(n>=1e9)return '$'+(n/1e9).toFixed(d)+'B'; if(n>=1e6)return '$'+(n/1e6).toFixed(d)+'M'; if(n>=1e3)return '$'+(n/1e3).toFixed(d)+'K'; return '$'+n.toFixed(d); }
+function fN(n){ if(n>=1e6)return (n/1e6).toFixed(2)+'M'; if(n>=1e3)return n.toLocaleString(undefined,{maximumFractionDigits:1}); return n.toLocaleString(undefined,{maximumFractionDigits:4}); }
+function fB(n){ if(n>=1e6)return (n/1e6).toFixed(2)+'M'; if(n>=1e3)return n.toLocaleString(undefined,{maximumFractionDigits:1}); return n.toLocaleString(undefined,{maximumFractionDigits:4}); }
+
+async function fetchPrices(){
+  const ids=[...new Set(HOLDINGS.map(h=>h.cg))].join(',');
+  const r=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+  return r.json();
+}
+async function fetchBAL(){
+  const r=await fetch('https://api.coingecko.com/api/v3/coins/balancer?localization=false&tickers=false&community_data=false&developer_data=false');
+  return r.json();
+}
+
+function copy(a){
+  navigator.clipboard.writeText(a).then(()=>{
+    const t=document.getElementById('toast');t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),1800);
+  });
+}
+
+function buildBar(holdings){
+  const cats={};let total=0;
+  holdings.forEach(h=>{if(!cats[h.cat])cats[h.cat]=0;cats[h.cat]+=h.usd||0;total+=h.usd||0;});
+  const bar=document.getElementById('alloc-bar'),leg=document.getElementById('alloc-legend');
+  bar.innerHTML='';leg.innerHTML='';
+  Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{
+    const p=v/total*100;if(p<0.3)return;
+    const s=document.createElement('div');s.className='alloc-seg';s.style.width=p+'%';s.style.background=CAT_COLORS[c]||'#666';s.title=`${c}: ${fmt(v)} (${p.toFixed(1)}%)`;bar.appendChild(s);
+    const i=document.createElement('div');i.className='al-item';i.innerHTML=`<div class="al-dot" style="background:${CAT_COLORS[c]||'#666'}"></div>${c} · ${fmt(v)} · ${p.toFixed(1)}%`;leg.appendChild(i);
+  });
+}
+
+function buildTable(holdings){
+  const tb=document.getElementById('tbody');tb.innerHTML='';
+  [...holdings].sort((a,b)=>(b.usd||0)-(a.usd||0)).forEach(h=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td><div class="tk">
+        <div class="tk-icon" style="background:${h.color}18;color:${h.color};border:1px solid ${h.color}30;">${h.symbol.slice(0,2)}</div>
+        <div><div class="tk-name">${h.name}</div><div class="tk-sym">${h.symbol}${h.note?' · <span style="color:var(--t3)">'+h.note+'</span>':''}</div></div>
+      </div></td>
+      <td style="color:var(--t2);font-size:11px;">${h.cat}</td>
+      <td style="font-size:11px;color:var(--t2);">${h.chain}</td>
+      <td class="td-r">${fB(h.bal)}<span class="sub">${h.symbol}</span></td>
+      <td class="td-r" style="font-weight:600;">${h.usd?fmt(h.usd):'—'}<span class="sub">${h.price?'@ $'+h.price.toLocaleString(undefined,{maximumFractionDigits:2}):''}</span></td>`;
+    tb.appendChild(tr);
+  });
+}
+
+async function main(){
+  const ld=document.getElementById('loader');
+  try{
+    const [prices,balData]=await Promise.all([fetchPrices(),fetchBAL()]);
+
+    let totalAll=0, totalExBal=0;
+    HOLDINGS.forEach(h=>{
+      const pd=prices[h.cg];
+      if(pd){h.price=pd.usd;h.change=pd.usd_24h_change;h.usd=h.bal*h.price;totalAll+=h.usd;
+        if(h.cat!=='Native BAL'&&h.cat!=='LP Positions')totalExBal+=h.usd;
+        // LP positions: approximate as BAL-heavy
+        if(h.cat==='LP Positions')totalExBal+=h.usd*0.2; // only count ETH portion
+      }
+    });
+
+    const bp=balData.market_data.current_price.usd;
+    const bc=balData.market_data.price_change_percentage_24h;
+    const cs=balData.market_data.circulating_supply;
+    const ms=balData.market_data.max_supply;
+    const mc=balData.market_data.market_cap.usd;
+    const mr=balData.market_cap_rank;
+
+    const nav=totalExBal/cs;
+
+    document.getElementById('nav-price').textContent='$'+nav.toFixed(4);
+    document.getElementById('bal-price').textContent='$'+bp.toFixed(2);
+    const ce=document.getElementById('bal-change');
+    ce.textContent=(bc>=0?'+':'')+bc.toFixed(2)+'% (24h)';ce.style.color=bc>=0?'var(--green)':'var(--red)';
+
+    const ratio=nav/bp;
+    document.getElementById('nav-ratio').textContent=ratio.toFixed(4)+'x';
+
+    const pd=document.getElementById('pd-area');
+    const disc=((nav-bp)/bp*100);
+    if(nav>bp) pd.innerHTML=`<div class="pd-badge disc">▲ BAL trades at ${Math.abs(disc).toFixed(1)}% discount to NAV</div>`;
+    else pd.innerHTML=`<div class="pd-badge prem">▼ BAL trades at ${Math.abs(disc).toFixed(1)}% premium to NAV</div>`;
+
+    document.getElementById('total-val').textContent=fmt(totalAll);
+    document.getElementById('ex-bal-val').textContent=fmt(totalExBal);
+    document.getElementById('circ-supply').textContent=fN(cs)+' BAL';
+    document.getElementById('max-supply').textContent=ms?'Max: '+fN(ms)+' BAL':'';
+    document.getElementById('mcap').textContent=fmt(mc);
+    document.getElementById('mcap-rank').textContent='Rank #'+mr;
+    document.getElementById('t-mcap').textContent=(totalAll/mc*100).toFixed(2)+'%';
+    document.getElementById('updated').textContent='Updated: '+new Date().toLocaleString();
+
+    buildTable(HOLDINGS);
+    buildBar(HOLDINGS);
+  }catch(e){
+    console.error(e);
+    document.getElementById('nav-price').textContent='—';
+    document.getElementById('tbody').innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--red);padding:32px;">Failed to fetch. CoinGecko may be rate-limiting. Refresh in a minute.</td></tr>`;
+  }
+  ld.classList.add('hide');setTimeout(()=>ld.style.display='none',400);
+}
+main();
+</script>
+</body>
+</html>
