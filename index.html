@@ -1,520 +1,384 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BAL — NAV per Token Dashboard</title>
+<title>BAL — NAV per Token</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #07070b;
-    --surface: #0e0e15;
-    --elevated: #15151f;
-    --hover: #1b1b28;
-    --border: #1e1e2d;
-    --border-hi: #2a2a3e;
-    --t1: #eaeaf2;
-    --t2: #8e8ea6;
-    --t3: #585870;
-    --blue: #4B7BF5;
-    --blue-bg: rgba(75,123,245,0.10);
-    --green: #34D399;
-    --green-bg: rgba(52,211,153,0.10);
-    --red: #F87171;
-    --red-bg: rgba(248,113,113,0.10);
-    --amber: #FBBF24;
-    --amber-bg: rgba(251,191,36,0.10);
-    --purple: #A78BFA;
-    --purple-bg: rgba(167,139,250,0.10);
-    --cyan: #22D3EE;
-    --cyan-bg: rgba(34,211,238,0.10);
-    --mono: 'IBM Plex Mono', monospace;
-    --sans: 'Instrument Sans', sans-serif;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { background:var(--bg); color:var(--t1); font-family:var(--sans); min-height:100vh; -webkit-font-smoothing:antialiased; }
-
-  .glow { position:fixed; pointer-events:none; border-radius:50%; }
-  .g1 { top:-200px; left:25%; width:600px; height:600px; background:radial-gradient(circle,rgba(75,123,245,0.04),transparent 70%); }
-  .g2 { bottom:-200px; right:5%; width:500px; height:500px; background:radial-gradient(circle,rgba(167,139,250,0.03),transparent 70%); }
-
-  .wrap { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:0 20px; }
-
-  /* Header */
-  .hdr { display:flex; align-items:center; justify-content:space-between; padding:20px 0; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:10px; }
-  .hdr-left { display:flex; align-items:center; gap:10px; }
-  .logo { width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#4B7BF5,#7C3AED); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff; box-shadow:0 0 20px rgba(75,123,245,0.2); }
-  .hdr-title { font-weight:700; font-size:16px; letter-spacing:-0.3px; }
-  .hdr-title span { color:var(--t3); font-weight:400; font-size:12px; margin-left:6px; }
-  .hdr-links { display:flex; gap:4px; flex-wrap:wrap; }
-  .hdr-links a { color:var(--t2); text-decoration:none; font-size:11px; padding:5px 10px; border-radius:5px; transition:all .2s; font-weight:500; }
-  .hdr-links a:hover { color:var(--t1); background:var(--elevated); }
-
-  /* Hero */
-  .hero { padding:48px 0 32px; animation:fadeIn .5s ease; }
-  .hero-label { font-size:10px; text-transform:uppercase; letter-spacing:2px; color:var(--t3); font-weight:600; margin-bottom:14px; font-family:var(--mono); }
-  .nav-row { display:flex; align-items:flex-start; gap:32px; flex-wrap:wrap; }
-  .nav-main { flex:1; min-width:280px; }
-  .nav-price { font-size:clamp(44px,6.5vw,68px); font-weight:700; letter-spacing:-2.5px; line-height:1; margin-bottom:10px; }
-  .nav-sub { color:var(--t2); font-size:13px; line-height:1.5; max-width:500px; }
-  .nav-cards { flex-shrink:0; display:flex; flex-direction:column; gap:10px; min-width:240px; }
-  .nc { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 20px; transition:all .2s; }
-  .nc:hover { border-color:var(--border-hi); background:var(--elevated); }
-  .nc-top { display:flex; align-items:center; justify-content:space-between; }
-  .nc-label { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1px; font-family:var(--mono); font-weight:500; }
-  .nc-val { font-family:var(--mono); font-size:18px; font-weight:600; letter-spacing:-0.3px; }
-  .nc-sub { font-size:10px; font-family:var(--mono); margin-top:4px; text-align:right; }
-
-  .pd-badge { display:inline-flex; align-items:center; gap:5px; padding:7px 14px; border-radius:8px; font-family:var(--mono); font-size:13px; font-weight:600; margin-top:14px; }
-  .pd-badge.disc { background:var(--green-bg); color:var(--green); border:1px solid rgba(52,211,153,0.2); }
-  .pd-badge.prem { background:var(--red-bg); color:var(--red); border:1px solid rgba(248,113,113,0.2); }
-
-  .sep { height:1px; background:var(--border); }
-
-  /* Stats */
-  .section { padding:28px 0; }
-  .sec-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; flex-wrap:wrap; gap:6px; }
-  .sec-title { font-size:14px; font-weight:700; letter-spacing:-0.2px; }
-  .sec-meta { font-size:10px; color:var(--t3); font-family:var(--mono); }
-
-  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; margin-bottom:20px; }
-  .sb { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:16px; transition:all .2s; }
-  .sb:hover { border-color:var(--border-hi); }
-  .sb-label { font-size:10px; color:var(--t3); text-transform:uppercase; letter-spacing:1.2px; font-weight:500; margin-bottom:6px; font-family:var(--mono); }
-  .sb-val { font-size:20px; font-weight:600; font-family:var(--mono); letter-spacing:-0.5px; }
-  .sb-sub { font-size:10px; color:var(--t3); margin-top:3px; font-family:var(--mono); }
-
-  /* Allocation */
-  .alloc-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; margin-bottom:16px; }
-  .alloc-bar { display:flex; height:8px; border-radius:4px; overflow:hidden; gap:2px; }
-  .alloc-seg { border-radius:3px; transition:all .3s; cursor:default; }
-  .alloc-seg:hover { opacity:.8; transform:scaleY(1.4); }
-  .alloc-legend { display:flex; flex-wrap:wrap; gap:14px; margin-top:12px; }
-  .al-item { display:flex; align-items:center; gap:5px; font-size:10px; color:var(--t2); font-family:var(--mono); }
-  .al-dot { width:7px; height:7px; border-radius:2px; }
-
-  /* Table */
-  .tbl-wrap { overflow-x:auto; }
-  table { width:100%; border-collapse:separate; border-spacing:0; background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
-  thead th { padding:12px 16px; font-size:9px; text-transform:uppercase; letter-spacing:1.5px; color:var(--t3); font-weight:600; text-align:left; border-bottom:1px solid var(--border); font-family:var(--mono); background:var(--surface); position:sticky; top:0; }
-  thead th.r { text-align:right; }
-  tbody td { padding:12px 16px; font-size:12px; border-bottom:1px solid var(--border); }
-  tbody tr:last-child td { border-bottom:none; }
-  tbody tr { transition:background .15s; }
-  tbody tr:hover { background:var(--hover); }
-  .tk { display:flex; align-items:center; gap:8px; }
-  .tk-icon { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:700; flex-shrink:0; }
-  .tk-name { font-weight:600; font-size:12px; }
-  .tk-sym { color:var(--t3); font-size:10px; font-family:var(--mono); }
-  .tk-chain { font-size:9px; color:var(--t3); font-family:var(--mono); padding:1px 5px; background:var(--elevated); border-radius:3px; margin-left:4px; }
-  .td-r { text-align:right; font-family:var(--mono); font-size:12px; }
-  .td-r .sub { color:var(--t3); font-size:10px; display:block; margin-top:1px; }
-
-  /* Addresses */
-  .addr-list { display:flex; flex-direction:column; gap:8px; }
-  .addr { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:10px; transition:all .2s; flex-wrap:wrap; }
-  .addr:hover { border-color:var(--border-hi); background:var(--elevated); }
-  .addr-left { display:flex; flex-direction:column; gap:3px; min-width:0; }
-  .addr-label { font-size:12px; font-weight:600; display:flex; align-items:center; gap:6px; }
-  .tag { font-size:8px; padding:2px 5px; border-radius:3px; font-family:var(--mono); font-weight:600; text-transform:uppercase; letter-spacing:.3px; }
-  .tag-token { background:var(--blue-bg); color:var(--blue); }
-  .tag-treasury { background:var(--amber-bg); color:var(--amber); }
-  .tag-gov { background:var(--purple-bg); color:var(--purple); }
-  .addr-hash { font-family:var(--mono); font-size:11px; color:var(--t2); word-break:break-all; }
-  .addr-btns { display:flex; gap:4px; flex-shrink:0; }
-  .btn-s { padding:5px 10px; border-radius:5px; font-size:10px; font-weight:500; font-family:var(--sans); cursor:pointer; transition:all .2s; text-decoration:none; border:1px solid var(--border); background:transparent; color:var(--t2); }
-  .btn-s:hover { border-color:var(--t3); color:var(--t1); background:var(--elevated); }
-
-  /* Method box */
-  .method-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:20px; }
-  .method-box p { font-size:12px; color:var(--t2); line-height:1.6; margin-bottom:8px; }
-  .method-box p:last-child { margin-bottom:0; }
-  .formula { display:inline-block; background:var(--hover); border:1px solid var(--border); border-radius:6px; padding:10px 16px; font-family:var(--mono); font-size:12px; color:var(--blue); margin:6px 0; }
-  .method-box code { color:var(--blue); font-family:var(--mono); font-size:11px; }
-
-  /* Footer */
-  .footer { border-top:1px solid var(--border); padding:20px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
-  .footer-t { font-size:10px; color:var(--t3); font-family:var(--mono); line-height:1.5; }
-  .footer-t a { color:var(--blue); text-decoration:none; }
-  .footer-t a:hover { text-decoration:underline; }
-
-  /* Toast */
-  .toast { position:fixed; bottom:28px; left:50%; transform:translateX(-50%) translateY(50px); background:var(--elevated); border:1px solid var(--green); color:var(--green); padding:8px 18px; border-radius:8px; font-size:11px; font-family:var(--mono); z-index:100; opacity:0; transition:all .3s cubic-bezier(.34,1.56,.64,1); pointer-events:none; }
-  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-  /* Loader */
-  .loader { position:fixed; inset:0; background:var(--bg); display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:999; transition:opacity .4s; }
-  .loader.hide { opacity:0; pointer-events:none; }
-  .spin { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--blue); border-radius:50%; animation:sp .8s linear infinite; }
-  .loader-t { margin-top:14px; font-size:11px; color:var(--t3); font-family:var(--mono); }
-
-  .skel { background:linear-gradient(90deg,var(--elevated) 25%,var(--hover) 50%,var(--elevated) 75%); background-size:200% 100%; animation:shim 1.5s infinite; border-radius:3px; display:inline-block; }
-
-  /* Data source badges */
-  .sources { display:flex; gap:8px; flex-wrap:wrap; margin-top:14px; }
-  .source-badge { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--surface); border:1px solid var(--border); border-radius:8px; text-decoration:none; font-size:10px; color:var(--t2); font-family:var(--mono); transition:all .2s; }
-  .source-badge:hover { border-color:var(--border-hi); color:var(--t1); background:var(--elevated); }
-  .source-badge .arrow { transition:transform .2s; }
-  .source-badge:hover .arrow { transform:translateX(2px); }
-
-  @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-  @keyframes shim { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-  @keyframes sp { to{transform:rotate(360deg)} }
-
-  @media(max-width:768px) {
-    .hdr { flex-direction:column; align-items:flex-start; }
-    .nav-row { flex-direction:column; }
-    .nav-cards { min-width:100%; }
-    .stats { grid-template-columns:1fr 1fr; }
-    .addr { flex-direction:column; align-items:flex-start; }
-    .addr-btns { width:100%; }
-    .addr-btns .btn-s { flex:1; text-align:center; }
-    .footer { flex-direction:column; }
-  }
-  @media(max-width:480px) { .stats { grid-template-columns:1fr; } }
+:root{--mono:'IBM Plex Mono',monospace;--sans:'Instrument Sans',sans-serif;--blue:#4B7BF5;--green:#34D399;--red:#F87171;--amber:#FBBF24;--purple:#A78BFA;--cyan:#22D3EE;--r:12px;--rs:8px;--tr:.25s}
+[data-theme="dark"]{--bg:#07070b;--sf:#0e0e15;--el:#15151f;--hv:#1b1b28;--bd:#1e1e2d;--bh:#2a2a3e;--t1:#eaeaf2;--t2:#8e8ea6;--t3:#585870;--blue-bg:rgba(75,123,245,.10);--green-bg:rgba(52,211,153,.10);--red-bg:rgba(248,113,113,.10);--amber-bg:rgba(251,191,36,.10);--purple-bg:rgba(167,139,250,.10);--cyan-bg:rgba(34,211,238,.10);--sh:0 1px 3px rgba(0,0,0,.3);--g1:rgba(75,123,245,.04);--g2:rgba(167,139,250,.03)}
+[data-theme="light"]{--bg:#f4f5f7;--sf:#ffffff;--el:#eef0f3;--hv:#e4e6eb;--bd:#d5d7de;--bh:#c0c2cc;--t1:#14142b;--t2:#555572;--t3:#8888a0;--blue-bg:rgba(75,123,245,.07);--green-bg:rgba(16,185,129,.07);--red-bg:rgba(239,68,68,.07);--amber-bg:rgba(200,150,0,.08);--purple-bg:rgba(139,92,246,.07);--cyan-bg:rgba(6,182,212,.07);--sh:0 1px 4px rgba(0,0,0,.05);--g1:rgba(75,123,245,.025);--g2:rgba(167,139,250,.015)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);min-height:100vh;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
+.glow{position:fixed;pointer-events:none;border-radius:50%;transition:background var(--tr)}.g1{top:-200px;left:25%;width:600px;height:600px;background:radial-gradient(circle,var(--g1),transparent 70%)}.g2{bottom:-200px;right:5%;width:500px;height:500px;background:radial-gradient(circle,var(--g2),transparent 70%)}
+.wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 20px}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap;gap:10px;transition:border-color var(--tr)}
+.hdr-left{display:flex;align-items:center;gap:10px}
+.bal-logo{height:28px;width:28px;background-size:contain;background-repeat:no-repeat;background-position:center;flex-shrink:0}
+[data-theme="dark"] .bal-logo{background-image:url('data:image/png;base64,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')}
+[data-theme="light"] .bal-logo{background-image:url('data:image/png;base64,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')}
+.hdr-title{font-weight:700;font-size:15px;letter-spacing:-.3px;display:flex;align-items:center;gap:6px}
+.hdr-title .pipe{color:var(--t3);font-weight:300}.hdr-title .sub{color:var(--t3);font-weight:400;font-size:12px}
+.hdr-right{display:flex;align-items:center;gap:4px}
+.hl{color:var(--t2);text-decoration:none;font-size:11px;padding:5px 10px;border-radius:5px;transition:all .2s;font-weight:500}.hl:hover{color:var(--t1);background:var(--el)}
+.tt{width:36px;height:20px;border-radius:10px;border:1px solid var(--bd);background:var(--el);cursor:pointer;position:relative;margin-left:6px;transition:all var(--tr);flex-shrink:0}
+.tt::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--t2);transition:all .3s cubic-bezier(.68,-.55,.27,1.55)}
+[data-theme="light"] .tt::after{left:18px;background:var(--amber)}
+.tt:hover{border-color:var(--bh)}
+.ti{font-size:11px;color:var(--t3);margin-left:2px;opacity:.4;transition:opacity .2s}
+[data-theme="dark"] .ti.moon{opacity:1}[data-theme="light"] .ti.sun{opacity:1}
+.hero{padding:44px 0 28px;animation:fadeIn .5s ease}
+.hero-label{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--t3);font-weight:600;margin-bottom:12px;font-family:var(--mono);display:flex;align-items:center;gap:8px}
+.hero-label .ld{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+.nav-row{display:flex;align-items:flex-start;gap:28px;flex-wrap:wrap}
+.nav-main{flex:1;min-width:280px}
+.nav-price{font-size:clamp(40px,6vw,64px);font-weight:700;letter-spacing:-2.5px;line-height:1;margin-bottom:8px}
+.nav-sub{color:var(--t2);font-size:12px;line-height:1.5;max-width:480px}
+.nav-cards{flex-shrink:0;display:flex;flex-direction:column;gap:8px;min-width:230px}
+.nc{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 18px;transition:all var(--tr);box-shadow:var(--sh)}.nc:hover{border-color:var(--bh);background:var(--el)}
+.nc-top{display:flex;align-items:center;justify-content:space-between}
+.nc-label{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;font-family:var(--mono);font-weight:500}
+.nc-val{font-family:var(--mono);font-size:17px;font-weight:600;letter-spacing:-.3px}
+.nc-sub{font-size:9px;font-family:var(--mono);margin-top:3px;text-align:right}
+.pd-badge{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:var(--rs);font-family:var(--mono);font-size:12px;font-weight:600;margin-top:12px}
+.pd-badge.disc{background:var(--green-bg);color:var(--green);border:1px solid rgba(52,211,153,.2)}
+.pd-badge.prem{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,.2)}
+.sources{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.sb-link{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:var(--sf);border:1px solid var(--bd);border-radius:6px;text-decoration:none;font-size:9px;color:var(--t2);font-family:var(--mono);transition:all .2s;box-shadow:var(--sh)}.sb-link:hover{border-color:var(--bh);color:var(--t1);background:var(--el)}
+.sep{height:1px;background:var(--bd);transition:background var(--tr)}
+.section{padding:24px 0}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:6px}
+.sec-title{font-size:13px;font-weight:700;letter-spacing:-.2px}
+.sec-meta{font-size:9px;color:var(--t3);font-family:var(--mono)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:16px}
+.sb{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:14px;transition:all var(--tr);box-shadow:var(--sh)}.sb:hover{border-color:var(--bh)}
+.sb-label{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:1.2px;font-weight:500;margin-bottom:5px;font-family:var(--mono)}
+.sb-val{font-size:18px;font-weight:600;font-family:var(--mono);letter-spacing:-.5px}
+.sb-sub{font-size:9px;color:var(--t3);margin-top:2px;font-family:var(--mono)}
+.alloc-box{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-bottom:12px;box-shadow:var(--sh);transition:all var(--tr)}
+.alloc-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;gap:2px}
+.alloc-seg{border-radius:3px;transition:all .3s;cursor:default}.alloc-seg:hover{opacity:.8;transform:scaleY(1.4)}
+.alloc-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.al-item{display:flex;align-items:center;gap:4px;font-size:9px;color:var(--t2);font-family:var(--mono)}
+.al-dot{width:6px;height:6px;border-radius:2px}
+.tbl-wrap{overflow-x:auto;border-radius:var(--r)}
+table{width:100%;border-collapse:separate;border-spacing:0;background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;transition:all var(--tr);box-shadow:var(--sh)}
+thead th{padding:10px 14px;font-size:8px;text-transform:uppercase;letter-spacing:1.5px;color:var(--t3);font-weight:600;text-align:left;border-bottom:1px solid var(--bd);font-family:var(--mono);background:var(--sf)}
+thead th.r{text-align:right}
+tbody td{padding:10px 14px;font-size:11px;border-bottom:1px solid var(--bd);transition:background var(--tr)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr{transition:background .15s}tbody tr:hover{background:var(--hv)}
+.tk{display:flex;align-items:center;gap:7px}
+.tk-icon{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0}
+.tk-name{font-weight:600;font-size:11px}.tk-sym{color:var(--t3);font-size:9px;font-family:var(--mono)}
+.td-r{text-align:right;font-family:var(--mono);font-size:11px}.td-r .sub{color:var(--t3);font-size:9px;display:block;margin-top:1px}
+.ext-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:24px;margin-bottom:12px;transition:all var(--tr);box-shadow:var(--sh);position:relative;overflow:hidden}
+.ext-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple))}
+.ext-title{font-size:15px;font-weight:700;letter-spacing:-.3px}
+.ext-desc{font-size:12px;color:var(--t2);line-height:1.6;margin:12px 0 16px;max-width:700px}
+.ext-note{background:var(--el);border:1px solid var(--bd);border-radius:var(--rs);padding:14px 16px;font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:16px;transition:all var(--tr)}
+.ext-note strong{color:var(--amber)}
+.ext-nav-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.ext-stat{background:var(--el);border:1px solid var(--bd);border-radius:10px;padding:16px;transition:all var(--tr)}.ext-stat:hover{border-color:var(--bh)}
+.ext-stat-label{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:1.2px;font-weight:500;font-family:var(--mono);margin-bottom:6px}
+.ext-stat-val{font-size:20px;font-weight:600;font-family:var(--mono);letter-spacing:-.5px}
+.ext-stat-sub{font-size:9px;color:var(--t3);font-family:var(--mono);margin-top:3px}
+.wallet-row{background:var(--el);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;transition:all .2s;flex-wrap:wrap}.wallet-row:hover{border-color:var(--bh)}
+.wallet-left{display:flex;flex-direction:column;gap:2px;min-width:0}
+.wallet-label{font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px}
+.wallet-hash{font-family:var(--mono);font-size:10px;color:var(--t2);word-break:break-all}
+.addr-list{display:flex;flex-direction:column;gap:6px}
+.addr{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;transition:all .2s;flex-wrap:wrap;box-shadow:var(--sh)}.addr:hover{border-color:var(--bh);background:var(--el)}
+.addr-left{display:flex;flex-direction:column;gap:2px;min-width:0}
+.addr-label{font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px}
+.tag{font-size:7px;padding:2px 5px;border-radius:3px;font-family:var(--mono);font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.tag-tk{background:var(--blue-bg);color:var(--blue)}.tag-tr{background:var(--amber-bg);color:var(--amber)}.tag-dao{background:var(--purple-bg);color:var(--purple)}.tag-op{background:var(--cyan-bg);color:var(--cyan)}.tag-on{background:var(--green-bg);color:var(--green)}
+.addr-hash{font-family:var(--mono);font-size:10px;color:var(--t2);word-break:break-all}
+.addr-btns,.wallet-btns{display:flex;gap:4px;flex-shrink:0}
+.btn-s{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:500;font-family:var(--sans);cursor:pointer;transition:all .2s;text-decoration:none;border:1px solid var(--bd);background:transparent;color:var(--t2)}.btn-s:hover{border-color:var(--t3);color:var(--t1);background:var(--el)}
+.mbox{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:18px;box-shadow:var(--sh);transition:all var(--tr)}
+.mbox p{font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:6px}.mbox p:last-child{margin-bottom:0}
+.formula{display:inline-block;background:var(--hv);border:1px solid var(--bd);border-radius:6px;padding:8px 14px;font-family:var(--mono);font-size:11px;color:var(--blue);margin:4px 0}
+.mbox code{color:var(--blue);font-family:var(--mono);font-size:10px}
+.footer{border-top:1px solid var(--bd);padding:18px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;transition:border-color var(--tr)}
+.footer-t{font-size:9px;color:var(--t3);font-family:var(--mono);line-height:1.5}.footer-t a{color:var(--blue);text-decoration:none}.footer-t a:hover{text-decoration:underline}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(50px);background:var(--el);border:1px solid var(--green);color:var(--green);padding:7px 16px;border-radius:var(--rs);font-size:10px;font-family:var(--mono);z-index:100;opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.loader{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .4s,background var(--tr)}.loader.hide{opacity:0;pointer-events:none}
+.spin{width:32px;height:32px;border:3px solid var(--bd);border-top-color:var(--blue);border-radius:50%;animation:sp .8s linear infinite}
+.loader-t{margin-top:12px;font-size:10px;color:var(--t3);font-family:var(--mono)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(max-width:768px){.hdr{flex-direction:column;align-items:flex-start}.nav-row{flex-direction:column}.nav-cards{min-width:100%}.stats{grid-template-columns:1fr 1fr}.addr,.wallet-row{flex-direction:column;align-items:flex-start}.addr-btns,.wallet-btns{width:100%}.addr-btns .btn-s,.wallet-btns .btn-s{flex:1;text-align:center}.footer{flex-direction:column}.ext-nav-row{grid-template-columns:1fr}}
+@media(max-width:480px){.stats{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="glow g1"></div>
-<div class="glow g2"></div>
-<div class="loader" id="loader"><div class="spin"></div><div class="loader-t">Fetching live treasury data...</div></div>
-
+<div class="glow g1"></div><div class="glow g2"></div>
+<div class="loader" id="loader"><div class="spin"></div><div class="loader-t">Fetching live data...</div></div>
 <div class="wrap">
-  <div class="hdr">
-    <div class="hdr-left">
-      <div class="logo">B</div>
-      <div class="hdr-title">Balancer NAV<span>per Token</span></div>
-    </div>
-    <div class="hdr-links">
-      <a href="https://balancer.fi" target="_blank">Protocol</a>
-      <a href="https://app.balancer.fi" target="_blank">App</a>
-      <a href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a>
-      <a href="https://reports.kpk.io/balancer" target="_blank">KPK Reports</a>
-      <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a>
-    </div>
-  </div>
 
-  <div class="hero">
-    <div class="hero-label">Net Asset Value per BAL Token</div>
-    <div class="nav-row">
-      <div class="nav-main">
-        <div class="nav-price" id="nav-price">—</div>
-        <div class="nav-sub">Total DAO Treasury value (excl. native BAL) divided by BAL circulating supply. Measures intrinsic backing per token from DAO-held assets across all chains.</div>
-        <div id="pd-area" style="margin-top:14px;"></div>
-        <div class="sources">
-          <a class="source-badge" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav Dashboard <span class="arrow">→</span></a>
-          <a class="source-badge" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank Portfolio <span class="arrow">→</span></a>
-          <a class="source-badge" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama <span class="arrow">→</span></a>
-        </div>
-      </div>
-      <div class="nav-cards">
-        <div class="nc">
-          <div class="nc-top">
-            <div class="nc-label">BAL Market Price</div>
-            <div class="nc-val" id="bal-price">—</div>
-          </div>
-          <div class="nc-sub" id="bal-change"></div>
-        </div>
-        <div class="nc">
-          <div class="nc-top">
-            <div class="nc-label">NAV / Price Ratio</div>
-            <div class="nc-val" id="nav-ratio">—</div>
-          </div>
-          <div class="nc-sub" id="ratio-sub" style="color:var(--t3)">NAV ÷ Market Price</div>
-        </div>
-        <div class="nc">
-          <div class="nc-top">
-            <div class="nc-label">Treasury Yield (APY)</div>
-            <div class="nc-val" style="color:var(--green)">~5.2%</div>
-          </div>
-          <div class="nc-sub" style="color:var(--t3)">~$600K generated in 2025</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- HEADER -->
+<div class="hdr">
+<div class="hdr-left">
+<div class="bal-logo"></div>
+<div class="hdr-title">Balancer <span class="pipe">|</span><span class="sub">NAV per Token</span></div>
+</div>
+<div class="hdr-right">
+<a class="hl" href="https://balancer.fi" target="_blank">Protocol</a>
+<a class="hl" href="https://app.balancer.fi" target="_blank">App</a>
+<a class="hl" href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a>
+<a class="hl" href="https://reports.kpk.io/balancer" target="_blank">KPK</a>
+<a class="hl" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a>
+<span class="ti sun">☀</span>
+<div class="tt" id="tt" title="Toggle theme"></div>
+<span class="ti moon">☽</span>
+</div>
+</div>
 
-  <div class="sep"></div>
+<!-- HERO -->
+<div class="hero">
+<div class="hero-label"><span class="ld"></span> Net Asset Value per BAL Token</div>
+<div class="nav-row">
+<div class="nav-main">
+<div class="nav-price" id="nav-price">—</div>
+<div class="nav-sub">DAO Treasury value (excl. native BAL) ÷ circulating supply. Intrinsic backing per token from all DAO-held assets across chains and DeFi positions.</div>
+<div id="pd-area"></div>
+<div class="sources">
+<a class="sb-link" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav →</a>
+<a class="sb-link" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank →</a>
+<a class="sb-link" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama →</a>
+</div>
+</div>
+<div class="nav-cards">
+<div class="nc"><div class="nc-top"><div class="nc-label">BAL Market Price</div><div class="nc-val" id="bal-price">—</div></div><div class="nc-sub" id="bal-change"></div></div>
+<div class="nc"><div class="nc-top"><div class="nc-label">NAV / Price Ratio</div><div class="nc-val" id="nav-ratio">—</div></div><div class="nc-sub" style="color:var(--t3)">NAV ÷ Market Price</div></div>
+<div class="nc"><div class="nc-top"><div class="nc-label">Treasury Yield</div><div class="nc-val" style="color:var(--green)">~5.2% APY</div></div><div class="nc-sub" style="color:var(--t3)">~$600K in 2025</div></div>
+</div>
+</div>
+</div>
+<div class="sep"></div>
 
-  <div class="section">
-    <div class="sec-head">
-      <div class="sec-title">Treasury Overview</div>
-      <div class="sec-meta" id="updated"></div>
-    </div>
-    <div class="stats">
-      <div class="sb">
-        <div class="sb-label">Total Treasury</div>
-        <div class="sb-val" id="total-val">—</div>
-        <div class="sb-sub">Across all chains & DeFi</div>
-      </div>
-      <div class="sb">
-        <div class="sb-label">Excl. Native BAL</div>
-        <div class="sb-val" id="ex-bal-val">—</div>
-        <div class="sb-sub">Used for NAV calculation</div>
-      </div>
-      <div class="sb">
-        <div class="sb-label">Circ. Supply</div>
-        <div class="sb-val" id="circ-supply">—</div>
-        <div class="sb-sub" id="max-supply"></div>
-      </div>
-      <div class="sb">
-        <div class="sb-label">Market Cap</div>
-        <div class="sb-val" id="mcap">—</div>
-        <div class="sb-sub" id="mcap-rank"></div>
-      </div>
-      <div class="sb">
-        <div class="sb-label">Treasury / MCap</div>
-        <div class="sb-val" id="t-mcap">—</div>
-        <div class="sb-sub">Backing ratio</div>
-      </div>
-    </div>
+<!-- TREASURY OVERVIEW -->
+<div class="section">
+<div class="sec-head"><div class="sec-title">DAO Treasury Overview</div><div class="sec-meta" id="updated"></div></div>
+<div class="stats">
+<div class="sb"><div class="sb-label">Total Treasury</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">All chains & DeFi</div></div>
+<div class="sb"><div class="sb-label">Excl. Native BAL</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator</div></div>
+<div class="sb"><div class="sb-label">Circ. Supply</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="max-supply"></div></div>
+<div class="sb"><div class="sb-label">Market Cap</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div>
+<div class="sb"><div class="sb-label">Treasury / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div>
+</div>
+<div class="alloc-box"><div style="font-size:11px;font-weight:600;margin-bottom:8px;">Allocation by Category</div><div class="alloc-bar" id="abar"></div><div class="alloc-legend" id="aleg"></div></div>
+<div class="tbl-wrap"><table><thead><tr><th>Asset</th><th>Position</th><th>Chain</th><th class="r">Balance</th><th class="r">Value</th></tr></thead><tbody id="tbody"><tr><td colspan="5" style="text-align:center;color:var(--t3);padding:28px;">Loading...</td></tr></tbody></table></div>
+</div>
+<div class="sep"></div>
 
-    <div class="alloc-box">
-      <div style="font-size:12px;font-weight:600;margin-bottom:10px;">Treasury Allocation by Category</div>
-      <div class="alloc-bar" id="alloc-bar"></div>
-      <div class="alloc-legend" id="alloc-legend"></div>
-    </div>
+<!-- EXTENDED NAV -->
+<div class="section">
+<div class="sec-head"><div class="sec-title">Extended NAV — Including Working Capital & Collected Fees</div></div>
+<div class="ext-card">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap;">
+<div class="ext-title">Adjusted NAV per BAL</div>
+<div class="nc-val" id="ext-nav" style="font-family:var(--mono);font-size:22px;font-weight:700;">—</div>
+</div>
+<div class="ext-desc">This extended view adds assets held by <strong>Balancer OpCo Limited</strong> (working capital for operations) and <strong>Balancer Onchain Limited</strong> (collected protocol fees not yet distributed) to the base DAO Treasury NAV.</div>
+<div class="ext-note"><strong>⚠ Important:</strong> The capital in these wallets is allocated for <strong>funding operations and protocol development</strong>. OpCo holds working capital for the Balancer Foundation's operational needs (salaries, audits, infrastructure). Onchain Limited holds collected protocol fees that may be used for ecosystem growth, contributor compensation, or protocol improvements per governance decisions. This capital <strong>should not be considered freely distributable</strong> to BAL holders — it is earmarked for sustaining and growing the protocol. The base Treasury NAV above is a more conservative measure of per-token backing.</div>
+<div style="margin-bottom:12px;">
+<div class="wallet-row"><div class="wallet-left"><div class="wallet-label"><span class="tag tag-op">OpCo</span> Balancer OpCo Limited — Working Capital</div><div class="wallet-hash">0x3B8910F378034FD6E103Df958863e5c684072693</div></div><div class="wallet-btns"><button class="btn-s" onclick="copy('0x3B8910F378034FD6E103Df958863e5c684072693')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">Etherscan ↗</a><a class="btn-s" href="https://debank.com/profile/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">DeBank ↗</a></div></div>
+<div class="wallet-row"><div class="wallet-left"><div class="wallet-label"><span class="tag tag-on">Onchain</span> Balancer Onchain Limited — Collected Fees</div><div class="wallet-hash">0x16b0056636Fcc85f92C49cD49a24bc519d4A1941</div></div><div class="wallet-btns"><button class="btn-s" onclick="copy('0x16b0056636Fcc85f92C49cD49a24bc519d4A1941')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">Etherscan ↗</a><a class="btn-s" href="https://debank.com/profile/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">DeBank ↗</a></div></div>
+</div>
+<div class="ext-nav-row">
+<div class="ext-stat"><div class="ext-stat-label">Base Treasury NAV</div><div class="ext-stat-val" id="ext-base">—</div><div class="ext-stat-sub">DAO Treasury only</div></div>
+<div class="ext-stat"><div class="ext-stat-label">+ OpCo Holdings</div><div class="ext-stat-val" id="ext-opco">—</div><div class="ext-stat-sub">Working capital (ex-BAL)</div></div>
+<div class="ext-stat"><div class="ext-stat-label">+ Onchain Holdings</div><div class="ext-stat-val" id="ext-onch">—</div><div class="ext-stat-sub">Collected fees (ex-BAL)</div></div>
+<div class="ext-stat"><div class="ext-stat-label">Ext. NAV / Price</div><div class="ext-stat-val" id="ext-ratio">—</div><div class="ext-stat-sub">Adjusted ratio</div></div>
+</div>
+<div id="ext-pd" style="margin-top:12px;"></div>
+</div>
+</div>
+<div class="sep"></div>
 
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr>
-          <th>Asset</th>
-          <th>Category / Position</th>
-          <th>Chain</th>
-          <th class="r">Balance</th>
-          <th class="r">Value (USD)</th>
-        </tr></thead>
-        <tbody id="tbody"><tr><td colspan="5" style="text-align:center;color:var(--t3);padding:32px;">Loading...</td></tr></tbody>
-      </table>
-    </div>
-  </div>
+<!-- METHODOLOGY -->
+<div class="section">
+<div class="sec-head"><div class="sec-title">Methodology</div></div>
+<div class="mbox">
+<p>The <strong>Base NAV</strong> prices all assets in the DAO Treasury and DAO Multisig wallets — including DeFi positions (Aave, Lido, Compound, Maker), staked tokens (stkAAVE, stkGHO, wstETH, vlAURA), and governance tokens from treasury swaps — then divides by BAL circulating supply. Native BAL is excluded to avoid circular valuation.</p>
+<div class="formula">Base NAV = (Treasury Value − Native BAL) ÷ Circulating Supply</div>
+<div class="formula">Extended NAV = (Treasury + OpCo + Onchain − All Native BAL) ÷ Circulating Supply</div>
+<p>Data sourced across <strong>Ethereum, Gnosis Chain, Arbitrum, Base, and other L2s</strong>. Token prices fetched live from CoinGecko API. Token symbols verified via CoinGecko contract addresses.</p>
+<p style="color:var(--t3);font-size:10px;">⚠ Balances are approximate. Complex DeFi positions may not be fully captured. See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a>, <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a>, and <a href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank" style="color:var(--blue)">DeBank</a> for authoritative data.</p>
+</div>
+</div>
+<div class="sep"></div>
 
-  <div class="sep"></div>
+<!-- ALL ADDRESSES -->
+<div class="section">
+<div class="sec-head"><div class="sec-title">All Addresses</div></div>
+<div class="addr-list">
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-tk">Token</span> BAL Token</div><div class="addr-hash">0xba100000625a3754423978a60c9317c58a424e3D</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xba100000625a3754423978a60c9317c58a424e3D')">Copy</button><a class="btn-s" href="https://etherscan.io/token/0xba100000625a3754423978a60c9317c58a424e3D" target="_blank">Etherscan ↗</a></div></div>
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-tr">Treasury</span> DAO Treasury Multisig (Karpatkey)</div><div class="addr-hash">0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">Etherscan ↗</a><a class="btn-s" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank ↗</a></div></div>
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">DAO</span> DAO Multisig</div><div class="addr-hash">0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f" target="_blank">Etherscan ↗</a><a class="btn-s" href="https://debank.com/profile/0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f" target="_blank">DeBank ↗</a></div></div>
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-op">OpCo</span> Balancer OpCo Limited</div><div class="addr-hash">0x3B8910F378034FD6E103Df958863e5c684072693</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x3B8910F378034FD6E103Df958863e5c684072693')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">Etherscan ↗</a><a class="btn-s" href="https://debank.com/profile/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">DeBank ↗</a></div></div>
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-on">Onchain</span> Balancer Onchain Limited</div><div class="addr-hash">0x16b0056636Fcc85f92C49cD49a24bc519d4A1941</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x16b0056636Fcc85f92C49cD49a24bc519d4A1941')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">Etherscan ↗</a><a class="btn-s" href="https://debank.com/profile/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">DeBank ↗</a></div></div>
+</div>
+</div>
 
-  <div class="section">
-    <div class="sec-head"><div class="sec-title">Methodology</div></div>
-    <div class="method-box">
-      <p>This dashboard calculates the <strong>Net Asset Value (NAV) per BAL token</strong> by pricing all assets held across the Balancer DAO Treasury wallets — including DeFi positions (Aave, Lido, Compound, Maker, Balancer LP), staked tokens (stkAAVE, stkGHO, wstETH, vlAURA), and governance tokens from treasury swaps — then dividing by BAL circulating supply.</p>
-      <div class="formula">NAV per BAL = (Total Treasury USD Value − Native BAL Holdings) ÷ Circulating Supply</div>
-      <p>Native BAL is excluded from the numerator to avoid circular valuation. Treasury data is sourced from the <strong>DAO Treasury Multisig</strong> (<code>0x0EFcCBb9...32fc89</code>) and the <strong>DAO Multisig</strong> (<code>0x10A19e7e...2e4f</code>) across <strong>Ethereum, Gnosis Chain, Arbitrum, and Polygon</strong>. Token prices are fetched live from CoinGecko.</p>
-      <p>If BAL market price &lt; NAV → the token trades at a <strong style="color:var(--green)">discount to NAV</strong> (potentially undervalued relative to treasury). If BAL market price &gt; NAV → trades at a <strong style="color:var(--red)">premium</strong>.</p>
-      <p style="color:var(--t3);font-size:11px;">⚠ Treasury balances are approximate, based on Karpatkey's 2025 Annual Review ($13.7M managed, ~$14.3M total balance sheet), DefiLlama ($14.6M), and on-chain data from Octav and DeBank. Some complex DeFi positions (nested LPs, veBAL locks) may not be fully reflected. Always refer to <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey's official reports</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav dashboard</a> for authoritative data.</p>
-    </div>
-  </div>
-
-  <div class="sep"></div>
-
-  <div class="section">
-    <div class="sec-head"><div class="sec-title">Key Addresses</div></div>
-    <div class="addr-list">
-      <div class="addr">
-        <div class="addr-left">
-          <div class="addr-label"><span class="tag tag-token">Token</span> BAL Token Contract</div>
-          <div class="addr-hash">0xba100000625a3754423978a60c9317c58a424e3D</div>
-        </div>
-        <div class="addr-btns">
-          <button class="btn-s" onclick="copy('0xba100000625a3754423978a60c9317c58a424e3D')">Copy</button>
-          <a class="btn-s" href="https://etherscan.io/token/0xba100000625a3754423978a60c9317c58a424e3D" target="_blank">Etherscan ↗</a>
-        </div>
-      </div>
-      <div class="addr">
-        <div class="addr-left">
-          <div class="addr-label"><span class="tag tag-treasury">Treasury</span> DAO Treasury Multisig (Karpatkey-managed)</div>
-          <div class="addr-hash">0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89</div>
-        </div>
-        <div class="addr-btns">
-          <button class="btn-s" onclick="copy('0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89')">Copy</button>
-          <a class="btn-s" href="https://etherscan.io/address/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">Etherscan ↗</a>
-          <a class="btn-s" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank ↗</a>
-        </div>
-      </div>
-      <div class="addr">
-        <div class="addr-left">
-          <div class="addr-label"><span class="tag tag-gov">DAO</span> DAO Multisig</div>
-          <div class="addr-hash">0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f</div>
-        </div>
-        <div class="addr-btns">
-          <button class="btn-s" onclick="copy('0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f')">Copy</button>
-          <a class="btn-s" href="https://etherscan.io/address/0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f" target="_blank">Etherscan ↗</a>
-          <a class="btn-s" href="https://debank.com/profile/0x10A19e7eE7d7F8a52822f6817de8ea18204F2e4f" target="_blank">DeBank ↗</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div class="footer-t">
-      Data: <a href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a> ·
-      <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a> ·
-      <a href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank</a> ·
-      <a href="https://reports.kpk.io/balancer" target="_blank">Karpatkey</a><br>
-      Not financial advice · Prices refresh on page load
-    </div>
-    <div class="footer-t">Treasury multisig: 0x0EFc...fc89</div>
-  </div>
+<div class="footer">
+<div class="footer-t">Data: <a href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a> · <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a> · <a href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank</a> · <a href="https://reports.kpk.io/balancer" target="_blank">Karpatkey</a><br>Not financial advice · Prices refresh on load</div>
+<div class="footer-t">Logo: <a href="https://github.com/balancer/brand-assets" target="_blank">balancer/brand-assets</a></div>
+</div>
 </div>
 
 <div class="toast" id="toast">✓ Copied</div>
 
 <script>
-// ════════════════════════════════════════════════
-// TREASURY HOLDINGS — Multi-chain, including DeFi positions
-// Sourced from: Karpatkey 2025 Annual Review, DefiLlama ($14.6M),
-// Octav dashboard, DeBank portfolio, Etherscan on-chain data.
-// 
-// Key facts from KPK 2025 review:
-// - KPK-managed: $13.7M at year-end 2025
-// - Broader balance sheet: ~$14.3M
-// - 46% stablecoins ($6M+, ~2yr runway)
-// - Yield: ~4-6% APY, ~$600K generated
-// - Holdings on Ethereum + Gnosis Chain primarily
-// - Strategies: Aave, Lido, Compound, Maker, Uniswap LP
-// - Treasury swaps: AAVE, GNO, COW, FEI→wound down
-// ════════════════════════════════════════════════
+// THEME
+const tt=document.getElementById('tt'),html=document.documentElement;
+try{const s=localStorage.getItem('bal-theme');if(s)html.dataset.theme=s;}catch(e){}
+tt.addEventListener('click',()=>{const n=html.dataset.theme==='dark'?'light':'dark';html.dataset.theme=n;try{localStorage.setItem('bal-theme',n);}catch(e){}});
 
-const HOLDINGS = [
-  // ── STABLECOINS (on Aave, Compound, Maker — yield-bearing) ──
-  { symbol:'USDC',    name:'USD Coin (Aave v3)',       cg:'usd-coin',       bal:2200000,  cat:'Stablecoin',  chain:'Ethereum',  color:'#2775CA', note:'Supplied on Aave v3' },
-  { symbol:'USDC',    name:'USD Coin',                 cg:'usd-coin',       bal:450000,   cat:'Stablecoin',  chain:'Gnosis',    color:'#2775CA', note:'Gnosis Chain' },
-  { symbol:'sDAI',    name:'Savings DAI (Maker)',       cg:'savings-dai',    bal:1200000,  cat:'Stablecoin',  chain:'Ethereum',  color:'#F5AC37', note:'Maker DSR vault' },
-  { symbol:'sDAI',    name:'Savings DAI',               cg:'savings-dai',    bal:350000,   cat:'Stablecoin',  chain:'Gnosis',    color:'#F5AC37', note:'Gnosis Chain' },
-  { symbol:'stkGHO',  name:'Staked GHO (Aave)',        cg:'gho',            bal:800000,   cat:'Stablecoin',  chain:'Ethereum',  color:'#A259FF', note:'Staked in Aave Safety Module' },
-  { symbol:'USDT',    name:'Tether USD (Compound)',     cg:'tether',         bal:250000,   cat:'Stablecoin',  chain:'Ethereum',  color:'#26A17B', note:'Compound v3' },
-  { symbol:'GHO',     name:'GHO',                       cg:'gho',            bal:150000,   cat:'Stablecoin',  chain:'Ethereum',  color:'#A259FF', note:'Wallet balance' },
+// ═══════════════════════════════════════════════
+// DAO TREASURY HOLDINGS
+// Sources: KPK 2025 Annual Review, DefiLlama, Octav, DeBank
+// CoinGecko IDs verified via contract addresses
+// ═══════════════════════════════════════════════
+const H=[
+// STABLECOINS (~46% of treasury, ~$6M+)
+// USDC: 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48 → coingecko: usd-coin
+{s:'USDC',n:'USD Coin (Aave v3)',cg:'usd-coin',b:2200000,cat:'Stablecoin',ch:'Ethereum',c:'#2775CA',nt:'Supplied on Aave v3'},
+{s:'USDC',n:'USD Coin',cg:'usd-coin',b:450000,cat:'Stablecoin',ch:'Gnosis',c:'#2775CA',nt:'Gnosis Chain'},
+// sDAI: 0x83f20f44975d03b1b09e64809b757c47f942beea → coingecko: savings-dai
+{s:'sDAI',n:'Savings DAI (Maker DSR)',cg:'savings-dai',b:1200000,cat:'Stablecoin',ch:'Ethereum',c:'#F5AC37',nt:'Maker DSR vault'},
+{s:'sDAI',n:'Savings DAI',cg:'savings-dai',b:350000,cat:'Stablecoin',ch:'Gnosis',c:'#F5AC37',nt:'Gnosis Chain'},
+// GHO: 0x40d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f → coingecko: gho
+{s:'stkGHO',n:'Staked GHO (Aave Safety Module)',cg:'gho',b:800000,cat:'Stablecoin',ch:'Ethereum',c:'#A259FF',nt:'Safety Module'},
+// USDT: 0xdac17f958d2ee523a2206206994597c13d831ec7 → coingecko: tether
+{s:'USDT',n:'Tether (Compound v3)',cg:'tether',b:250000,cat:'Stablecoin',ch:'Ethereum',c:'#26A17B',nt:'Compound v3'},
+{s:'GHO',n:'GHO',cg:'gho',b:150000,cat:'Stablecoin',ch:'Ethereum',c:'#A259FF',nt:'Wallet'},
 
-  // ── ETH & LIQUID STAKING DERIVATIVES ──
-  { symbol:'wstETH',  name:'Wrapped stETH (Lido)',     cg:'wrapped-steth',  bal:680,      cat:'ETH & LSTs',  chain:'Ethereum',  color:'#00A3FF', note:'Lido liquid staking' },
-  { symbol:'wstETH',  name:'Wrapped stETH',             cg:'wrapped-steth',  bal:120,      cat:'ETH & LSTs',  chain:'Gnosis',    color:'#00A3FF', note:'Gnosis Chain' },
-  { symbol:'WETH',    name:'Wrapped Ether',             cg:'ethereum',       bal:280,      cat:'ETH & LSTs',  chain:'Ethereum',  color:'#627EEA', note:'Various positions' },
-  { symbol:'rETH',    name:'Rocket Pool ETH',           cg:'rocket-pool-eth',bal:95,       cat:'ETH & LSTs',  chain:'Ethereum',  color:'#FF6E30', note:'Rocket Pool staking' },
-  { symbol:'ETH',     name:'Ether (native)',            cg:'ethereum',       bal:45,       cat:'ETH & LSTs',  chain:'Ethereum',  color:'#627EEA', note:'Native ETH balance' },
+// ETH & LSTs
+// wstETH: 0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0 → coingecko: wrapped-steth
+{s:'wstETH',n:'Wrapped stETH (Lido)',cg:'wrapped-steth',b:680,cat:'ETH & LSTs',ch:'Ethereum',c:'#00A3FF',nt:'Lido staking'},
+{s:'wstETH',n:'Wrapped stETH',cg:'wrapped-steth',b:120,cat:'ETH & LSTs',ch:'Gnosis',c:'#00A3FF',nt:'Gnosis Chain'},
+// WETH: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 → coingecko: ethereum (priced as ETH)
+{s:'WETH',n:'Wrapped Ether',cg:'ethereum',b:280,cat:'ETH & LSTs',ch:'Ethereum',c:'#627EEA',nt:'Various positions'},
+// rETH: 0xae78736cd615f374d3085123a210448e74fc6393 → coingecko: rocket-pool-eth
+{s:'rETH',n:'Rocket Pool ETH',cg:'rocket-pool-eth',b:95,cat:'ETH & LSTs',ch:'Ethereum',c:'#FF6E30',nt:'Rocket Pool'},
+{s:'ETH',n:'Ether',cg:'ethereum',b:45,cat:'ETH & LSTs',ch:'Ethereum',c:'#627EEA',nt:'Native'},
 
-  // ── GOVERNANCE TOKENS (from treasury swaps & staking) ──
-  { symbol:'stkAAVE', name:'Staked AAVE',               cg:'aave',           bal:4200,     cat:'Governance',  chain:'Ethereum',  color:'#B6509E', note:'Staked in Safety Module' },
-  { symbol:'GNO',     name:'Gnosis',                    cg:'gnosis',         bal:3100,     cat:'Governance',  chain:'Ethereum',  color:'#009CB4', note:'Karpatkey/Gnosis alignment' },
-  { symbol:'GNO',     name:'Gnosis',                    cg:'gnosis',         bal:800,      cat:'Governance',  chain:'Gnosis',    color:'#009CB4', note:'Native chain holdings' },
-  { symbol:'COW',     name:'CoW Protocol',              cg:'cow-protocol',   bal:631000,   cat:'Governance',  chain:'Ethereum',  color:'#052B65', note:'BIP token swap (2yr lock)' },
-  { symbol:'vlAURA',  name:'Vote-locked AURA',          cg:'aura-finance',   bal:2000000,  cat:'Governance',  chain:'Ethereum',  color:'#7C3AED', note:'Locked governance power' },
-  { symbol:'COW',     name:'CoW Protocol',              cg:'cow-protocol',   bal:12360,    cat:'Governance',  chain:'Ethereum',  color:'#052B65', note:'DAO Multisig' },
+// GOVERNANCE
+// AAVE: 0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9 → coingecko: aave
+{s:'stkAAVE',n:'Staked AAVE',cg:'aave',b:4200,cat:'Governance',ch:'Ethereum',c:'#B6509E',nt:'Safety Module'},
+// GNO: 0x6810e776880c02933d47db1b9fc05908e5386b96 → coingecko: gnosis
+{s:'GNO',n:'Gnosis',cg:'gnosis',b:3100,cat:'Governance',ch:'Ethereum',c:'#009CB4',nt:'KPK alignment'},
+{s:'GNO',n:'Gnosis',cg:'gnosis',b:800,cat:'Governance',ch:'Gnosis',c:'#009CB4',nt:'Gnosis Chain'},
+// COW: 0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab → coingecko: cow-protocol
+{s:'COW',n:'CoW Protocol',cg:'cow-protocol',b:631000,cat:'Governance',ch:'Ethereum',c:'#052B65',nt:'BIP swap (2yr lock)'},
+// AURA: 0xc0c293ce456ff0ed870add98a0828dd4d2903dbf → coingecko: aura-finance
+{s:'vlAURA',n:'Vote-locked AURA',cg:'aura-finance',b:2000000,cat:'Governance',ch:'Ethereum',c:'#7C3AED',nt:'Locked governance'},
+{s:'COW',n:'CoW Protocol',cg:'cow-protocol',b:12360,cat:'Governance',ch:'Ethereum',c:'#052B65',nt:'DAO Multisig'},
 
-  // ── NATIVE BAL (excluded from NAV numerator) ──
-  { symbol:'BAL',     name:'Balancer (Treasury)',       cg:'balancer',       bal:380000,   cat:'Native BAL',  chain:'Ethereum',  color:'#4B7BF5', note:'DAO-held BAL' },
-  { symbol:'BAL',     name:'Balancer',                  cg:'balancer',       bal:45000,    cat:'Native BAL',  chain:'Arbitrum',  color:'#4B7BF5', note:'Arbitrum holdings' },
+// NATIVE BAL (excluded from NAV numerator)
+// BAL: 0xba100000625a3754423978a60c9317c58a424e3D → coingecko: balancer
+{s:'BAL',n:'Balancer',cg:'balancer',b:380000,cat:'Native BAL',ch:'Ethereum',c:'#4B7BF5',nt:'DAO-held'},
+{s:'BAL',n:'Balancer',cg:'balancer',b:45000,cat:'Native BAL',ch:'Arbitrum',c:'#4B7BF5',nt:'Arbitrum'},
 
-  // ── LP POSITIONS (Balancer pools, Uniswap) ──
-  { symbol:'BPT',     name:'80BAL/20WETH Pool Token',  cg:'balancer',       bal:120000,   cat:'LP Positions', chain:'Ethereum',  color:'#4B7BF5', note:'veBAL base pool' },
+// LP POSITIONS
+{s:'BPT',n:'80BAL/20WETH BPT',cg:'balancer',b:120000,cat:'LP Positions',ch:'Ethereum',c:'#4B7BF5',nt:'veBAL pool'},
 ];
 
-const CAT_COLORS = {
-  'Stablecoin':'#2775CA','ETH & LSTs':'#627EEA','Governance':'#B6509E',
-  'Native BAL':'#4B7BF5','LP Positions':'#22D3EE'
-};
+// ═══════════════════════════════════════════════
+// OpCo Holdings — ~$803K ex-BAL per DeBank (March 2026)
+// Ethereum mainnet only
+// ═══════════════════════════════════════════════
+const OPC=[
+{s:'USDC',n:'USD Coin',cg:'usd-coin',b:620000,cat:'Stablecoin',ch:'Ethereum'},
+{s:'USDT',n:'Tether',cg:'tether',b:85000,cat:'Stablecoin',ch:'Ethereum'},
+{s:'WETH',n:'Wrapped Ether',cg:'ethereum',b:28,cat:'ETH',ch:'Ethereum'},
+{s:'DAI',n:'Dai',cg:'dai',b:35000,cat:'Stablecoin',ch:'Ethereum'},
+{s:'BAL',n:'Balancer',cg:'balancer',b:150000,cat:'Native BAL',ch:'Ethereum'},
+];
 
-// ════════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// Onchain Holdings — ~$48K ex-BAL per DeBank (March 2026)
+// Ethereum + L2s — mostly small residual amounts
+// ═══════════════════════════════════════════════
+const ONC=[
+{s:'USDC',n:'USD Coin',cg:'usd-coin',b:22000,cat:'Stablecoin',ch:'Ethereum'},
+{s:'WETH',n:'Wrapped Ether',cg:'ethereum',b:8,cat:'ETH',ch:'Ethereum'},
+{s:'USDC',n:'USD Coin',cg:'usd-coin',b:6000,cat:'Stablecoin',ch:'Arbitrum'},
+{s:'USDC',n:'USD Coin',cg:'usd-coin',b:4000,cat:'Stablecoin',ch:'Base'},
+{s:'WETH',n:'Wrapped Ether',cg:'ethereum',b:2.5,cat:'ETH',ch:'Arbitrum'},
+{s:'BAL',n:'Balancer',cg:'balancer',b:18000,cat:'Native BAL',ch:'Ethereum'},
+];
 
-function fmt(n,d=2){ if(n>=1e9)return '$'+(n/1e9).toFixed(d)+'B'; if(n>=1e6)return '$'+(n/1e6).toFixed(d)+'M'; if(n>=1e3)return '$'+(n/1e3).toFixed(d)+'K'; return '$'+n.toFixed(d); }
-function fN(n){ if(n>=1e6)return (n/1e6).toFixed(2)+'M'; if(n>=1e3)return n.toLocaleString(undefined,{maximumFractionDigits:1}); return n.toLocaleString(undefined,{maximumFractionDigits:4}); }
-function fB(n){ if(n>=1e6)return (n/1e6).toFixed(2)+'M'; if(n>=1e3)return n.toLocaleString(undefined,{maximumFractionDigits:1}); return n.toLocaleString(undefined,{maximumFractionDigits:4}); }
+const CC={'Stablecoin':'#2775CA','ETH & LSTs':'#627EEA','Governance':'#B6509E','Native BAL':'#4B7BF5','LP Positions':'#22D3EE','ETH':'#627EEA'};
 
-async function fetchPrices(){
-  const ids=[...new Set(HOLDINGS.map(h=>h.cg))].join(',');
-  const r=await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
-  return r.json();
+function fmt(n,d=2){if(n>=1e9)return'$'+(n/1e9).toFixed(d)+'B';if(n>=1e6)return'$'+(n/1e6).toFixed(d)+'M';if(n>=1e3)return'$'+(n/1e3).toFixed(d)+'K';return'$'+n.toFixed(d);}
+function fN(n){if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return n.toLocaleString(undefined,{maximumFractionDigits:1});return n.toLocaleString(undefined,{maximumFractionDigits:4});}
+
+function priceArr(arr,p){let t=0,x=0;arr.forEach(h=>{const d=p[h.cg];if(d){h.price=d.usd;h.usd=h.b*h.price;t+=h.usd;if(h.cat!=='Native BAL'&&h.cat!=='LP Positions')x+=h.usd;if(h.cat==='LP Positions')x+=h.usd*.2;}});return{t,x};}
+
+function copy(a){navigator.clipboard.writeText(a).then(()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);});}
+
+function buildBar(arr){
+  const cats={};let tot=0;arr.forEach(h=>{if(!cats[h.cat])cats[h.cat]=0;cats[h.cat]+=h.usd||0;tot+=h.usd||0;});
+  const bar=document.getElementById('abar'),leg=document.getElementById('aleg');bar.innerHTML='';leg.innerHTML='';
+  Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{const p=v/tot*100;if(p<.3)return;
+    const s=document.createElement('div');s.className='alloc-seg';s.style.width=p+'%';s.style.background=CC[c]||'#666';s.title=c+': '+fmt(v)+' ('+p.toFixed(1)+'%)';bar.appendChild(s);
+    const i=document.createElement('div');i.className='al-item';i.innerHTML='<div class="al-dot" style="background:'+(CC[c]||'#666')+'"></div>'+c+' · '+fmt(v)+' · '+p.toFixed(1)+'%';leg.appendChild(i);});
 }
-async function fetchBAL(){
-  const r=await fetch('https://api.coingecko.com/api/v3/coins/balancer?localization=false&tickers=false&community_data=false&developer_data=false');
-  return r.json();
-}
 
-function copy(a){
-  navigator.clipboard.writeText(a).then(()=>{
-    const t=document.getElementById('toast');t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),1800);
-  });
-}
-
-function buildBar(holdings){
-  const cats={};let total=0;
-  holdings.forEach(h=>{if(!cats[h.cat])cats[h.cat]=0;cats[h.cat]+=h.usd||0;total+=h.usd||0;});
-  const bar=document.getElementById('alloc-bar'),leg=document.getElementById('alloc-legend');
-  bar.innerHTML='';leg.innerHTML='';
-  Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{
-    const p=v/total*100;if(p<0.3)return;
-    const s=document.createElement('div');s.className='alloc-seg';s.style.width=p+'%';s.style.background=CAT_COLORS[c]||'#666';s.title=`${c}: ${fmt(v)} (${p.toFixed(1)}%)`;bar.appendChild(s);
-    const i=document.createElement('div');i.className='al-item';i.innerHTML=`<div class="al-dot" style="background:${CAT_COLORS[c]||'#666'}"></div>${c} · ${fmt(v)} · ${p.toFixed(1)}%`;leg.appendChild(i);
-  });
-}
-
-function buildTable(holdings){
+function buildTbl(arr){
   const tb=document.getElementById('tbody');tb.innerHTML='';
-  [...holdings].sort((a,b)=>(b.usd||0)-(a.usd||0)).forEach(h=>{
-    const tr=document.createElement('tr');
-    tr.innerHTML=`
-      <td><div class="tk">
-        <div class="tk-icon" style="background:${h.color}18;color:${h.color};border:1px solid ${h.color}30;">${h.symbol.slice(0,2)}</div>
-        <div><div class="tk-name">${h.name}</div><div class="tk-sym">${h.symbol}${h.note?' · <span style="color:var(--t3)">'+h.note+'</span>':''}</div></div>
-      </div></td>
-      <td style="color:var(--t2);font-size:11px;">${h.cat}</td>
-      <td style="font-size:11px;color:var(--t2);">${h.chain}</td>
-      <td class="td-r">${fB(h.bal)}<span class="sub">${h.symbol}</span></td>
-      <td class="td-r" style="font-weight:600;">${h.usd?fmt(h.usd):'—'}<span class="sub">${h.price?'@ $'+h.price.toLocaleString(undefined,{maximumFractionDigits:2}):''}</span></td>`;
-    tb.appendChild(tr);
-  });
+  [...arr].sort((a,b)=>(b.usd||0)-(a.usd||0)).forEach(h=>{const tr=document.createElement('tr');
+    tr.innerHTML='<td><div class="tk"><div class="tk-icon" style="background:'+h.c+'18;color:'+h.c+';border:1px solid '+h.c+'30;">'+h.s.slice(0,2)+'</div><div><div class="tk-name">'+h.n+'</div><div class="tk-sym">'+h.s+(h.nt?' · <span style="color:var(--t3)">'+h.nt+'</span>':'')+'</div></div></div></td><td style="color:var(--t2);font-size:10px;">'+h.cat+'</td><td style="font-size:10px;color:var(--t2);">'+h.ch+'</td><td class="td-r">'+fN(h.b)+'<span class="sub">'+h.s+'</span></td><td class="td-r" style="font-weight:600;">'+(h.usd?fmt(h.usd):'—')+'<span class="sub">'+(h.price?'@ $'+h.price.toLocaleString(undefined,{maximumFractionDigits:2}):'')+'</span></td>';
+    tb.appendChild(tr);});
 }
 
 async function main(){
   const ld=document.getElementById('loader');
   try{
-    const [prices,balData]=await Promise.all([fetchPrices(),fetchBAL()]);
+    const all=[...H,...OPC,...ONC];const ids=[...new Set(all.map(h=>h.cg))].join(',');
+    const[prices,bd]=await Promise.all([
+      fetch('https://api.coingecko.com/api/v3/simple/price?ids='+ids+'&vs_currencies=usd&include_24hr_change=true').then(r=>r.json()),
+      fetch('https://api.coingecko.com/api/v3/coins/balancer?localization=false&tickers=false&community_data=false&developer_data=false').then(r=>r.json())
+    ]);
+    const tr=priceArr(H,prices),op=priceArr(OPC,prices),on=priceArr(ONC,prices);
+    const bp=bd.market_data.current_price.usd,bc=bd.market_data.price_change_percentage_24h,cs=bd.market_data.circulating_supply,ms=bd.market_data.max_supply,mc=bd.market_data.market_cap.usd,mr=bd.market_cap_rank;
 
-    let totalAll=0, totalExBal=0;
-    HOLDINGS.forEach(h=>{
-      const pd=prices[h.cg];
-      if(pd){h.price=pd.usd;h.change=pd.usd_24h_change;h.usd=h.bal*h.price;totalAll+=h.usd;
-        if(h.cat!=='Native BAL'&&h.cat!=='LP Positions')totalExBal+=h.usd;
-        // LP positions: approximate as BAL-heavy
-        if(h.cat==='LP Positions')totalExBal+=h.usd*0.2; // only count ETH portion
-      }
-    });
-
-    const bp=balData.market_data.current_price.usd;
-    const bc=balData.market_data.price_change_percentage_24h;
-    const cs=balData.market_data.circulating_supply;
-    const ms=balData.market_data.max_supply;
-    const mc=balData.market_data.market_cap.usd;
-    const mr=balData.market_cap_rank;
-
-    const nav=totalExBal/cs;
-
+    // Base NAV
+    const nav=tr.x/cs;
     document.getElementById('nav-price').textContent='$'+nav.toFixed(4);
     document.getElementById('bal-price').textContent='$'+bp.toFixed(2);
-    const ce=document.getElementById('bal-change');
-    ce.textContent=(bc>=0?'+':'')+bc.toFixed(2)+'% (24h)';ce.style.color=bc>=0?'var(--green)':'var(--red)';
-
-    const ratio=nav/bp;
-    document.getElementById('nav-ratio').textContent=ratio.toFixed(4)+'x';
-
-    const pd=document.getElementById('pd-area');
+    const ce=document.getElementById('bal-change');ce.textContent=(bc>=0?'+':'')+bc.toFixed(2)+'% (24h)';ce.style.color=bc>=0?'var(--green)':'var(--red)';
+    document.getElementById('nav-ratio').textContent=(nav/bp).toFixed(4)+'x';
     const disc=((nav-bp)/bp*100);
-    if(nav>bp) pd.innerHTML=`<div class="pd-badge disc">▲ BAL trades at ${Math.abs(disc).toFixed(1)}% discount to NAV</div>`;
-    else pd.innerHTML=`<div class="pd-badge prem">▼ BAL trades at ${Math.abs(disc).toFixed(1)}% premium to NAV</div>`;
+    document.getElementById('pd-area').innerHTML=nav>bp?'<div class="pd-badge disc">▲ BAL at '+Math.abs(disc).toFixed(1)+'% discount to NAV</div>':'<div class="pd-badge prem">▼ BAL at '+Math.abs(disc).toFixed(1)+'% premium to NAV</div>';
 
-    document.getElementById('total-val').textContent=fmt(totalAll);
-    document.getElementById('ex-bal-val').textContent=fmt(totalExBal);
+    document.getElementById('total-val').textContent=fmt(tr.t);
+    document.getElementById('ex-bal-val').textContent=fmt(tr.x);
     document.getElementById('circ-supply').textContent=fN(cs)+' BAL';
     document.getElementById('max-supply').textContent=ms?'Max: '+fN(ms)+' BAL':'';
     document.getElementById('mcap').textContent=fmt(mc);
     document.getElementById('mcap-rank').textContent='Rank #'+mr;
-    document.getElementById('t-mcap').textContent=(totalAll/mc*100).toFixed(2)+'%';
+    document.getElementById('t-mcap').textContent=(tr.t/mc*100).toFixed(2)+'%';
     document.getElementById('updated').textContent='Updated: '+new Date().toLocaleString();
+    buildTbl(H);buildBar(H);
 
-    buildTable(HOLDINGS);
-    buildBar(HOLDINGS);
-  }catch(e){
-    console.error(e);
-    document.getElementById('nav-price').textContent='—';
-    document.getElementById('tbody').innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--red);padding:32px;">Failed to fetch. CoinGecko may be rate-limiting. Refresh in a minute.</td></tr>`;
-  }
-  ld.classList.add('hide');setTimeout(()=>ld.style.display='none',400);
+    // Extended NAV
+    const extX=tr.x+op.x+on.x,extNav=extX/cs;
+    document.getElementById('ext-nav').textContent='$'+extNav.toFixed(4);
+    document.getElementById('ext-base').textContent='$'+nav.toFixed(4);
+    document.getElementById('ext-opco').textContent=fmt(op.x)+' (ex-BAL)';
+    document.getElementById('ext-onch').textContent=fmt(on.x)+' (ex-BAL)';
+    document.getElementById('ext-ratio').textContent=(extNav/bp).toFixed(4)+'x';
+    const ed=((extNav-bp)/bp*100);
+    document.getElementById('ext-pd').innerHTML=extNav>bp?'<div class="pd-badge disc">▲ Extended: BAL at '+Math.abs(ed).toFixed(1)+'% discount to extended NAV</div>':'<div class="pd-badge prem">▼ Extended: BAL at '+Math.abs(ed).toFixed(1)+'% premium to extended NAV</div>';
+  }catch(e){console.error(e);document.getElementById('nav-price').textContent='Error';document.getElementById('tbody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--red);padding:28px;">CoinGecko rate limit. Refresh in a minute.</td></tr>';}
+  ld.classList.add('hide');setTimeout(function(){ld.style.display='none';},400);
 }
 main();
 </script>
