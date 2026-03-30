@@ -43,18 +43,20 @@
 
 <div class="hero"><div class="hero-label"><span class="ld"></span> Net Asset Value per BAL Token</div><div class="nav-row"><div class="nav-main"><div class="nav-price" id="nav-price">—</div><div class="nav-sub">DAO Treasury value (excl. native BAL) ÷ adjusted circulating supply. Positions + prices from Zerion API (8000+ protocols, 38+ chains). Supply from Etherscan on-chain.</div><div id="pd-area"></div><div class="sources"><a class="sb-link" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav →</a><a class="sb-link" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank →</a><a class="sb-link" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama →</a></div></div><div class="nav-cards"><div class="nc"><div class="nc-top"><div class="nc-label">BAL Market Price</div><div class="nc-val" id="bal-price">—</div></div><div class="nc-sub" id="bal-change"></div></div><div class="nc"><div class="nc-top"><div class="nc-label">NAV / Price Ratio</div><div class="nc-val" id="nav-ratio">—</div></div><div class="nc-sub" style="color:var(--t3)">NAV ÷ Market Price</div></div><div class="nc"><div class="nc-top"><div class="nc-label">Treasury Yield</div><div class="nc-val" style="color:var(--green)">~5.2% APY</div></div><div class="nc-sub" style="color:var(--t3)">~$600K in 2025</div></div></div></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">Total Treasury</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">Zerion: all chains + DeFi</div></div><div class="sb"><div class="sb-label">Excl. Native BAL</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − excluded wallets</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Treasury / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
+<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">Total Treasury</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">Zerion: all chains + DeFi</div></div><div class="sb"><div class="sb-label">Excl. Native BAL</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − 4 excluded wallets</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Treasury / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
 <div class="alloc-box"><div style="font-size:11px;font-weight:600;margin-bottom:8px;">Allocation by Category</div><div class="alloc-bar" id="abar"></div><div class="alloc-legend" id="aleg"></div></div>
 <div class="tbl-wrap"><table><thead><tr><th>Asset</th><th>Protocol</th><th>Chain</th><th class="r">Balance</th><th class="r">Value</th></tr></thead><tbody id="tbody"><tr><td colspan="5" style="text-align:center;color:var(--t3);padding:28px;">Loading from Zerion...</td></tr></tbody></table></div></div><div class="sep"></div>
 
 <div class="section"><div class="sec-head"><div class="sec-title">Extended NAV — Including Working Capital & Collected Fees</div></div><div class="ext-card"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap;"><div class="ext-title">Adjusted NAV per BAL</div><div class="nc-val" id="ext-nav" style="font-family:var(--mono);font-size:22px;font-weight:700;">—</div></div><div class="ext-desc">Adds assets from <strong>Balancer OpCo Limited</strong> (working capital) and <strong>Balancer Onchain Limited</strong> (collected fees).</div><div class="ext-note"><strong>⚠ Important:</strong> This capital is allocated for <strong>funding operations and protocol development</strong>. It <strong>should not be considered freely distributable</strong> to BAL holders.</div><div style="margin-bottom:12px;"><div class="wallet-row"><div class="wallet-left"><div class="wallet-label"><span class="tag tag-op">OpCo</span> Balancer OpCo Limited</div><div class="wallet-hash">0x3B8910F378034FD6E103Df958863e5c684072693</div></div><div class="wallet-btns"><button class="btn-s" onclick="copy('0x3B8910F378034FD6E103Df958863e5c684072693')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">DeBank ↗</a></div></div><div class="wallet-row"><div class="wallet-left"><div class="wallet-label"><span class="tag tag-on">Onchain</span> Balancer Onchain Limited</div><div class="wallet-hash">0x16b0056636Fcc85f92C49cD49a24bc519d4A1941</div></div><div class="wallet-btns"><button class="btn-s" onclick="copy('0x16b0056636Fcc85f92C49cD49a24bc519d4A1941')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">DeBank ↗</a></div></div></div><div class="ext-nav-row"><div class="ext-stat"><div class="ext-stat-label">Base Treasury NAV</div><div class="ext-stat-val" id="ext-base">—</div><div class="ext-stat-sub">DAO Treasury only</div></div><div class="ext-stat"><div class="ext-stat-label">+ OpCo Holdings</div><div class="ext-stat-val" id="ext-opco">—</div><div class="ext-stat-sub">Working capital (ex-BAL)</div></div><div class="ext-stat"><div class="ext-stat-label">+ Onchain Holdings</div><div class="ext-stat-val" id="ext-onch">—</div><div class="ext-stat-sub">Collected fees (ex-BAL)</div></div><div class="ext-stat"><div class="ext-stat-label">Ext. NAV / Price</div><div class="ext-stat-val" id="ext-ratio">—</div><div class="ext-stat-sub">Adjusted ratio</div></div></div><div id="ext-pd" style="margin-top:12px;"></div></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for all token balances, DeFi positions, and USD prices across 38+ chains and 8000+ protocols. Etherscan API for on-chain BAL supply calculation.</p><div class="formula">Circ. Supply = totalSupply() − BAL(Treasury) − BAL(BLabs) − BAL(OpCo)</div><div class="formula">NAV = Treasury Value (ex-BAL) ÷ Circ. Supply</div><p><strong>BLabs wallets excluded from supply:</strong> <code>0xCDcE...DBc5</code> + <code>0x3B89...2693</code> (OpCo).</p><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
+<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for all token balances, DeFi positions, and USD prices across 38+ chains and 8000+ protocols. Etherscan API for on-chain BAL supply calculation.</p><div class="formula">Circ. Supply = totalSupply() − BAL(Treasury) − BAL(BLabs Vesting) − BAL(BLabs Fundraise) − BAL(tetuBAL)</div><div class="formula">NAV = Treasury Value (ex-BAL) ÷ Circ. Supply</div><p><strong>Wallets excluded from circulating supply:</strong> DAO Treasury (<code>0x0EFc...fc89</code>), BLabs Vesting (<code>0xCDcE...DBc5</code>), BLabs Fundraise (<code>0xB129...20Eb</code>), tetuBAL (<code>0x9cC5...96Ce</code>).</p><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
 
 <div class="section"><div class="sec-head"><div class="sec-title">All Addresses</div></div><div class="addr-list">
 <div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-tk">Token</span> BAL Token</div><div class="addr-hash">0xba100000625a3754423978a60c9317c58a424e3D</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xba100000625a3754423978a60c9317c58a424e3D')">Copy</button><a class="btn-s" href="https://etherscan.io/token/0xba100000625a3754423978a60c9317c58a424e3D" target="_blank">Etherscan ↗</a></div></div>
 <div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-tr">Treasury</span> DAO Treasury (Karpatkey)</div><div class="addr-hash">0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank ↗</a></div></div>
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">BLabs</span> Balancer Labs</div><div class="addr-hash">0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5" target="_blank">Etherscan ↗</a></div></div>
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">BLabs</span> BLabs Vesting Safe</div><div class="addr-hash">0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5" target="_blank">Etherscan ↗</a></div></div>
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">BLabs</span> BLabs Fundraise Fund</div><div class="addr-hash">0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb" target="_blank">Etherscan ↗</a></div></div>
+<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">tetuBAL</span> tetuBAL Locker</div><div class="addr-hash">0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce" target="_blank">Etherscan ↗</a></div></div>
 <div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-op">OpCo / BLabs</span> Balancer OpCo Limited</div><div class="addr-hash">0x3B8910F378034FD6E103Df958863e5c684072693</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x3B8910F378034FD6E103Df958863e5c684072693')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">DeBank ↗</a></div></div>
 <div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-on">Onchain</span> Balancer Onchain Limited</div><div class="addr-hash">0x16b0056636Fcc85f92C49cD49a24bc519d4A1941</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x16b0056636Fcc85f92C49cD49a24bc519d4A1941')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">DeBank ↗</a></div></div>
 </div></div>
@@ -68,11 +70,12 @@ function copy(a){navigator.clipboard.writeText(a).then(()=>{const t=document.get
 
 // ═══ CONFIG ═══
 const PROXY='https://debank-proxy.danko-6a9.workers.dev';
-const EK='VH6MV7REZAG87659SN96TD7JHFDQA5X6VS';
 const BAL_ADDR='0xba100000625a3754423978a60c9317c58a424e3D';
 const W={
   treasury:'0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89',
-  blabs:'0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5',
+  blabsVesting:'0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5',
+  blabsFundraise:'0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb',
+  tetuBAL:'0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce',
   opco:'0x3B8910F378034FD6E103Df958863e5c684072693',
   onchain:'0x16b0056636Fcc85f92C49cD49a24bc519d4A1941'
 };
@@ -90,165 +93,163 @@ async function zGet(path, attempt=0){
   return r.json();
 }
 
-// Get all positions (wallet + DeFi) for an address
+// Single call per wallet — no_filter returns everything, we dedup after
 async function zPositions(addr){
-  // no_filter = wallet tokens + DeFi positions
   return zGet('/v1/wallets/'+addr+'/positions/?filter[positions]=no_filter&currency=usd&filter[trash]=only_non_trash&sort=-value');
 }
 
-// Get portfolio summary
-async function zPortfolio(addr){
-  return zGet('/v1/wallets/'+addr+'/portfolio/?currency=usd');
-}
-
-// ═══ Etherscan ═══
+// ═══ Etherscan via proxy ═══
 function bD(a){return'0x70a08231000000000000000000000000'+a.slice(2).toLowerCase();}
 async function ethCall(to,data){
-  try{const u='https://api.etherscan.io/api?module=proxy&action=eth_call&to='+to+'&data='+data+'&tag=latest&apikey='+EK;const r=await fetch(u).then(r=>r.json());if(r.result&&r.result!=='0x')return r.result;}catch(e){}
-  for(const u of['https://cloudflare-eth.com','https://eth.llamarpc.com']){try{const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'eth_call',params:[{to,data},'latest']})});const j=await r.json();if(j.result&&j.result!=='0x')return j.result;}catch(e){}}
+  try{
+    const r=await fetch(PROXY+'/eth?to='+encodeURIComponent(to)+'&data='+encodeURIComponent(data));
+    if(!r.ok) return null;
+    const j=await r.json();
+    if(j.result&&j.result!=='0x'&&j.result.length>2) return j.result;
+  }catch(e){}
   return null;
 }
 function h2n(h,d=18){if(!h||h==='0x')return 0;try{return Number(BigInt(h))/Math.pow(10,d);}catch(e){return 0;}}
 
-// ═══ Helpers ═══
+// ═══ Formatting ═══
 function fmt(n,d=2){if(n>=1e9)return'$'+(n/1e9).toFixed(d)+'B';if(n>=1e6)return'$'+(n/1e6).toFixed(d)+'M';if(n>=1e3)return'$'+(n/1e3).toFixed(d)+'K';return'$'+n.toFixed(d);}
 function fN(n){if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return n.toLocaleString(undefined,{maximumFractionDigits:1});return n.toLocaleString(undefined,{maximumFractionDigits:4});}
 function badge(el,pct,suf){if(pct>=0)el.innerHTML='<div class="pd-badge above">BAL trading at +'+Math.abs(pct).toFixed(1)+'% above '+suf+'</div>';else el.innerHTML='<div class="pd-badge below">BAL trading at -'+Math.abs(pct).toFixed(1)+'% below '+suf+'</div>';}
 
-// ═══ Process Zerion positions ═══
+// ═══ Position processing with DEDUP ═══
 const STABLES=new Set(['USDC','USDT','DAI','sDAI','GHO','stkGHO','FRAX','LUSD','crvUSD','wxDAI','XDAI','EURe','EURS','agEUR','USDP','GUSD']);
 const ETHS=new Set(['ETH','WETH','wstETH','stETH','rETH','cbETH','sfrxETH','osETH','OETH','swETH','mETH']);
 const GOVS=new Set(['AAVE','stkAAVE','GNO','osGNO','COW','AURA','vlAURA','CRV','CVX','LDO','RPL','SDT','POL','MATIC']);
-const CAT_COLORS={'Stablecoin':'#2775CA','ETH & LSTs':'#627EEA','Governance':'#B6509E','Native BAL':'#4B7BF5','DeFi':'#22D3EE','Other':'#888'};
+const CAT_COLORS={'Stablecoin':'#2775CA','ETH & LSTs':'#627EEA','Governance':'#B6509E','Native BAL':'#4B7BF5','Other':'#888'};
 
 function catOf(sym){
-  const s=(sym||'').replace(/^a[A-Z]/,'').toUpperCase();// strip aToken prefix
-  if(s==='BAL'||sym==='BAL')return'Native BAL';
-  if(STABLES.has(s)||STABLES.has(sym))return'Stablecoin';
-  if(ETHS.has(s)||ETHS.has(sym))return'ETH & LSTs';
-  if(GOVS.has(s)||GOVS.has(sym))return'Governance';
+  if(sym==='BAL')return'Native BAL';
+  if(STABLES.has(sym))return'Stablecoin';
+  if(ETHS.has(sym))return'ETH & LSTs';
+  if(GOVS.has(sym))return'Governance';
   return'Other';
 }
 
+// Receipt tokens = wallet-held tokens whose value duplicates a DeFi protocol position
+const RECEIPT_TOKENS=new Set(['stkGHO','stkAAVE','osGNO','aEthUSDC','aEthUSDT','aEthWETH','aEthDAI','cUSDCv3','aPolUSDC','aArbUSDC']);
+
 function parsePositions(data){
   if(!data?.data)return[];
-  const raw=data.data.filter(p=>(p.attributes?.value||0)>0.5).map(p=>{
+  const CH={'ethereum':'Ethereum','gnosis':'Gnosis','arbitrum':'Arbitrum','polygon':'Polygon','optimism':'Optimism','base':'Base','avalanche':'Avalanche','xdai':'Gnosis'};
+  const all=data.data.filter(p=>(p.attributes?.value||0)>0.5).map(p=>{
     const a=p.attributes;
     const sym=a.fungible_info?.symbol||'?';
-    const name=a.fungible_info?.name||sym;
-    const icon=a.fungible_info?.icon?.url||null;
-    const chain=p.relationships?.chain?.data?.id||'ethereum';
+    const chain=CH[p.relationships?.chain?.data?.id]||p.relationships?.chain?.data?.id||'?';
     const proto=a.application_metadata?.name||null;
     const posType=a.position_type||'wallet';
-    const src=proto||(posType==='wallet'?'Wallet':posType);
-    const cat=catOf(sym);
-    const chainName={'ethereum':'Ethereum','gnosis':'Gnosis','arbitrum':'Arbitrum','polygon':'Polygon','optimism':'Optimism','base':'Base','avalanche':'Avalanche'}[chain]||chain;
-    return{s:sym,n:name,chain:chainName,cat,b:a.quantity?.float||0,price:a.price||0,usd:a.value||0,logo:icon,src,isBAL:cat==='Native BAL',posType,proto};
+    return{
+      s:sym, n:a.fungible_info?.name||sym, chain,
+      cat:catOf(sym), b:a.quantity?.float||0, price:a.price||0, usd:a.value||0,
+      logo:a.fungible_info?.icon?.url||null,
+      src:proto||(posType==='wallet'?'Wallet':posType),
+      isBAL:sym==='BAL', posType, proto
+    };
   });
 
-  // Deduplicate: if a token has BOTH a wallet position AND a protocol position,
-  // the wallet position is the receipt token (stkAAVE, stkGHO, aUSDC etc.)
-  // and the protocol position is the real underlying. Keep only the protocol one.
-  // Group by underlying fungible ID (symbol + chain as proxy)
-  const protoTokens=new Set();
-  raw.forEach(p=>{
-    if(p.posType!=='wallet'&&p.proto) protoTokens.add(p.s+'_'+p.chain);
-  });
-
-  // Also handle wrapped/staked pairs: stkGHO wallet = GHO in Aave, stkAAVE wallet = AAVE in Aave
-  const STAKED_MAP={'stkGHO':'GHO','stkAAVE':'AAVE'};
-  const skipWallet=new Set();
-  raw.forEach(p=>{
-    if(p.posType==='wallet'){
-      const underlying=STAKED_MAP[p.s];
-      if(underlying){
-        // Check if the underlying exists as a protocol position
-        const hasProto=raw.some(q=>q.s===underlying&&q.posType!=='wallet'&&q.chain===p.chain);
-        if(hasProto) skipWallet.add(p.s+'_'+p.chain+'_wallet');
-      }
-    }
-  });
-
-  return raw.filter(p=>{
-    if(p.posType==='wallet'){
-      const key=p.s+'_'+p.chain+'_wallet';
-      if(skipWallet.has(key)) return false;
-      // Also skip if exact same token exists as protocol position (e.g. wallet AAVE + Aave V2 AAVE)
-      if(protoTokens.has(p.s+'_'+p.chain)) return false;
-    }
+  // DEDUP: drop wallet positions for known receipt tokens
+  // These are ERC-20s in the wallet whose value is ALREADY counted
+  // in a corresponding protocol position (e.g. stkGHO wallet = GHO in Aave V3)
+  const deduped=all.filter(p=>{
+    if(p.posType==='wallet' && RECEIPT_TOKENS.has(p.s)) return false;
     return true;
   });
+
+  // Aggregate same token+chain+source (e.g. 5x StakeWise GNO → 1 row)
+  const agg={};
+  deduped.forEach(p=>{
+    const k=p.s+'|'+p.chain+'|'+p.src;
+    if(agg[k]){agg[k].b+=p.b;agg[k].usd+=p.usd;}
+    else agg[k]={...p};
+  });
+  return Object.values(agg);
 }
 
-function sumPositions(arr){let t=0,x=0;arr.forEach(h=>{t+=h.usd;if(!h.isBAL)x+=h.usd;});return{total:t,exBal:x};}
+function sumPos(arr){let t=0,x=0;arr.forEach(h=>{t+=h.usd;if(!h.isBAL)x+=h.usd;});return{total:t,exBal:x};}
 
 // ═══ UI ═══
-function buildBar(arr){const cats={};let tot=0;arr.forEach(h=>{if(!cats[h.cat])cats[h.cat]=0;cats[h.cat]+=h.usd;tot+=h.usd;});const bar=document.getElementById('abar'),leg=document.getElementById('aleg');bar.innerHTML='';leg.innerHTML='';Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{const p=v/tot*100;if(p<.3)return;const s=document.createElement('div');s.className='alloc-seg';s.style.width=p+'%';s.style.background=CAT_COLORS[c]||'#888';s.title=c+': '+fmt(v)+' ('+p.toFixed(1)+'%)';bar.appendChild(s);const i=document.createElement('div');i.className='al-item';i.innerHTML='<div class="al-dot" style="background:'+(CAT_COLORS[c]||'#888')+'"></div>'+c+' · '+fmt(v)+' · '+p.toFixed(1)+'%';leg.appendChild(i);});}
-
+function buildBar(arr){const cats={};let tot=0;arr.forEach(h=>{cats[h.cat]=(cats[h.cat]||0)+h.usd;tot+=h.usd;});const bar=document.getElementById('abar'),leg=document.getElementById('aleg');bar.innerHTML='';leg.innerHTML='';Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{const p=v/tot*100;if(p<.3)return;const s=document.createElement('div');s.className='alloc-seg';s.style.width=p+'%';s.style.background=CAT_COLORS[c]||'#888';s.title=c+': '+fmt(v)+' ('+p.toFixed(1)+'%)';bar.appendChild(s);const i=document.createElement('div');i.className='al-item';i.innerHTML='<div class="al-dot" style="background:'+(CAT_COLORS[c]||'#888')+'"></div>'+c+' · '+fmt(v)+' · '+p.toFixed(1)+'%';leg.appendChild(i);});}
 function buildTbl(arr){const tb=document.getElementById('tbody');tb.innerHTML='';arr.sort((a,b)=>b.usd-a.usd).forEach(h=>{if(h.usd<1)return;const tr=document.createElement('tr');const icon=h.logo?'<img class="tk-img" src="'+h.logo+'" onerror="this.style.display=\'none\'">':'<div class="tk-icon" style="background:'+(CAT_COLORS[h.cat]||'#888')+'18;color:'+(CAT_COLORS[h.cat]||'#888')+';">'+h.s.slice(0,2)+'</div>';tr.innerHTML='<td><div class="tk">'+icon+'<div><div class="tk-name">'+h.s+'</div><div class="tk-sym">'+h.n+'</div></div></div></td><td style="color:var(--t2);font-size:10px;">'+h.src+'</td><td style="font-size:10px;color:var(--t2);">'+h.chain+'</td><td class="td-r">'+fN(h.b)+'</td><td class="td-r" style="font-weight:600;">'+fmt(h.usd)+'</td>';tb.appendChild(tr);});}
 
 // ═══ MAIN ═══
 async function main(){
   const ld=document.getElementById('loader'),msg=document.getElementById('lmsg');
   try{
-    msg.textContent='Fetching treasury from Zerion...';
-    const tPos=await zPositions(W.treasury);
-
+    // 1. Fetch all positions (single call each, sequential for rate limit)
+    msg.textContent='Fetching treasury positions...';
+    const tData=await zPositions(W.treasury);
     msg.textContent='Fetching OpCo wallet...';
-    const opPos=await zPositions(W.opco);
-
+    const opData=await zPositions(W.opco);
     msg.textContent='Fetching Onchain wallet...';
-    const onPos=await zPositions(W.onchain);
+    const onData=await zPositions(W.onchain);
 
-    msg.textContent='Querying on-chain supply...';
-    let supH=null,tBalH=null,bBalH=null,oBalH=null;
-    try{
-      [supH,tBalH,bBalH,oBalH]=await Promise.all([
-        ethCall(BAL_ADDR,'0x18160ddd'),
-        ethCall(BAL_ADDR,bD(W.treasury)),
-        ethCall(BAL_ADDR,bD(W.blabs)),
-        ethCall(BAL_ADDR,bD(W.opco)),
-      ]);
-    }catch(e){console.warn('Etherscan failed, using CoinGecko fallback for supply',e);}
+    // 2. On-chain supply (sequential through proxy)
+    msg.textContent='Querying BAL supply on-chain...';
+    const supH=await ethCall(BAL_ADDR,'0x18160ddd');
+    const exTreasury=await ethCall(BAL_ADDR,bD(W.treasury));
+    const exVesting=await ethCall(BAL_ADDR,bD(W.blabsVesting));
+    const exFundraise=await ethCall(BAL_ADDR,bD(W.blabsFundraise));
 
-    // CoinGecko as fallback for BAL price + supply
+    // tetuBAL: holds 80BAL/20WETH BPT, not raw BAL
+    // Query BPT balance, then calculate BAL share
+    // BPT pool (80BAL/20WETH): 0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56
+    const BPT_POOL='0x5c6Ee304399DBdB9C8Ef030aB642B10820DB8F56';
+    const tetuBptH=await ethCall(BPT_POOL,bD(W.tetuBAL)); // BPT balance of tetuBAL
+    const bptTotalH=await ethCall(BPT_POOL,'0x18160ddd'); // BPT total supply
+    const balInPoolH=await ethCall(BAL_ADDR,bD('0xBA12222222228d8Ba445958a75a0704d566BF2C8')); // BAL in Vault
+    // BAL in the 80/20 pool ≈ BAL in Vault attributed to this pool
+    // Simpler: use known ratio from Dune data (~4.36 BAL per BPT)
+    const tetuBpt=h2n(tetuBptH,18);
+    const bptTotal=h2n(bptTotalH,18);
+    const balInPool=h2n(balInPoolH,18);
+    // BAL per BPT = balInPool / bptTotal (if available), else use ~4.36 from Dune
+    const balPerBpt=(bptTotal>0 && balInPool>0)?(balInPool/bptTotal):4.36;
+    const tetuBAL=tetuBpt*balPerBpt;
+
+    // CoinGecko for 24h change
     let cgData=null;
     try{cgData=await fetch('https://api.coingecko.com/api/v3/coins/balancer?localization=false&tickers=false&community_data=false&developer_data=false').then(r=>r.json());}catch(e){}
 
+    // 3. Process positions
     msg.textContent='Processing...';
-    const treasuryAll=parsePositions(tPos);
-    const treasuryS=sumPositions(treasuryAll);
-    const opcoAll=parsePositions(opPos);
-    const opcoS=sumPositions(opcoAll);
-    const onchainAll=parsePositions(onPos);
-    const onchainS=sumPositions(onchainAll);
+    const treasuryAll=parsePositions(tData);
+    const treasuryS=sumPos(treasuryAll);
+    const opcoAll=parsePositions(opData);
+    const opcoS=sumPos(opcoAll);
+    const onchainAll=parsePositions(onData);
+    const onchainS=sumPos(onchainAll);
 
-    // BAL price: prefer Zerion data, fallback CoinGecko
+    // BAL price
     const balPos=treasuryAll.find(p=>p.isBAL&&p.price>0);
     const bp=balPos?.price||cgData?.market_data?.current_price?.usd||0.15;
     const bc=cgData?.market_data?.price_change_percentage_24h||0;
 
-    // Supply: prefer on-chain, fallback CoinGecko
+    // 4. Supply calculation
     const totalSup=h2n(supH,18);
-    const balTreasury=h2n(tBalH,18);
-    const balBLabs=h2n(bBalH,18);
-    const balOpCo=h2n(oBalH,18);
-    let cs;
-    if(totalSup>0){
-      cs=totalSup-balTreasury-balBLabs-balOpCo;
-      document.getElementById('total-supply').textContent=fN(totalSup)+' BAL';
-      document.getElementById('total-supply-sub').textContent='On-chain totalSupply()';
-      document.getElementById('circ-supply-sub').innerHTML='Excl: Treasury '+fN(balTreasury)+'<br>BLabs '+fN(balBLabs)+' · OpCo '+fN(balOpCo);
-    }else{
-      // Fallback: CoinGecko total supply minus known excluded (~5M BAL)
-      const cgTotal=cgData?.market_data?.total_supply||72085292;
-      const cgCirc=cgData?.market_data?.circulating_supply||67000000;
-      cs=cgCirc;
-      document.getElementById('total-supply').textContent=fN(cgTotal)+' BAL';
-      document.getElementById('total-supply-sub').textContent='CoinGecko (Etherscan unavailable)';
-      document.getElementById('circ-supply-sub').textContent='CoinGecko circulating supply';
+    const balTreasury=h2n(exTreasury,18);
+    const balVesting=h2n(exVesting,18);
+    const balFundraise=h2n(exFundraise,18);
+    const excluded=balTreasury+balVesting+balFundraise+tetuBAL;
+    const cs=totalSup>0?totalSup-excluded:0;
+
+    if(cs<=0){
+      document.getElementById('nav-price').textContent='Supply error';
+      document.getElementById('total-supply').textContent=totalSup>0?fN(totalSup)+' BAL':'Etherscan failed';
+      buildTbl(treasuryAll);buildBar(treasuryAll);
+      document.getElementById('total-val').textContent=fmt(treasuryS.total);
+      document.getElementById('ex-bal-val').textContent=fmt(treasuryS.exBal);
+      throw new Error('Supply=0. Test: '+PROXY+'/eth?to='+BAL_ADDR+'&data=0x18160ddd');
     }
 
+    // 5. Display
+    document.getElementById('total-supply').textContent=fN(totalSup)+' BAL';
+    document.getElementById('total-supply-sub').textContent='On-chain totalSupply()';
+    document.getElementById('circ-supply-sub').innerHTML='Excl: Treasury '+fN(balTreasury)+'<br>BLabs Vest. '+fN(balVesting)+' · Fund. '+fN(balFundraise)+'<br>tetuBAL '+fN(tetuBAL)+' ('+fN(tetuBpt)+' BPT × '+balPerBpt.toFixed(2)+')';
+    document.getElementById('circ-supply').textContent=fN(cs)+' BAL';
     const mc=bp*cs;
     const nav=treasuryS.exBal/cs;
 
@@ -257,10 +258,8 @@ async function main(){
     const ce=document.getElementById('bal-change');ce.textContent=(bc>=0?'+':'')+bc.toFixed(2)+'% (24h)';ce.style.color=bc>=0?'var(--green)':'var(--red)';
     document.getElementById('nav-ratio').textContent=(nav/bp).toFixed(4)+'x';
     badge(document.getElementById('pd-area'),((bp-nav)/nav*100),'NAV');
-
     document.getElementById('total-val').textContent=fmt(treasuryS.total);
     document.getElementById('ex-bal-val').textContent=fmt(treasuryS.exBal);
-    document.getElementById('circ-supply').textContent=fN(cs)+' BAL';
     document.getElementById('mcap').textContent=fmt(mc);
     document.getElementById('t-mcap').textContent=(treasuryS.total/mc*100).toFixed(2)+'%';
     document.getElementById('updated').textContent='Updated: '+new Date().toLocaleString();
@@ -276,7 +275,7 @@ async function main(){
     document.getElementById('ext-ratio').textContent=(extNav/bp).toFixed(4)+'x';
     badge(document.getElementById('ext-pd'),((bp-extNav)/extNav*100),'extended NAV');
 
-  }catch(e){console.error(e);document.getElementById('nav-price').textContent='Error';document.getElementById('tbody').innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--red);padding:28px;">'+e.message+'</td></tr>';}
+  }catch(e){console.error(e);document.getElementById('nav-price').textContent=document.getElementById('nav-price').textContent==='—'?'Error':document.getElementById('nav-price').textContent;document.getElementById('tbody').innerHTML=document.getElementById('tbody').innerHTML.includes('Loading')?'<tr><td colspan="5" style="text-align:center;color:var(--red);padding:28px;">'+e.message+'</td></tr>':document.getElementById('tbody').innerHTML;}
   ld.classList.add('hide');setTimeout(()=>{ld.style.display='none';},400);
 }
 main();
