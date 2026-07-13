@@ -171,20 +171,18 @@ const RECEIPT_TOKENS=new Set([
   'aEthWETH','aEthDAI','cUSDCv3','aPolUSDC','aArbUSDC','waEthLidoGHO',
   'sETH2','B-80BAL-20WETH','sDAI'
 ]);
-// DEFI_RECEIPT_TOKENS: tokens that appear as DeFi positions but are receipt
-// tokens whose value duplicates another DeFi position for the same protocol
-// e.g. osGNO (StakeWise) duplicates GNO (StakeWise) — same staked value
-function isDefiReceipt(sym){
+// Single function to check if a token is a receipt/wrapper whose value
+// is already counted in another position
+function isReceipt(sym){
+  if(RECEIPT_TOKENS.has(sym)) return true;
   if(sym==='osGNO') return true;
   if(sym.startsWith('kpk_')) return true; // Karpatkey vault receipt tokens
   return false;
 }
 
 function mergeTreasury(walletPositions, defiPositions){
-  // Remove known receipt tokens from DeFi positions too
-  const defiClean=defiPositions.filter(p=>!isDefiReceipt(p.s));
-  // Keep wallet tokens that aren't receipt tokens
-  const walletOnly=walletPositions.filter(p=>!RECEIPT_TOKENS.has(p.s));
+  const defiClean=defiPositions.filter(p=>!isReceipt(p.s));
+  const walletOnly=walletPositions.filter(p=>!isReceipt(p.s));
   return [...defiClean,...walletOnly];
 }
 
