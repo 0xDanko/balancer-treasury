@@ -56,7 +56,7 @@
 
 <div class="hero"><div class="hero-label"><span class="ld"></span> Net Asset Value per BAL Token</div><div class="nav-row"><div class="nav-main"><div class="nav-price" id="nav-price">—</div><div class="nav-sub">Distributable DAO value across all treasury buckets (excl. native BAL) ÷ adjusted circulating supply. Positions + prices from Zerion; supply on-chain from Etherscan.</div><div id="pd-area"></div><div class="sources"><a class="sb-link" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav →</a><a class="sb-link" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank →</a><a class="sb-link" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama →</a></div></div><div class="nav-cards"><div class="nc"><div class="nc-top"><div class="nc-label">BAL Market Price</div><div class="nc-val" id="bal-price">—</div></div><div class="nc-sub" id="bal-change"></div></div><div class="nc"><div class="nc-top"><div class="nc-label">NAV / Price Ratio</div><div class="nc-val" id="nav-ratio">—</div></div><div class="nc-sub" style="color:var(--t3)">NAV ÷ Market Price</div></div><div class="nc"><div class="nc-top"><div class="nc-label">Treasury Yield</div><div class="nc-val" style="color:var(--green)">~5.2% APY</div></div><div class="nc-sub" style="color:var(--t3)">~$600K in 2025</div></div></div></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview — All Buckets</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">All Buckets (non-BAL)</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">distributable + locked + OpCo</div></div><div class="sb"><div class="sb-label">Distributable</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − DAO-held BAL</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Distributable / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
+<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview — All Buckets</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">All Buckets (non-BAL)</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">distributable + locked + OpCo</div></div><div class="sb"><div class="sb-label">Distributable</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator, ex-BAL legs</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − DAO-held BAL</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Distributable / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
 <div class="alloc-box"><div style="font-size:11px;font-weight:600;margin-bottom:8px;">Allocation by Category</div><div class="alloc-bar" id="abar"></div><div class="alloc-legend" id="aleg"></div></div>
 <div class="tbl-wrap"><table><thead><tr><th>Asset</th><th>Bucket</th><th>Protocol</th><th>Chain</th><th class="r">Balance</th><th class="r">Value</th></tr></thead><tbody id="tbody"><tr><td colspan="6" style="text-align:center;color:var(--t3);padding:28px;">Loading from Zerion...</td></tr></tbody></table></div></div><div class="sep"></div>
 
@@ -64,7 +64,7 @@
 
 <div class="section"><div class="sec-head"><div class="sec-title">Buckets &amp; Addresses</div></div><div class="dq" id="dq">Loading…</div><div class="tbl-wrap"><table><thead><tr><th>Bucket</th><th>Address</th><th>Chains</th><th>Tier</th><th class="r">Non-BAL</th><th class="r">Attested</th><th class="r">Status</th></tr></thead><tbody id="bkbody"><tr><td colspan="7" style="text-align:center;color:var(--t3);padding:28px;">Loading buckets…</td></tr></tbody></table></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for token balances, DeFi positions and USD prices. Etherscan for on-chain BAL supply. Where no source covers a chain or a contract, the dashboard falls back to the <strong>attested address list</strong> (measured on-chain 18 September 2026, DefiLlama prices) and labels the row as such.</p><div class="formula">Distributable NAV = Σ non-BAL value of every available distributable bucket ÷ Circ. Supply</div><div class="formula">Circ. Supply = totalSupply() − BAL held by every DAO-controlled address − tetuBAL permalocked</div><p><strong>Tiers.</strong> <em>Distributable</em> is what the DAO could send to the main Treasury and distribute today. <em>Time-locked</em> value exists but is not yet available and is excluded from the headline NAV until its unlock date. <em>Operating</em> is the OpCo account, which is partly committed spend and is never blended into the headline.</p><p><strong>Double counting.</strong> Wallet and DeFi positions are fetched separately per bucket and merged with receipt-token dedup, so a wrapped position is never counted twice. The v3 buffers are held by the Vault contract rather than the Treasury Safe, which is why they need their own bucket.</p><p><strong>Excluded by policy</strong> — this is why the total will not tie to DeBank or DefiLlama:</p><ul class="excl-list" id="excl-list"></ul><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
+<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for token balances, DeFi positions and USD prices. Etherscan for on-chain BAL supply. Where no source covers a chain or a contract, the dashboard falls back to the <strong>attested address list</strong> (measured on-chain 18 September 2026, DefiLlama prices) and labels the row as such.</p><div class="formula">Distributable NAV = Σ non-BAL value of every available distributable bucket ÷ Circ. Supply</div><div class="formula">Circ. Supply = totalSupply() − BAL held by every DAO-controlled address − tetuBAL permalocked</div><p><strong>Tiers.</strong> <em>Distributable</em> is what the DAO could send to the main Treasury and distribute today. <em>Time-locked</em> value exists but is not yet available and is excluded from the headline NAV until its unlock date. <em>Operating</em> is the OpCo account, which is partly committed spend and is never blended into the headline.</p><p><strong>BAL exclusion is fractional.</strong> Native BAL is excluded outright. Anything that resolves into BAL — the 80/20 BAL/WETH pool token, rAURA and auraBAL — is exited proportionally, so only its ETH leg (20.45% of value) counts toward NAV.</p><p><strong>Double counting.</strong> Wallet and DeFi positions are fetched separately per bucket and merged with receipt-token dedup, so a wrapped position is never counted twice. The v3 buffers are held by the Vault contract rather than the Treasury Safe, which is why they need their own bucket.</p><p><strong>Excluded by policy</strong> — this is why the total will not tie to DeBank or DefiLlama:</p><ul class="excl-list" id="excl-list"></ul><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
 
 <div class="section"><div class="sec-head"><div class="sec-title">All Addresses</div></div><div class="addr-list" id="addr-list"></div></div>
 <div class="footer"><div class="footer-t">Data: <a href="https://zerion.io/api" target="_blank">Zerion API</a> (positions + prices) · <a href="https://etherscan.io" target="_blank">Etherscan</a> (supply)<br>Not financial advice · All data live</div><div class="footer-t">Logo: <a href="https://github.com/balancer/brand-assets" target="_blank">balancer/brand-assets</a></div></div></div>
@@ -261,7 +261,7 @@ async function loadBuffers(prices){
     if(usd<=0) continue;
     items.push({s:b.sym, n:b.under+' buffer (v3)', chain:'Ethereum', cat:catOf(b.under),
                 b:usd/(prices[b.under]??STABLE_UNDERLYING[b.under]), price:prices[b.under]??STABLE_UNDERLYING[b.under],
-                usd, logo:null, src:'Balancer v3 buffer', isBAL:false,
+                usd, logo:null, src:'Balancer v3 buffer', isBAL:false, balW:0,
                 posType:'buffer', proto:'Balancer v3', fungibleId:b.wrapped});
   }
   return items;
@@ -316,10 +316,26 @@ function badge(el,pct,suf){if(pct>=0)el.innerHTML='<div class="pd-badge above">B
 const STABLES=new Set(['USDC','USDT','DAI','sDAI','GHO','stkGHO','FRAX','LUSD','crvUSD','wxDAI','XDAI','EURe','EURS','agEUR','USDP','GUSD']);
 const ETHS=new Set(['ETH','WETH','wstETH','stETH','rETH','cbETH','sfrxETH','osETH','OETH','swETH','mETH']);
 const GOVS=new Set(['AAVE','stkAAVE','GNO','osGNO','COW','AURA','vlAURA','CRV','CVX','LDO','RPL','SDT','POL','MATIC']);
-const CAT_COLORS={'Stablecoin':'#2775CA','ETH & LSTs':'#627EEA','Governance':'#B6509E','Native BAL':'#4B7BF5','Other':'#888'};
+const CAT_COLORS={'Stablecoin':'#2775CA','ETH & LSTs':'#627EEA','Governance':'#B6509E','Native BAL':'#4B7BF5','BAL-paired':'#7C9BF7','Other':'#888'};
+
+// BAL exclusion is fractional, not binary. The address list excludes BAL "and
+// anything that resolves into BAL", counting only the non-BAL leg of the
+// 80/20 BAL/WETH pool. The liquid BPT, rAURA and auraBAL are all claims on
+// that same pool, so all three carry the same weight and contribute only
+// their ETH leg to NAV.
+const BPT_BAL_WEIGHT=0.7955; // 80/20 BAL/WETH, WETH at 20.45% of pool NAV
+const BAL_WEIGHTS={
+  'BAL':1,
+  'veBAL':BPT_BAL_WEIGHT,
+  'auraBAL':BPT_BAL_WEIGHT,
+  'rAURA':BPT_BAL_WEIGHT,
+  'B-80BAL-20WETH':BPT_BAL_WEIGHT
+};
+function balWeightOf(sym){return BAL_WEIGHTS[sym]??0;}
 
 function catOf(sym){
   if(sym==='BAL')return'Native BAL';
+  if(BAL_WEIGHTS[sym]!==undefined)return'BAL-paired';
   if(STABLES.has(sym))return'Stablecoin';
   if(ETHS.has(sym))return'ETH & LSTs';
   if(GOVS.has(sym))return'Governance';
@@ -340,7 +356,7 @@ function parsePositions(data){
       cat:catOf(sym), b:a.quantity?.float||0, price:a.price||0, usd:a.value||0,
       logo:a.fungible_info?.icon?.url||null,
       src:proto||(posType==='wallet'?'Wallet':posType),
-      isBAL:sym==='BAL', posType, proto,
+      isBAL:sym==='BAL', balW:balWeightOf(sym), posType, proto,
       fungibleId:a.fungible_info?.id||sym // unique token identifier from Zerion
     };
   });
@@ -359,15 +375,19 @@ function parsePositions(data){
 const RECEIPT_TOKENS=new Set([
   'stkGHO','stkAAVE','osGNO','aEthBAL','aBAL','aEthUSDC','aEthUSDT',
   'aEthWETH','aEthDAI','cUSDCv3','aPolUSDC','aArbUSDC','waEthLidoGHO',
-  'sETH2','B-80BAL-20WETH','sDAI'
+  'sETH2','sDAI'
 ]);
-// Single function to check if a token is a receipt/wrapper whose value
-// is already counted in another position
+// The liquid BPT is a real wallet holding and the address list counts it, so
+// it is no longer dropped outright — but a veBAL or Aura position reporting
+// the same BPT on the DeFi side would duplicate it, so it is dropped there.
+const DEFI_RECEIPT_TOKENS=new Set(['B-80BAL-20WETH']);
 function isReceipt(sym){
   if(RECEIPT_TOKENS.has(sym)) return true;
-  if(sym==='osGNO') return true;
   if(sym.startsWith('kpk_')) return true; // Karpatkey vault receipt tokens
   return false;
+}
+function isDefiReceipt(sym){
+  return isReceipt(sym)||DEFI_RECEIPT_TOKENS.has(sym);
 }
 
 function isVaultBufferPosition(p){
@@ -375,12 +395,18 @@ function isVaultBufferPosition(p){
 }
 
 function mergePositions(walletPositions, defiPositions){
-  const defiClean=defiPositions.filter(p=>!isReceipt(p.s)&&!isVaultBufferPosition(p));
+  const defiClean=defiPositions.filter(p=>!isDefiReceipt(p.s)&&!isVaultBufferPosition(p));
   const walletOnly=walletPositions.filter(p=>!isReceipt(p.s));
   return [...defiClean,...walletOnly];
 }
 
-function sumPos(arr){let t=0,x=0;arr.forEach(h=>{t+=h.usd;if(!h.isBAL)x+=h.usd;});return{total:t,exBal:x};}
+// exBal is the non-BAL leg: full value for ordinary tokens, the ETH leg only
+// for anything that resolves into the 80/20 BAL/WETH pool.
+function sumPos(arr){
+  let t=0,x=0,b=0;
+  arr.forEach(h=>{t+=h.usd;x+=h.usd*(1-h.balW);b+=h.usd*h.balW;});
+  return{total:t,exBal:x,balPart:b};
+}
 
 // ═══ Bucket loading ═══
 // Sequential on purpose: the proxy rate-limits, and eight buckets is up to
@@ -509,7 +535,7 @@ async function main(){
     //    every distributable bucket that is actually available. Locked value
     //    and the operating account are shown separately, never blended in.
     msg.textContent='Processing...';
-    let distX=0, lockedX=0, operX=0, treasuryTotal=0, failed=[], attested=[];
+    let distX=0, lockedX=0, operX=0, treasuryTotal=0, balResolved=0, failed=[], attested=[];
     const allItems=[];
     BUCKETS.forEach(b=>{
       const r=res[b.key];
@@ -518,6 +544,7 @@ async function main(){
       else if(st==='locked') lockedX+=r.nonBal;
       else operX+=r.nonBal;
       if(b.key==='treasury') treasuryTotal=r.total;
+      balResolved+=r.total-r.nonBal;
       if(!r.ok) failed.push(b.label);
       else if(r.attested) attested.push(b.label);
       // Tag every position with its bucket so the holdings table can show it
@@ -587,6 +614,7 @@ async function main(){
     if(failed.length) parts.push('<strong>'+failed.length+' bucket(s) failed to load</strong> ('+failed.join(', ')+') — those rows fall back to the attested value, so NAV is <strong>partial</strong>.');
     if(attested.length) parts.push('Read from the attested address list rather than live: '+attested.join(', ')+'.');
     parts.push('Attested figures measured '+ATTESTED_AS_OF+' at DefiLlama prices; live figures use Zerion prices, so the two will not tie exactly.');
+    parts.push(fmt(balResolved)+' excluded as BAL or BAL-resolved. The 80/20 BAL/WETH pool token, rAURA and auraBAL contribute only their ETH leg ('+((1-BPT_BAL_WEIGHT)*100).toFixed(2)+'% of value).');
     parts.push(fmt(ASSUMED_PRICE_USD)+' of the total rests on assumed prices (ciUSDCv3 redeems 1:1, dPOLc0 at the POL price) rather than quotes.');
     warn.innerHTML=parts.map(p=>'<div class="dq-line">'+p+'</div>').join('');
     warn.className='dq '+(failed.length?'dq-bad':'dq-ok');
