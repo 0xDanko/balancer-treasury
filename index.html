@@ -78,6 +78,7 @@ function copy(a){navigator.clipboard.writeText(a).then(()=>{const t=document.get
 // ═══ CONFIG ═══
 const PROXY='https://debank-proxy.danko-6a9.workers.dev';
 const BAL_ADDR='0xba100000625a3754423978a60c9317c58a424e3D';
+const TREASURY_SAFE='0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89';
 
 // As-of date of the attested figures in BUCKETS[].attestedUsd.
 // Source: "Balancer DAO distributable assets, address list", measured on-chain
@@ -101,7 +102,7 @@ const ATTESTED_AS_OF='2026-09-18';
 //   holdsBal     query BAL balanceOf() and exclude it from circulating supply
 const BUCKETS=[
   {key:'treasury', label:'Treasury Safe (kpk)', tag:'Treasury', tagClass:'tag-tr',
-   address:'0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89',
+   address:TREASURY_SAFE,
    chains:'Ethereum, Gnosis, Arbitrum', tier:'distributable',
    fetch:'zerion', defi:true, holdsBal:true, attestedUsd:9145204,
    explorer:'debank', note:'Main DAO treasury, managed by karpatkey.'},
@@ -109,7 +110,7 @@ const BUCKETS=[
   {key:'buffers', label:'v3 buffers', tag:'Buffers', tagClass:'tag-tr',
    address:'0xbA1333333333a1BA1108E8412f11850A5C319bA9',
    chains:'Ethereum', tier:'distributable',
-   fetch:'attested', attestedUsd:398995,
+   fetch:'contract', attestedUsd:398995,
    explorer:'etherscan',
    note:'Six ERC-4626 buffers owned by the Treasury Safe. The balances sit inside the v3 Vault, not in the Safe, so a wallet query never sees them.'},
 
@@ -191,6 +192,79 @@ function isAvailable(b){
 function bucketState(b){
   if(!isAvailable(b)) return 'locked';
   return b.tier;
+}
+
+// ═══ v3 BUFFERS ═══
+// Buffer liquidity is internal Vault accounting, not an ERC-20 the Safe holds,
+// so no wallet query can see it. Each buffer is read straight off the Vault:
+//   ownerShares / totalShares × (underlyingBalance + convertToAssets(wrappedBalance))
+// gives the Treasury Safe's claim in underlying units, priced with the same
+// Zerion prices as every other position.
+const V3_VAULT='0xbA1333333333a1BA1108E8412f11850A5C319bA9';
+const BUFFERS=[
+  {sym:'waEthUSDC',      wrapped:'0x0bfc9d54Fc184518A81162F8fB99c2eACa081202', under:'USDC',   dec:6},
+  {sym:'waEthUSDT',      wrapped:'0x7Bc3485026Ac48b6cf9BaF0A377477Fff5703Af8', under:'USDT',   dec:6},
+  {sym:'waEthLidoGHO',   wrapped:'0xC71Ea051a5F82c67ADcF634c36FFE6334793D24C', under:'GHO',    dec:18},
+  {sym:'waEthWETH',      wrapped:'0x0FE906e030a44eF24CA8c7dC7B7c53A6C4F00ce9', under:'WETH',   dec:18},
+  {sym:'waEthLidoWETH',  wrapped:'0x775F661b0bD1739349b9A2A3EF60be277c5d2D29', under:'WETH',   dec:18},
+  {sym:'waEthLidowstETH',wrapped:'0xD4fa2D31b7968E448877f69A96DE69f5de8cD23E', under:'wstETH', dec:18}
+];
+const BUFFER_SYMBOLS=new Set(BUFFERS.map(b=>b.sym));
+// Function selectors, keccak-256 of the ABI signature
+const SEL={
+  bufferOwnerShares:'0x9385e39a', // getBufferOwnerShares(address,address)
+  bufferTotalShares:'0xf2784e07', // getBufferTotalShares(address)
+  bufferBalance:    '0x4021fe0f', // getBufferBalance(address)
+  convertToAssets:  '0x07a2d13a'  // convertToAssets(uint256)
+};
+// Underlyings with no meaningful price risk. Anything else must come from a
+// live price or the buffer read is abandoned in favour of the attested figure.
+const STABLE_UNDERLYING={USDC:1,USDT:1,GHO:1};
+
+function padAddr(a){return a.slice(2).toLowerCase().padStart(64,'0');}
+function padHex(h){return h.replace(/^0x/,'').padStart(64,'0');}
+function word(hex,i){return BigInt('0x'+hex.replace(/^0x/,'').slice(i*64,(i+1)*64));}
+
+async function readBuffer(b,prices){
+  const w=padAddr(b.wrapped);
+  const [sharesH,totalH,balH]=await Promise.all([
+    ethCall(V3_VAULT,SEL.bufferOwnerShares+w+padAddr(TREASURY_SAFE)),
+    ethCall(V3_VAULT,SEL.bufferTotalShares+w),
+    ethCall(V3_VAULT,SEL.bufferBalance+w)
+  ]);
+  if(sharesH===null||totalH===null||balH===null) throw new Error(b.sym+': vault read failed');
+  const shares=word(sharesH,0), total=word(totalH,0);
+  if(total===0n) return 0;
+  if(shares===0n) return 0;
+  const underlyingBal=word(balH,0), wrappedBal=word(balH,1);
+  // Wrapped leg valued through the ERC-4626 itself so the buffer's accrued
+  // yield is picked up rather than assumed 1:1.
+  let fromWrapped=0n;
+  if(wrappedBal>0n){
+    const convH=await ethCall(b.wrapped,SEL.convertToAssets+padHex(wrappedBal.toString(16)));
+    if(convH===null) throw new Error(b.sym+': convertToAssets failed');
+    fromWrapped=word(convH,0);
+  }
+  const price=prices[b.under]??STABLE_UNDERLYING[b.under];
+  if(!price) throw new Error(b.sym+': no price for '+b.under);
+  // Ratio first, in BigInt, so precision survives; scale after.
+  const ownerUnits=(underlyingBal+fromWrapped)*shares/total;
+  return Number(ownerUnits)/Math.pow(10,b.dec)*price;
+}
+
+// Returns positions shaped like Zerion ones so they flow through the existing
+// table, allocation bar and BAL handling unchanged.
+async function loadBuffers(prices){
+  const items=[];
+  for(const b of BUFFERS){
+    const usd=await readBuffer(b,prices);
+    if(usd<=0) continue;
+    items.push({s:b.sym, n:b.under+' buffer (v3)', chain:'Ethereum', cat:catOf(b.under),
+                b:usd/(prices[b.under]??STABLE_UNDERLYING[b.under]), price:prices[b.under]??STABLE_UNDERLYING[b.under],
+                usd, logo:null, src:'Balancer v3 buffer', isBAL:false,
+                posType:'buffer', proto:'Balancer v3', fungibleId:b.wrapped});
+  }
+  return items;
 }
 
 // ═══ Zerion via proxy — with retry on 429 ═══
@@ -296,8 +370,12 @@ function isReceipt(sym){
   return false;
 }
 
+function isVaultBufferPosition(p){
+  return BUFFER_SYMBOLS.has(p.s) && /balancer/i.test(p.proto||'');
+}
+
 function mergePositions(walletPositions, defiPositions){
-  const defiClean=defiPositions.filter(p=>!isReceipt(p.s));
+  const defiClean=defiPositions.filter(p=>!isReceipt(p.s)&&!isVaultBufferPosition(p));
   const walletOnly=walletPositions.filter(p=>!isReceipt(p.s));
   return [...defiClean,...walletOnly];
 }
@@ -308,14 +386,20 @@ function sumPos(arr){let t=0,x=0;arr.forEach(h=>{t+=h.usd;if(!h.isBAL)x+=h.usd;}
 // Sequential on purpose: the proxy rate-limits, and eight buckets is up to
 // fourteen Zerion calls. One bucket failing must not blank the whole page, so
 // every failure is caught per bucket and surfaced in the UI instead.
-async function loadBucket(b,msg){
+async function loadBucket(b,msg,prices){
   if(b.fetch==='attested'){
     return {items:[], total:b.attestedUsd, nonBal:b.attestedUsd, ok:true, attested:true};
   }
   msg.textContent='Loading '+b.label+'…';
+  if(b.fetch==='contract'){
+    const items=await loadBuffers(prices);
+    const s=sumPos(items);
+    return {items, total:s.total, nonBal:s.exBal, ok:true, attested:false};
+  }
   const wallet=parsePositions(await zWallet(b.address));
   const defi=b.defi?parsePositions(await zDefi(b.address)):[];
   const items=mergePositions(wallet,defi);
+  items.forEach(p=>{if(p.price>0&&prices[p.s]===undefined)prices[p.s]=p.price;});
   const s=sumPos(items);
   const manual=b.manualUsd||0;
   return {items, total:s.total+manual, nonBal:s.exBal+manual, ok:true, attested:false};
@@ -323,9 +407,12 @@ async function loadBucket(b,msg){
 
 async function loadAllBuckets(msg){
   const out={};
+  // Shared symbol → USD index, filled as buckets load. The buffer reader needs
+  // it, which is why the Treasury Safe is loaded first.
+  const prices={};
   for(const b of BUCKETS){
     try{
-      out[b.key]=await loadBucket(b,msg);
+      out[b.key]=await loadBucket(b,msg,prices);
     }catch(e){
       // Fall back to the attested figure so the tier maths stays complete,
       // and mark the bucket so the UI can say the number is not live.
