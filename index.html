@@ -28,7 +28,20 @@
 .tk{display:flex;align-items:center;gap:7px}.tk-img{width:22px;height:22px;border-radius:50%;flex-shrink:0;background:var(--el)}.tk-icon{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;flex-shrink:0}.tk-name{font-weight:600;font-size:11px}.tk-sym{color:var(--t3);font-size:9px;font-family:var(--mono)}.td-r{text-align:right;font-family:var(--mono);font-size:11px}.td-r .sub{color:var(--t3);font-size:9px;display:block;margin-top:1px}
 .ext-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:24px;margin-bottom:12px;box-shadow:var(--sh);position:relative;overflow:hidden}.ext-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple))}.ext-title{font-size:15px;font-weight:700}.ext-desc{font-size:12px;color:var(--t2);line-height:1.6;margin:12px 0 16px;max-width:700px}.ext-note{background:var(--el);border:1px solid var(--bd);border-radius:var(--rs);padding:14px 16px;font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:16px}.ext-note strong{color:var(--amber)}.ext-nav-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}.ext-stat{background:var(--el);border:1px solid var(--bd);border-radius:10px;padding:16px}.ext-stat:hover{border-color:var(--bh)}.ext-stat-label{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:1.2px;font-weight:500;font-family:var(--mono);margin-bottom:6px}.ext-stat-val{font-size:20px;font-weight:600;font-family:var(--mono)}.ext-stat-sub{font-size:9px;color:var(--t3);font-family:var(--mono);margin-top:3px}
 .wallet-row{background:var(--el);border:1px solid var(--bd);border-radius:var(--rs);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px;flex-wrap:wrap}.wallet-row:hover{border-color:var(--bh)}.wallet-left{display:flex;flex-direction:column;gap:2px;min-width:0}.wallet-label{font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px}.wallet-hash{font-family:var(--mono);font-size:10px;color:var(--t2);word-break:break-all}
-.addr-list{display:flex;flex-direction:column;gap:6px}.addr{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;box-shadow:var(--sh)}.addr:hover{border-color:var(--bh);background:var(--el)}.addr-left{display:flex;flex-direction:column;gap:2px;min-width:0}.addr-label{font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px}.tag{font-size:7px;padding:2px 5px;border-radius:3px;font-family:var(--mono);font-weight:600;text-transform:uppercase}.tag-tk{background:var(--blue-bg);color:var(--blue)}.tag-tr{background:var(--amber-bg);color:var(--amber)}.tag-dao{background:var(--purple-bg);color:var(--purple)}.tag-op{background:var(--cyan-bg);color:var(--cyan)}.tag-on{background:var(--green-bg);color:var(--green)}.addr-hash{font-family:var(--mono);font-size:10px;color:var(--t2);word-break:break-all}.addr-btns,.wallet-btns{display:flex;gap:4px;flex-shrink:0}.btn-s{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:500;font-family:var(--sans);cursor:pointer;text-decoration:none;border:1px solid var(--bd);background:transparent;color:var(--t2)}.btn-s:hover{border-color:var(--t3);color:var(--t1);background:var(--el)}
+.addr-list{display:flex;flex-direction:column;gap:6px}.addr{background:var(--sf);border:1px solid var(--bd);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;box-shadow:var(--sh)}.addr:hover{border-color:var(--bh);background:var(--el)}.addr-left{display:flex;flex-direction:column;gap:2px;min-width:0}.addr-label{font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px}.tag{font-size:7px;padding:2px 5px;border-radius:3px;font-family:var(--mono);font-weight:600;text-transform:uppercase}
+.bk-note{font-size:9px;color:var(--t3);margin-top:3px;max-width:340px;line-height:1.45}
+.bk-addr{font-family:var(--mono);font-size:10px;color:var(--blue);text-decoration:none}
+.bk-addr:hover{text-decoration:underline}
+.dq{border-radius:var(--rs);padding:12px 14px;margin-bottom:12px;font-size:10px;line-height:1.6;border:1px solid var(--bd);background:var(--el)}
+.dq-ok{border-left:2px solid var(--blue)}
+.dq-bad{border-left:2px solid var(--red)}
+.dq-line{color:var(--t2);margin:2px 0}
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px}
+.tier{background:var(--el);border:1px solid var(--bd);border-radius:var(--rs);padding:12px}
+.tier-l{font-size:9px;color:var(--t2);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px}
+.tier-v{font-family:var(--mono);font-size:15px;font-weight:600}
+.tier-s{font-size:9px;color:var(--t3);margin-top:3px}
+.excl-list{margin:6px 0 0 16px;padding:0;color:var(--t3);font-size:10px;line-height:1.7}.tag-tk{background:var(--blue-bg);color:var(--blue)}.tag-tr{background:var(--amber-bg);color:var(--amber)}.tag-dao{background:var(--purple-bg);color:var(--purple)}.tag-op{background:var(--cyan-bg);color:var(--cyan)}.tag-on{background:var(--green-bg);color:var(--green)}.addr-hash{font-family:var(--mono);font-size:10px;color:var(--t2);word-break:break-all}.addr-btns,.wallet-btns{display:flex;gap:4px;flex-shrink:0}.btn-s{padding:4px 9px;border-radius:5px;font-size:9px;font-weight:500;font-family:var(--sans);cursor:pointer;text-decoration:none;border:1px solid var(--bd);background:transparent;color:var(--t2)}.btn-s:hover{border-color:var(--t3);color:var(--t1);background:var(--el)}
 .mbox{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:18px;box-shadow:var(--sh)}.mbox p{font-size:11px;color:var(--t2);line-height:1.6;margin-bottom:6px}.mbox p:last-child{margin-bottom:0}.formula{display:inline-block;background:var(--hv);border:1px solid var(--bd);border-radius:6px;padding:8px 14px;font-family:var(--mono);font-size:11px;color:var(--blue);margin:4px 0}.mbox code{color:var(--blue);font-family:var(--mono);font-size:10px}
 .footer{border-top:1px solid var(--bd);padding:18px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.footer-t{font-size:9px;color:var(--t3);font-family:var(--mono);line-height:1.5}.footer-t a{color:var(--blue);text-decoration:none}.footer-t a:hover{text-decoration:underline}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(50px);background:var(--el);border:1px solid var(--green);color:var(--green);padding:7px 16px;border-radius:var(--rs);font-size:10px;font-family:var(--mono);z-index:100;opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -41,25 +54,19 @@
 <div class="wrap">
 <div class="hdr"><div class="hdr-left"><div class="bal-logo"></div><div class="hdr-title">Balancer <span class="pipe">|</span><span class="sub">NAV per Token</span></div></div><div class="hdr-right"><a class="hl" href="https://balancer.fi" target="_blank">Protocol</a><a class="hl" href="https://app.balancer.fi" target="_blank">App</a><a class="hl" href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a><a class="hl" href="https://reports.kpk.io/balancer" target="_blank">KPK</a><a class="hl" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a><span class="ti sun">☀</span><div class="tt" id="tt" title="Toggle theme"></div><span class="ti moon">☽</span></div></div>
 
-<div class="hero"><div class="hero-label"><span class="ld"></span> Net Asset Value per BAL Token</div><div class="nav-row"><div class="nav-main"><div class="nav-price" id="nav-price">—</div><div class="nav-sub">DAO Treasury value (excl. native BAL) ÷ adjusted circulating supply. Positions + prices from Zerion API (8000+ protocols, 38+ chains). Supply from Etherscan on-chain.</div><div id="pd-area"></div><div class="sources"><a class="sb-link" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav →</a><a class="sb-link" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank →</a><a class="sb-link" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama →</a></div></div><div class="nav-cards"><div class="nc"><div class="nc-top"><div class="nc-label">BAL Market Price</div><div class="nc-val" id="bal-price">—</div></div><div class="nc-sub" id="bal-change"></div></div><div class="nc"><div class="nc-top"><div class="nc-label">NAV / Price Ratio</div><div class="nc-val" id="nav-ratio">—</div></div><div class="nc-sub" style="color:var(--t3)">NAV ÷ Market Price</div></div><div class="nc"><div class="nc-top"><div class="nc-label">Treasury Yield</div><div class="nc-val" style="color:var(--green)">~5.2% APY</div></div><div class="nc-sub" style="color:var(--t3)">~$600K in 2025</div></div></div></div></div><div class="sep"></div>
+<div class="hero"><div class="hero-label"><span class="ld"></span> Net Asset Value per BAL Token</div><div class="nav-row"><div class="nav-main"><div class="nav-price" id="nav-price">—</div><div class="nav-sub">Distributable DAO value across all treasury buckets (excl. native BAL) ÷ adjusted circulating supply. Positions + prices from Zerion; supply on-chain from Etherscan.</div><div id="pd-area"></div><div class="sources"><a class="sb-link" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav →</a><a class="sb-link" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank →</a><a class="sb-link" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama →</a></div></div><div class="nav-cards"><div class="nc"><div class="nc-top"><div class="nc-label">BAL Market Price</div><div class="nc-val" id="bal-price">—</div></div><div class="nc-sub" id="bal-change"></div></div><div class="nc"><div class="nc-top"><div class="nc-label">NAV / Price Ratio</div><div class="nc-val" id="nav-ratio">—</div></div><div class="nc-sub" style="color:var(--t3)">NAV ÷ Market Price</div></div><div class="nc"><div class="nc-top"><div class="nc-label">Treasury Yield</div><div class="nc-val" style="color:var(--green)">~5.2% APY</div></div><div class="nc-sub" style="color:var(--t3)">~$600K in 2025</div></div></div></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">Total Treasury</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">Zerion: all chains + DeFi</div></div><div class="sb"><div class="sb-label">Excl. Native BAL</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − 4 excluded wallets</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Treasury / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
+<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview — All Buckets</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">All Buckets (non-BAL)</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">distributable + locked + OpCo</div></div><div class="sb"><div class="sb-label">Distributable</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − DAO-held BAL</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Distributable / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
 <div class="alloc-box"><div style="font-size:11px;font-weight:600;margin-bottom:8px;">Allocation by Category</div><div class="alloc-bar" id="abar"></div><div class="alloc-legend" id="aleg"></div></div>
-<div class="tbl-wrap"><table><thead><tr><th>Asset</th><th>Protocol</th><th>Chain</th><th class="r">Balance</th><th class="r">Value</th></tr></thead><tbody id="tbody"><tr><td colspan="5" style="text-align:center;color:var(--t3);padding:28px;">Loading from Zerion...</td></tr></tbody></table></div></div><div class="sep"></div>
+<div class="tbl-wrap"><table><thead><tr><th>Asset</th><th>Bucket</th><th>Protocol</th><th>Chain</th><th class="r">Balance</th><th class="r">Value</th></tr></thead><tbody id="tbody"><tr><td colspan="6" style="text-align:center;color:var(--t3);padding:28px;">Loading from Zerion...</td></tr></tbody></table></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">Extended NAV — Including Working Capital & Collected Fees</div></div><div class="ext-card"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap;"><div class="ext-title">Adjusted NAV per BAL</div><div class="nc-val" id="ext-nav" style="font-family:var(--mono);font-size:22px;font-weight:700;">—</div></div><div class="ext-desc">Adds assets from <strong>Balancer OpCo Limited</strong> (working capital) and <strong>Balancer Onchain Limited</strong> (collected fees).</div><div class="ext-note"><strong>⚠ Important:</strong> This capital is allocated for <strong>funding operations and protocol development</strong>. It <strong>should not be considered freely distributable</strong> to BAL holders.</div><div style="margin-bottom:12px;"><div class="wallet-row"><div class="wallet-left"><div class="wallet-label"><span class="tag tag-op">OpCo</span> Balancer OpCo Limited</div><div class="wallet-hash">0x3B8910F378034FD6E103Df958863e5c684072693</div></div><div class="wallet-btns"><button class="btn-s" onclick="copy('0x3B8910F378034FD6E103Df958863e5c684072693')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">DeBank ↗</a></div></div><div class="wallet-row"><div class="wallet-left"><div class="wallet-label"><span class="tag tag-on">Onchain</span> Balancer Onchain Limited</div><div class="wallet-hash">0x16b0056636Fcc85f92C49cD49a24bc519d4A1941</div></div><div class="wallet-btns"><button class="btn-s" onclick="copy('0x16b0056636Fcc85f92C49cD49a24bc519d4A1941')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">DeBank ↗</a></div></div></div><div class="ext-nav-row"><div class="ext-stat"><div class="ext-stat-label">Base Treasury NAV</div><div class="ext-stat-val" id="ext-base">—</div><div class="ext-stat-sub">DAO Treasury only</div></div><div class="ext-stat"><div class="ext-stat-label">+ OpCo Holdings</div><div class="ext-stat-val" id="ext-opco">—</div><div class="ext-stat-sub">Working capital (ex-BAL)</div></div><div class="ext-stat"><div class="ext-stat-label">+ Onchain Holdings</div><div class="ext-stat-val" id="ext-onch">—</div><div class="ext-stat-sub">Collected fees (ex-BAL)</div></div><div class="ext-stat"><div class="ext-stat-label">Ext. NAV / Price</div><div class="ext-stat-val" id="ext-ratio">—</div><div class="ext-stat-sub">Adjusted ratio</div></div></div><div id="ext-pd" style="margin-top:12px;"></div></div></div><div class="sep"></div>
+<div class="section"><div class="sec-head"><div class="sec-title">NAV Tiers</div></div><div class="ext-card"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap;"><div class="ext-title">Distributable NAV per BAL</div><div class="nc-val" id="tier-nav" style="font-family:var(--mono);font-size:22px;font-weight:700;">—</div></div><div class="ext-desc">The headline NAV counts <strong>every distributable bucket that is available today</strong>, not just the Treasury Safe. Value that is time-locked, and the OpCo operating account, are held out and shown separately.</div><div class="ext-note"><strong>⚠ OpCo is not freely distributable:</strong> it is the operating account, and part of the balance covers <strong>committed spend</strong>. The committed portion is an OpCo figure and cannot be read on-chain, so the total NAV below is an <strong>upper bound</strong>.</div><div class="tier-grid"><div class="tier"><div class="tier-l">Treasury Safe</div><div class="tier-v" id="tier-treasury">—</div><div class="tier-s">incl. BAL</div></div><div class="tier"><div class="tier-l">Distributable</div><div class="tier-v" id="tier-dist" style="color:var(--green)">—</div><div class="tier-s" id="tier-dist-sub">—</div></div><div class="tier"><div class="tier-l">+ Time-locked</div><div class="tier-v" id="tier-locked">—</div><div class="tier-s">not yet available</div></div><div class="tier"><div class="tier-l">+ OpCo</div><div class="tier-v" id="tier-oper">—</div><div class="tier-s">partly committed</div></div><div class="tier"><div class="tier-l">Total non-BAL</div><div class="tier-v" id="tier-total">—</div><div class="tier-s">all buckets</div></div><div class="tier"><div class="tier-l">Total NAV / BAL</div><div class="tier-v" id="tier-total-nav">—</div><div class="tier-s">upper bound</div></div><div class="tier"><div class="tier-l">Total NAV / Price</div><div class="tier-v" id="tier-ratio">—</div><div class="tier-s">adjusted ratio</div></div></div><div id="tier-pd"></div></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for all token balances, DeFi positions, and USD prices across 38+ chains and 8000+ protocols. Etherscan API for on-chain BAL supply calculation.</p><div class="formula">Circ. Supply = totalSupply() − BAL(Treasury) − BAL(BLabs Vesting) − BAL(BLabs Fundraise) − BAL(tetuBAL)</div><div class="formula">NAV = Treasury Value (ex-BAL) ÷ Circ. Supply</div><p><strong>Wallets excluded from circulating supply:</strong> DAO Treasury (<code>0x0EFc...fc89</code>), BLabs Vesting (<code>0xCDcE...DBc5</code>), BLabs Fundraise (<code>0xB129...20Eb</code>), tetuBAL (<code>0x9cC5...96Ce</code>).</p><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
+<div class="section"><div class="sec-head"><div class="sec-title">Buckets &amp; Addresses</div></div><div class="dq" id="dq">Loading…</div><div class="tbl-wrap"><table><thead><tr><th>Bucket</th><th>Address</th><th>Chains</th><th>Tier</th><th class="r">Non-BAL</th><th class="r">Attested</th><th class="r">Status</th></tr></thead><tbody id="bkbody"><tr><td colspan="7" style="text-align:center;color:var(--t3);padding:28px;">Loading buckets…</td></tr></tbody></table></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">All Addresses</div></div><div class="addr-list">
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-tk">Token</span> BAL Token</div><div class="addr-hash">0xba100000625a3754423978a60c9317c58a424e3D</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xba100000625a3754423978a60c9317c58a424e3D')">Copy</button><a class="btn-s" href="https://etherscan.io/token/0xba100000625a3754423978a60c9317c58a424e3D" target="_blank">Etherscan ↗</a></div></div>
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-tr">Treasury</span> DAO Treasury (Karpatkey)</div><div class="addr-hash">0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">DeBank ↗</a></div></div>
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">BLabs</span> BLabs Vesting Safe</div><div class="addr-hash">0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5" target="_blank">Etherscan ↗</a></div></div>
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">BLabs</span> BLabs Fundraise Fund</div><div class="addr-hash">0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb" target="_blank">Etherscan ↗</a></div></div>
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-dao">tetuBAL</span> tetuBAL Locker</div><div class="addr-hash">0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce')">Copy</button><a class="btn-s" href="https://etherscan.io/address/0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce" target="_blank">Etherscan ↗</a></div></div>
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-op">OpCo / BLabs</span> Balancer OpCo Limited</div><div class="addr-hash">0x3B8910F378034FD6E103Df958863e5c684072693</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x3B8910F378034FD6E103Df958863e5c684072693')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x3B8910F378034FD6E103Df958863e5c684072693" target="_blank">DeBank ↗</a></div></div>
-<div class="addr"><div class="addr-left"><div class="addr-label"><span class="tag tag-on">Onchain</span> Balancer Onchain Limited</div><div class="addr-hash">0x16b0056636Fcc85f92C49cD49a24bc519d4A1941</div></div><div class="addr-btns"><button class="btn-s" onclick="copy('0x16b0056636Fcc85f92C49cD49a24bc519d4A1941')">Copy</button><a class="btn-s" href="https://debank.com/profile/0x16b0056636Fcc85f92C49cD49a24bc519d4A1941" target="_blank">DeBank ↗</a></div></div>
-</div></div>
+<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for token balances, DeFi positions and USD prices. Etherscan for on-chain BAL supply. Where no source covers a chain or a contract, the dashboard falls back to the <strong>attested address list</strong> (measured on-chain 18 September 2026, DefiLlama prices) and labels the row as such.</p><div class="formula">Distributable NAV = Σ non-BAL value of every available distributable bucket ÷ Circ. Supply</div><div class="formula">Circ. Supply = totalSupply() − BAL held by every DAO-controlled address − tetuBAL permalocked</div><p><strong>Tiers.</strong> <em>Distributable</em> is what the DAO could send to the main Treasury and distribute today. <em>Time-locked</em> value exists but is not yet available and is excluded from the headline NAV until its unlock date. <em>Operating</em> is the OpCo account, which is partly committed spend and is never blended into the headline.</p><p><strong>Double counting.</strong> Wallet and DeFi positions are fetched separately per bucket and merged with receipt-token dedup, so a wrapped position is never counted twice. The v3 buffers are held by the Vault contract rather than the Treasury Safe, which is why they need their own bucket.</p><p><strong>Excluded by policy</strong> — this is why the total will not tie to DeBank or DefiLlama:</p><ul class="excl-list" id="excl-list"></ul><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
+
+<div class="section"><div class="sec-head"><div class="sec-title">All Addresses</div></div><div class="addr-list" id="addr-list"></div></div>
 <div class="footer"><div class="footer-t">Data: <a href="https://zerion.io/api" target="_blank">Zerion API</a> (positions + prices) · <a href="https://etherscan.io" target="_blank">Etherscan</a> (supply)<br>Not financial advice · All data live</div><div class="footer-t">Logo: <a href="https://github.com/balancer/brand-assets" target="_blank">balancer/brand-assets</a></div></div></div>
 <div class="toast" id="toast">✓ Copied</div>
 
@@ -71,14 +78,120 @@ function copy(a){navigator.clipboard.writeText(a).then(()=>{const t=document.get
 // ═══ CONFIG ═══
 const PROXY='https://debank-proxy.danko-6a9.workers.dev';
 const BAL_ADDR='0xba100000625a3754423978a60c9317c58a424e3D';
-const W={
-  treasury:'0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89',
-  blabsVesting:'0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5',
-  blabsFundraise:'0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb',
-  tetuBAL:'0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce',
-  opco:'0x3B8910F378034FD6E103Df958863e5c684072693',
-  onchain:'0x16b0056636Fcc85f92C49cD49a24bc519d4A1941'
-};
+
+// As-of date of the attested figures in BUCKETS[].attestedUsd.
+// Source: "Balancer DAO distributable assets, address list", measured on-chain
+// 18 September 2026 at DefiLlama prices.
+const ATTESTED_AS_OF='2026-09-18';
+
+// ═══ BUCKETS ═══
+// Every DAO-controlled address that holds distributable value, plus the
+// operating account. Adding a bucket is a single entry here — the fetch loop,
+// the tier maths, the bucket table, the address list and the circulating
+// supply exclusions are all derived from this array.
+//
+//   tier         'distributable' counts toward the headline NAV.
+//                'operating' is OpCo: real value, but partly committed spend.
+//   fetch        'zerion'   read balances from the Zerion API
+//                'attested' no live reader yet — use attestedUsd
+//   defi         also issue the only_complex Zerion call (LP / staked positions)
+//   availableFrom  ISO date before which the bucket is not distributable
+//   manualUsd    value on a chain no data source covers, added on top
+//   attestedUsd  non-BAL value from the address list, for reconciliation
+//   holdsBal     query BAL balanceOf() and exclude it from circulating supply
+const BUCKETS=[
+  {key:'treasury', label:'Treasury Safe (kpk)', tag:'Treasury', tagClass:'tag-tr',
+   address:'0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89',
+   chains:'Ethereum, Gnosis, Arbitrum', tier:'distributable',
+   fetch:'zerion', defi:true, holdsBal:true, attestedUsd:9145204,
+   explorer:'debank', note:'Main DAO treasury, managed by karpatkey.'},
+
+  {key:'buffers', label:'v3 buffers', tag:'Buffers', tagClass:'tag-tr',
+   address:'0xbA1333333333a1BA1108E8412f11850A5C319bA9',
+   chains:'Ethereum', tier:'distributable',
+   fetch:'attested', attestedUsd:398995,
+   explorer:'etherscan',
+   note:'Six ERC-4626 buffers owned by the Treasury Safe. The balances sit inside the v3 Vault, not in the Safe, so a wallet query never sees them.'},
+
+  {key:'innovation', label:'Innovation Fund', tag:'InnoFund', tagClass:'tag-dao',
+   address:'0x284a37B375e69c8cB30a5633Ee55f3584dd26808',
+   chains:'Ethereum, Base, HyperEVM', tier:'distributable',
+   fetch:'zerion', defi:true, attestedUsd:155704,
+   manualUsd:10511, manualNote:'HyperEVM leg (WETH, USDC, 39.84 HYPE) — no API coverage',
+   explorer:'debank',
+   note:'AutoRange WETH/USDC and BTFSH positions. LP positions need the complex-position query.'},
+
+  {key:'merkleLdo', label:'MerkleRedeem LDO, BIP-922', tag:'Earmarked', tagClass:'tag-op',
+   address:'0x884226c9f7b7205f607922E0431419276a64CF8f',
+   chains:'Ethereum', tier:'distributable',
+   fetch:'zerion', attestedUsd:137880,
+   explorer:'etherscan',
+   note:'Claim contract, not a Safe. LDO sitting against a pending distribution.'},
+
+  {key:'bizdev', label:'BizDev', tag:'BizDev', tagClass:'tag-dao',
+   address:'0xF3B4829C8B9E2910C2396538F49a12b0c2475a7e',
+   chains:'Ethereum, Arbitrum, Base, Polygon', tier:'distributable',
+   fetch:'zerion', defi:true, holdsBal:true, attestedUsd:74238,
+   explorer:'debank',
+   note:'Received the BAL from the emptied MerkleRedeem on 17 September.'},
+
+  {key:'onchain', label:'Balancer Onchain Ltd', tag:'Onchain', tagClass:'tag-on',
+   address:'0x16b0056636Fcc85f92C49cD49a24bc519d4A1941',
+   chains:'Ethereum', tier:'distributable',
+   fetch:'zerion', holdsBal:true, attestedUsd:66154,
+   explorer:'debank', note:'Collected protocol fees.'},
+
+  {key:'aura', label:'Aura', tag:'Locked', tagClass:'tag-op',
+   address:'0x928966752dc0cc0D7babe343Fc2937BA13a5120c',
+   chains:'Ethereum', tier:'distributable',
+   fetch:'zerion', defi:true, holdsBal:true, attestedUsd:24386,
+   availableFrom:'2027-05-10',
+   explorer:'etherscan',
+   note:'rAURA. Not distributable before 10 May 2027, so it is held out of the headline NAV until then.'},
+
+  {key:'opco', label:'Balancer OpCo Ltd', tag:'OpCo', tagClass:'tag-op',
+   address:'0x3B8910F378034FD6E103Df958863e5c684072693',
+   chains:'Ethereum', tier:'operating',
+   fetch:'zerion', holdsBal:true, attestedUsd:763019,
+   explorer:'debank',
+   note:'Operating account, not a reserve. Part of the balance covers committed spend; the committed portion is an OpCo figure, not readable on-chain.'}
+];
+
+// Addresses that hold BAL but no distributable non-BAL value. They only ever
+// affect the circulating supply denominator.
+const SUPPLY_ONLY=[
+  {key:'blabsVesting', label:'BLabs Vesting Safe', tag:'BLabs', tagClass:'tag-dao',
+   address:'0xCDcEBF1f28678eb4A1478403BA7f34C94F7dDBc5', explorer:'etherscan'},
+  {key:'blabsFundraise', label:'BLabs Fundraise Fund', tag:'BLabs', tagClass:'tag-dao',
+   address:'0xB129F73f1AFd3A49C701241F374dB17AE63B20Eb', explorer:'etherscan'},
+  {key:'tetuBAL', label:'tetuBAL Locker', tag:'tetuBAL', tagClass:'tag-dao',
+   address:'0x9cC56Fa7734DA21aC88F6a816aF10C5b898596Ce', explorer:'etherscan'}
+];
+
+// tetuBAL: ~2.8M BAL permalocked in veBAL via the Tetu BalLocker. The on-chain
+// locked() query returns 0 because of the contract structure, so this is
+// hardcoded from Dune / governance data.
+const TETUBAL_PERMALOCKED=2800000;
+
+// Value the address list flags as an assumption rather than a quoted price.
+const ASSUMED_PRICE_USD=500173+10595; // ciUSDCv3 Comet balance + dPOLc0 delegation shares
+
+// Value deliberately outside every bucket, kept here so the dashboard can
+// explain why it will not tie to DeBank or DefiLlama.
+const EXCLUDED_NOTES=[
+  'Rescued exploit funds on four chains — LP property under BIP-892 and BIP-923.',
+  'FeeDistributor v2 residual — owed to veBAL lockers, unrecoverable.',
+  'BAL MerkleRedeem 0x6d19…2Fa8 — emptied into BizDev on 17 September.',
+  'Native BAL and anything that resolves into BAL.'
+];
+
+function isAvailable(b){
+  return !b.availableFrom || new Date(b.availableFrom)<=new Date();
+}
+function bucketState(b){
+  if(!isAvailable(b)) return 'locked';
+  return b.tier;
+}
 
 // ═══ Zerion via proxy — with retry on 429 ═══
 async function zGet(path, attempt=0){
@@ -93,7 +206,7 @@ async function zGet(path, attempt=0){
   return r.json();
 }
 
-// Two separate calls for treasury to avoid double counting
+// Two separate calls per address to avoid double counting
 async function zWallet(addr){
   return zGet('/v1/wallets/'+addr+'/positions/?filter[positions]=only_simple&currency=usd&filter[trash]=only_non_trash&sort=-value');
 }
@@ -117,6 +230,12 @@ function h2n(h,d=18){if(!h||h==='0x')return 0;try{return Number(BigInt(h))/Math.
 // ═══ Formatting ═══
 function fmt(n,d=2){if(n>=1e9)return'$'+(n/1e9).toFixed(d)+'B';if(n>=1e6)return'$'+(n/1e6).toFixed(d)+'M';if(n>=1e3)return'$'+(n/1e3).toFixed(d)+'K';return'$'+n.toFixed(d);}
 function fN(n){if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return n.toLocaleString(undefined,{maximumFractionDigits:1});return n.toLocaleString(undefined,{maximumFractionDigits:4});}
+function shortAddr(a){return a.slice(0,6)+'…'+a.slice(-4);}
+function explorerUrl(e){
+  return e.explorer==='debank'
+    ? 'https://debank.com/profile/'+e.address
+    : 'https://etherscan.io/address/'+e.address;
+}
 function badge(el,pct,suf){if(pct>=0)el.innerHTML='<div class="pd-badge above">BAL trading at +'+Math.abs(pct).toFixed(1)+'% above '+suf+'</div>';else el.innerHTML='<div class="pd-badge below">BAL trading at -'+Math.abs(pct).toFixed(1)+'% below '+suf+'</div>';}
 
 // ═══ Position processing with DEDUP ═══
@@ -133,12 +252,9 @@ function catOf(sym){
   return'Other';
 }
 
-// Receipt tokens = wallet-held tokens whose value duplicates a DeFi protocol position
-// (handled in mergeTreasury below)
-
 function parsePositions(data){
   if(!data?.data)return[];
-  const CH={'ethereum':'Ethereum','gnosis':'Gnosis','arbitrum':'Arbitrum','polygon':'Polygon','optimism':'Optimism','base':'Base','avalanche':'Avalanche','xdai':'Gnosis'};
+  const CH={'ethereum':'Ethereum','gnosis':'Gnosis','arbitrum':'Arbitrum','polygon':'Polygon','optimism':'Optimism','base':'Base','avalanche':'Avalanche','xdai':'Gnosis','hyperevm':'HyperEVM'};
   const all=data.data.filter(p=>(p.attributes?.value||0)>0.5).map(p=>{
     const a=p.attributes;
     const sym=a.fungible_info?.symbol||'?';
@@ -180,7 +296,7 @@ function isReceipt(sym){
   return false;
 }
 
-function mergeTreasury(walletPositions, defiPositions){
+function mergePositions(walletPositions, defiPositions){
   const defiClean=defiPositions.filter(p=>!isReceipt(p.s));
   const walletOnly=walletPositions.filter(p=>!isReceipt(p.s));
   return [...defiClean,...walletOnly];
@@ -188,105 +304,207 @@ function mergeTreasury(walletPositions, defiPositions){
 
 function sumPos(arr){let t=0,x=0;arr.forEach(h=>{t+=h.usd;if(!h.isBAL)x+=h.usd;});return{total:t,exBal:x};}
 
+// ═══ Bucket loading ═══
+// Sequential on purpose: the proxy rate-limits, and eight buckets is up to
+// fourteen Zerion calls. One bucket failing must not blank the whole page, so
+// every failure is caught per bucket and surfaced in the UI instead.
+async function loadBucket(b,msg){
+  if(b.fetch==='attested'){
+    return {items:[], total:b.attestedUsd, nonBal:b.attestedUsd, ok:true, attested:true};
+  }
+  msg.textContent='Loading '+b.label+'…';
+  const wallet=parsePositions(await zWallet(b.address));
+  const defi=b.defi?parsePositions(await zDefi(b.address)):[];
+  const items=mergePositions(wallet,defi);
+  const s=sumPos(items);
+  const manual=b.manualUsd||0;
+  return {items, total:s.total+manual, nonBal:s.exBal+manual, ok:true, attested:false};
+}
+
+async function loadAllBuckets(msg){
+  const out={};
+  for(const b of BUCKETS){
+    try{
+      out[b.key]=await loadBucket(b,msg);
+    }catch(e){
+      // Fall back to the attested figure so the tier maths stays complete,
+      // and mark the bucket so the UI can say the number is not live.
+      out[b.key]={items:[], total:b.attestedUsd, nonBal:b.attestedUsd,
+                  ok:false, attested:true, err:e.message};
+    }
+  }
+  return out;
+}
+
 // ═══ UI ═══
 function buildBar(arr){const cats={};let tot=0;arr.forEach(h=>{cats[h.cat]=(cats[h.cat]||0)+h.usd;tot+=h.usd;});const bar=document.getElementById('abar'),leg=document.getElementById('aleg');bar.innerHTML='';leg.innerHTML='';Object.entries(cats).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>{const p=v/tot*100;if(p<.3)return;const s=document.createElement('div');s.className='alloc-seg';s.style.width=p+'%';s.style.background=CAT_COLORS[c]||'#888';s.title=c+': '+fmt(v)+' ('+p.toFixed(1)+'%)';bar.appendChild(s);const i=document.createElement('div');i.className='al-item';i.innerHTML='<div class="al-dot" style="background:'+(CAT_COLORS[c]||'#888')+'"></div>'+c+' · '+fmt(v)+' · '+p.toFixed(1)+'%';leg.appendChild(i);});}
-function buildTbl(arr){const tb=document.getElementById('tbody');tb.innerHTML='';arr.sort((a,b)=>b.usd-a.usd).forEach(h=>{if(h.usd<1)return;const tr=document.createElement('tr');const icon=h.logo?'<img class="tk-img" src="'+h.logo+'" onerror="this.style.display=\'none\'">':'<div class="tk-icon" style="background:'+(CAT_COLORS[h.cat]||'#888')+'18;color:'+(CAT_COLORS[h.cat]||'#888')+';">'+h.s.slice(0,2)+'</div>';tr.innerHTML='<td><div class="tk">'+icon+'<div><div class="tk-name">'+h.s+'</div><div class="tk-sym">'+h.n+'</div></div></div></td><td style="color:var(--t2);font-size:10px;">'+h.src+'</td><td style="font-size:10px;color:var(--t2);">'+h.chain+'</td><td class="td-r">'+fN(h.b)+'</td><td class="td-r" style="font-weight:600;">'+fmt(h.usd)+'</td>';tb.appendChild(tr);});}
+
+function buildTbl(arr){const tb=document.getElementById('tbody');tb.innerHTML='';arr.sort((a,b)=>b.usd-a.usd).forEach(h=>{if(h.usd<1)return;const tr=document.createElement('tr');const icon=h.logo?'<img class="tk-img" src="'+h.logo+'" onerror="this.style.display=\'none\'">':'<div class="tk-icon" style="background:'+(CAT_COLORS[h.cat]||'#888')+'18;color:'+(CAT_COLORS[h.cat]||'#888')+';">'+h.s.slice(0,2)+'</div>';tr.innerHTML='<td><div class="tk">'+icon+'<div><div class="tk-name">'+h.s+'</div><div class="tk-sym">'+h.n+'</div></div></div></td><td style="color:var(--t2);font-size:10px;">'+(h.bucket||'—')+'</td><td style="color:var(--t2);font-size:10px;">'+h.src+'</td><td style="font-size:10px;color:var(--t2);">'+h.chain+'</td><td class="td-r">'+fN(h.b)+'</td><td class="td-r" style="font-weight:600;">'+fmt(h.usd)+'</td>';tb.appendChild(tr);});}
+
+// Bucket table: one row per address, with the live value against the attested
+// one. A bucket drifting far from attested is the signal that a data source
+// silently lost a chain — the address list itself documents one such miss.
+function buildBuckets(res){
+  const tb=document.getElementById('bkbody');
+  tb.innerHTML='';
+  BUCKETS.forEach(b=>{
+    const r=res[b.key];
+    const st=bucketState(b);
+    const delta=b.attestedUsd?((r.nonBal-b.attestedUsd)/b.attestedUsd*100):0;
+    let status,scls;
+    if(!r.ok){status='fetch failed';scls='var(--red)';}
+    else if(r.attested){status='attested';scls='var(--amber)';}
+    else if(Math.abs(delta)>15){status=(delta>0?'+':'')+delta.toFixed(0)+'% vs attested';scls='var(--amber)';}
+    else{status='live';scls='var(--green)';}
+    const tierLabel=st==='locked'
+      ? 'locked until '+new Date(b.availableFrom).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})
+      : (st==='operating'?'operating':'distributable');
+    const tr=document.createElement('tr');
+    tr.innerHTML=
+      '<td><div class="tk-name">'+b.label+'</div>'
+       +'<div class="bk-note">'+b.note+(r.err?' <span style="color:var(--red)">('+r.err+')</span>':'')+'</div></td>'
+      +'<td><a class="bk-addr" href="'+explorerUrl(b)+'" target="_blank">'+shortAddr(b.address)+' ↗</a></td>'
+      +'<td style="font-size:10px;color:var(--t2);">'+b.chains+'</td>'
+      +'<td style="font-size:10px;"><span class="tag '+(st==='distributable'?'tag-on':'tag-op')+'">'+tierLabel+'</span></td>'
+      +'<td class="td-r" style="font-weight:600;">'+fmt(r.nonBal)+'</td>'
+      +'<td class="td-r" style="font-size:10px;color:var(--t2);">'+fmt(b.attestedUsd)+'</td>'
+      +'<td class="td-r" style="font-size:10px;color:'+scls+';">'+status+'</td>';
+    tb.appendChild(tr);
+  });
+}
+
+function buildAddresses(){
+  const el=document.getElementById('addr-list');
+  if(!el) return;
+  const rows=[{label:'BAL Token', tag:'Token', tagClass:'tag-tk',
+               address:BAL_ADDR, explorer:'etherscan'}]
+    .concat(BUCKETS, SUPPLY_ONLY);
+  el.innerHTML=rows.map(e=>
+    '<div class="addr"><div class="addr-left">'
+     +'<div class="addr-label"><span class="tag '+e.tagClass+'">'+e.tag+'</span> '+e.label+'</div>'
+     +'<div class="addr-hash">'+e.address+'</div></div>'
+     +'<div class="addr-btns"><button class="btn-s" onclick="copy(\''+e.address+'\')">Copy</button>'
+     +'<a class="btn-s" href="'+explorerUrl(e)+'" target="_blank">'
+     +(e.explorer==='debank'?'DeBank':'Etherscan')+' ↗</a></div></div>').join('');
+}
+
+function buildExcluded(){
+  const el=document.getElementById('excl-list');
+  if(!el) return;
+  el.innerHTML=EXCLUDED_NOTES.map(n=>'<li>'+n+'</li>').join('');
+}
 
 // ═══ MAIN ═══
 async function main(){
   const ld=document.getElementById('loader'),msg=document.getElementById('lmsg');
+  buildAddresses();
+  buildExcluded();
   try{
-    // 1. Fetch all positions (single call each, sequential for rate limit)
-    msg.textContent='Fetching treasury positions...';
-    // Treasury: separate wallet + DeFi calls, then merge without overlap
-    msg.textContent='Fetching treasury wallet tokens...';
-    const tWallet=await zWallet(W.treasury);
-    msg.textContent='Fetching treasury DeFi positions...';
-    const tDefi=await zDefi(W.treasury);
-    msg.textContent='Fetching OpCo wallet...';
-    const opData=await zWallet(W.opco);
-    msg.textContent='Fetching Onchain wallet...';
-    const onData=await zWallet(W.onchain);
+    // 1. Every bucket, sequentially, failures isolated per bucket
+    msg.textContent='Fetching bucket positions...';
+    const res=await loadAllBuckets(msg);
 
-    // 2. On-chain supply — exclude wallets that hold BAL
+    // 2. On-chain supply — exclude every DAO-controlled address that holds BAL
     msg.textContent='Querying BAL supply on-chain...';
     const supH=await ethCall(BAL_ADDR,'0x18160ddd');
-    const exTreasury=await ethCall(BAL_ADDR,bD(W.treasury));
-    const exVesting=await ethCall(BAL_ADDR,bD(W.blabsVesting));
-    const exFundraise=await ethCall(BAL_ADDR,bD(W.blabsFundraise));
-    // tetuBAL: ~2.8M BAL permalocked in veBAL via Tetu BalLocker
-    // The on-chain locked() query returns 0 due to contract structure,
-    // but the BAL is permanently locked. Hardcoded from Dune/governance data.
-    const tetuBAL=2800000;
+    const balHolders=BUCKETS.filter(b=>b.holdsBal).concat(SUPPLY_ONLY);
+    const held={};
+    for(const h of balHolders){
+      held[h.key]=h2n(await ethCall(BAL_ADDR,bD(h.address)),18);
+    }
+    held.tetuBAL=TETUBAL_PERMALOCKED;
 
     // CoinGecko for 24h change
     let cgData=null;
     try{cgData=await fetch('https://api.coingecko.com/api/v3/coins/balancer?localization=false&tickers=false&community_data=false&developer_data=false').then(r=>r.json());}catch(e){}
 
-    // 3. Process positions — merge wallet + DeFi without double counting
+    // 3. Tier maths. The headline NAV is what the DAO could distribute today:
+    //    every distributable bucket that is actually available. Locked value
+    //    and the operating account are shown separately, never blended in.
     msg.textContent='Processing...';
-    const walletItems=parsePositions(tWallet);
-    const defiItems=parsePositions(tDefi);
-    const treasuryAll=mergeTreasury(walletItems,defiItems);
-    const treasuryS=sumPos(treasuryAll);
-    const opcoAll=parsePositions(opData);
-    const opcoS=sumPos(opcoAll);
-    const onchainAll=parsePositions(onData);
-    const onchainS=sumPos(onchainAll);
+    let distX=0, lockedX=0, operX=0, treasuryTotal=0, failed=[], attested=[];
+    const allItems=[];
+    BUCKETS.forEach(b=>{
+      const r=res[b.key];
+      const st=bucketState(b);
+      if(st==='distributable') distX+=r.nonBal;
+      else if(st==='locked') lockedX+=r.nonBal;
+      else operX+=r.nonBal;
+      if(b.key==='treasury') treasuryTotal=r.total;
+      if(!r.ok) failed.push(b.label);
+      else if(r.attested) attested.push(b.label);
+      // Tag every position with its bucket so the holdings table can show it
+      if(st!=='operating') r.items.forEach(p=>allItems.push({...p,bucket:b.label}));
+    });
 
     // BAL price
-    const balPos=treasuryAll.find(p=>p.isBAL&&p.price>0);
+    const balPos=allItems.find(p=>p.isBAL&&p.price>0);
     const bp=balPos?.price||cgData?.market_data?.current_price?.usd||0.15;
     const bc=cgData?.market_data?.price_change_percentage_24h||0;
 
     // 4. Supply calculation
     const totalSup=h2n(supH,18);
-    const balTreasury=h2n(exTreasury,18);
-    const balVesting=h2n(exVesting,18);
-    const balFundraise=h2n(exFundraise,18);
-    const excluded=balTreasury+balVesting+balFundraise+tetuBAL;
+    const excluded=Object.values(held).reduce((a,v)=>a+v,0);
     const cs=totalSup>0?totalSup-excluded:0;
 
     if(cs<=0){
       document.getElementById('nav-price').textContent='Supply error';
       document.getElementById('total-supply').textContent=totalSup>0?fN(totalSup)+' BAL':'Etherscan failed';
-      buildTbl(treasuryAll);buildBar(treasuryAll);
-      document.getElementById('total-val').textContent=fmt(treasuryS.total);
-      document.getElementById('ex-bal-val').textContent=fmt(treasuryS.exBal);
+      buildTbl(allItems);buildBar(allItems);buildBuckets(res);
+      document.getElementById('total-val').textContent=fmt(distX+lockedX+operX);
+      document.getElementById('ex-bal-val').textContent=fmt(distX);
       throw new Error('Supply=0. Test: '+PROXY+'/eth?to='+BAL_ADDR+'&data=0x18160ddd');
     }
 
     // 5. Display
     document.getElementById('total-supply').textContent=fN(totalSup)+' BAL';
     document.getElementById('total-supply-sub').textContent='On-chain totalSupply()';
-    document.getElementById('circ-supply-sub').innerHTML='Excl: Treasury '+fN(balTreasury)+'<br>BLabs Vest. '+fN(balVesting)+' · Fund. '+fN(balFundraise)+'<br>tetuBAL '+fN(tetuBAL)+' (permalocked)';
+    document.getElementById('circ-supply-sub').innerHTML=
+      'Excl. '+balHolders.length+' DAO addresses:<br>'
+      +BUCKETS.filter(b=>b.holdsBal).map(b=>b.label.split(' ')[0]+' '+fN(held[b.key])).join(' · ')
+      +'<br>BLabs Vest. '+fN(held.blabsVesting)+' · Fund. '+fN(held.blabsFundraise)
+      +'<br>tetuBAL '+fN(held.tetuBAL)+' (permalocked)';
     document.getElementById('circ-supply').textContent=fN(cs)+' BAL';
     const mc=bp*cs;
-    const nav=treasuryS.exBal/cs;
+    const nav=distX/cs;
+    const totalNav=(distX+operX)/cs;
 
     document.getElementById('nav-price').textContent='$'+nav.toFixed(4);
     document.getElementById('bal-price').textContent='$'+bp.toFixed(4);
     const ce=document.getElementById('bal-change');ce.textContent=(bc>=0?'+':'')+bc.toFixed(2)+'% (24h)';ce.style.color=bc>=0?'var(--green)':'var(--red)';
     document.getElementById('nav-ratio').textContent=(nav/bp).toFixed(4)+'x';
     badge(document.getElementById('pd-area'),((bp-nav)/nav*100),'NAV');
-    document.getElementById('total-val').textContent=fmt(treasuryS.total);
-    document.getElementById('ex-bal-val').textContent=fmt(treasuryS.exBal);
+    document.getElementById('total-val').textContent=fmt(distX+lockedX+operX);
+    document.getElementById('ex-bal-val').textContent=fmt(distX);
     document.getElementById('mcap').textContent=fmt(mc);
-    document.getElementById('t-mcap').textContent=(treasuryS.total/mc*100).toFixed(2)+'%';
+    document.getElementById('t-mcap').textContent=(distX/mc*100).toFixed(2)+'%';
     document.getElementById('updated').textContent='Updated: '+new Date().toLocaleString();
-    buildTbl(treasuryAll);buildBar(treasuryAll);
+    buildTbl(allItems);buildBar(allItems);buildBuckets(res);
 
-    // Extended NAV
-    const extX=treasuryS.exBal+opcoS.exBal+onchainS.exBal;
-    const extNav=extX/cs;
-    document.getElementById('ext-nav').textContent='$'+extNav.toFixed(4);
-    document.getElementById('ext-base').textContent='$'+nav.toFixed(4);
-    document.getElementById('ext-opco').textContent=fmt(opcoS.exBal)+' (ex-BAL)';
-    document.getElementById('ext-onch').textContent=fmt(onchainS.exBal)+' (ex-BAL)';
-    document.getElementById('ext-ratio').textContent=(extNav/bp).toFixed(4)+'x';
-    badge(document.getElementById('ext-pd'),((bp-extNav)/extNav*100),'extended NAV');
+    // Tier waterfall
+    const attSum=BUCKETS.filter(b=>bucketState(b)==='distributable').reduce((a,b)=>a+b.attestedUsd,0);
+    document.getElementById('tier-dist').textContent=fmt(distX);
+    document.getElementById('tier-dist-sub').textContent='vs '+fmt(attSum)+' attested';
+    document.getElementById('tier-locked').textContent=fmt(lockedX);
+    document.getElementById('tier-oper').textContent=fmt(operX);
+    document.getElementById('tier-total').textContent=fmt(distX+lockedX+operX);
+    document.getElementById('tier-treasury').textContent=fmt(treasuryTotal);
+    document.getElementById('tier-nav').textContent='$'+nav.toFixed(4);
+    document.getElementById('tier-total-nav').textContent='$'+totalNav.toFixed(4);
+    document.getElementById('tier-ratio').textContent=(totalNav/bp).toFixed(4)+'x';
+    badge(document.getElementById('tier-pd'),((bp-totalNav)/totalNav*100),'total NAV');
 
-  }catch(e){console.error(e);document.getElementById('nav-price').textContent=document.getElementById('nav-price').textContent==='—'?'Error':document.getElementById('nav-price').textContent;document.getElementById('tbody').innerHTML=document.getElementById('tbody').innerHTML.includes('Loading')?'<tr><td colspan="5" style="text-align:center;color:var(--red);padding:28px;">'+e.message+'</td></tr>':document.getElementById('tbody').innerHTML;}
+    // Data-quality banner. Never let a partial read masquerade as a full one.
+    const warn=document.getElementById('dq');
+    const parts=[];
+    if(failed.length) parts.push('<strong>'+failed.length+' bucket(s) failed to load</strong> ('+failed.join(', ')+') — those rows fall back to the attested value, so NAV is <strong>partial</strong>.');
+    if(attested.length) parts.push('Read from the attested address list rather than live: '+attested.join(', ')+'.');
+    parts.push('Attested figures measured '+ATTESTED_AS_OF+' at DefiLlama prices; live figures use Zerion prices, so the two will not tie exactly.');
+    parts.push(fmt(ASSUMED_PRICE_USD)+' of the total rests on assumed prices (ciUSDCv3 redeems 1:1, dPOLc0 at the POL price) rather than quotes.');
+    warn.innerHTML=parts.map(p=>'<div class="dq-line">'+p+'</div>').join('');
+    warn.className='dq '+(failed.length?'dq-bad':'dq-ok');
+
+  }catch(e){console.error(e);document.getElementById('nav-price').textContent=document.getElementById('nav-price').textContent==='—'?'Error':document.getElementById('nav-price').textContent;document.getElementById('tbody').innerHTML=document.getElementById('tbody').innerHTML.includes('Loading')?'<tr><td colspan="6" style="text-align:center;color:var(--red);padding:28px;">'+e.message+'</td></tr>':document.getElementById('tbody').innerHTML;}
   ld.classList.add('hide');setTimeout(()=>{ld.style.display='none';},400);
 }
 main();
