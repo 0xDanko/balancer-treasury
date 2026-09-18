@@ -54,17 +54,17 @@
 <div class="wrap">
 <div class="hdr"><div class="hdr-left"><div class="bal-logo"></div><div class="hdr-title">Balancer <span class="pipe">|</span><span class="sub">NAV per Token</span></div></div><div class="hdr-right"><a class="hl" href="https://balancer.fi" target="_blank">Protocol</a><a class="hl" href="https://app.balancer.fi" target="_blank">App</a><a class="hl" href="https://www.coingecko.com/en/coins/balancer" target="_blank">CoinGecko</a><a class="hl" href="https://reports.kpk.io/balancer" target="_blank">KPK</a><a class="hl" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">Octav</a><span class="ti sun">☀</span><div class="tt" id="tt" title="Toggle theme"></div><span class="ti moon">☽</span></div></div>
 
-<div class="hero"><div class="hero-label"><span class="ld"></span> Net Asset Value per BAL Token</div><div class="nav-row"><div class="nav-main"><div class="nav-price" id="nav-price">—</div><div class="nav-sub">Distributable DAO value across all treasury buckets (excl. native BAL) ÷ adjusted circulating supply. Positions + prices from Zerion; supply on-chain from Etherscan.</div><div id="pd-area"></div><div class="sources"><a class="sb-link" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav →</a><a class="sb-link" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank →</a><a class="sb-link" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama →</a></div></div><div class="nav-cards"><div class="nc"><div class="nc-top"><div class="nc-label">BAL Market Price</div><div class="nc-val" id="bal-price">—</div></div><div class="nc-sub" id="bal-change"></div></div><div class="nc"><div class="nc-top"><div class="nc-label">NAV / Price Ratio</div><div class="nc-val" id="nav-ratio">—</div></div><div class="nc-sub" style="color:var(--t3)">NAV ÷ Market Price</div></div><div class="nc"><div class="nc-top"><div class="nc-label">Treasury Yield</div><div class="nc-val" style="color:var(--green)">~5.2% APY</div></div><div class="nc-sub" style="color:var(--t3)">~$600K in 2025</div></div></div></div></div><div class="sep"></div>
+<div class="hero"><div class="hero-label"><span class="ld"></span> Net Asset Value per BAL Token</div><div class="nav-row"><div class="nav-main"><div class="nav-price" id="nav-price">—</div><div class="nav-sub">Distributable DAO value across all treasury buckets, Balancer Onchain included and OpCo excluded (and excl. native BAL), ÷ adjusted circulating supply. Positions + prices from Zerion; supply on-chain from Etherscan.</div><div id="pd-area"></div><div class="sources"><a class="sb-link" href="https://balancer.octav.fi/app/balancer-treasury" target="_blank">📊 Octav →</a><a class="sb-link" href="https://debank.com/profile/0x0EFcCBb9E2C09Ea29551879bd9Da32362b32fc89" target="_blank">🔍 DeBank →</a><a class="sb-link" href="https://defillama.com/protocol/balancer" target="_blank">📈 DefiLlama →</a></div></div><div class="nav-cards"><div class="nc"><div class="nc-top"><div class="nc-label">BAL Market Price</div><div class="nc-val" id="bal-price">—</div></div><div class="nc-sub" id="bal-change"></div></div><div class="nc"><div class="nc-top"><div class="nc-label">NAV / Price Ratio</div><div class="nc-val" id="nav-ratio">—</div></div><div class="nc-sub" style="color:var(--t3)">NAV ÷ Market Price</div></div><div class="nc"><div class="nc-top"><div class="nc-label">Treasury Yield</div><div class="nc-val" style="color:var(--green)">~5.2% APY</div></div><div class="nc-sub" style="color:var(--t3)">~$600K in 2025</div></div></div></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview — All Buckets</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">All Buckets (non-BAL)</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">distributable + locked + OpCo</div></div><div class="sb"><div class="sb-label">Distributable</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator, ex-BAL legs</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − DAO-held BAL</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Distributable / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
+<div class="section"><div class="sec-head"><div class="sec-title">DAO Treasury Overview — All Buckets</div><div class="sec-meta" id="updated"></div></div><div class="stats"><div class="sb"><div class="sb-label">All Buckets (non-BAL)</div><div class="sb-val" id="total-val">—</div><div class="sb-sub">distributable + locked + OpCo memo</div></div><div class="sb"><div class="sb-label">Distributable</div><div class="sb-val" id="ex-bal-val">—</div><div class="sb-sub">NAV numerator, ex-BAL legs</div></div><div class="sb"><div class="sb-label">Total Supply (on-chain)</div><div class="sb-val" id="total-supply">—</div><div class="sb-sub" id="total-supply-sub">BAL token contract</div></div><div class="sb"><div class="sb-label">Circ. Supply (adjusted)</div><div class="sb-val" id="circ-supply">—</div><div class="sb-sub" id="circ-supply-sub">Total − DAO-held BAL</div></div><div class="sb"><div class="sb-label">Market Cap (adj.)</div><div class="sb-val" id="mcap">—</div><div class="sb-sub" id="mcap-rank"></div></div><div class="sb"><div class="sb-label">Distributable / MCap</div><div class="sb-val" id="t-mcap">—</div><div class="sb-sub">Backing ratio</div></div></div>
 <div class="alloc-box"><div style="font-size:11px;font-weight:600;margin-bottom:8px;">Allocation by Category</div><div class="alloc-bar" id="abar"></div><div class="alloc-legend" id="aleg"></div></div>
 <div class="tbl-wrap"><table><thead><tr><th>Asset</th><th>Bucket</th><th>Protocol</th><th>Chain</th><th class="r">Balance</th><th class="r">Value</th></tr></thead><tbody id="tbody"><tr><td colspan="6" style="text-align:center;color:var(--t3);padding:28px;">Loading from Zerion...</td></tr></tbody></table></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">NAV Tiers</div></div><div class="ext-card"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap;"><div class="ext-title">Distributable NAV per BAL</div><div class="nc-val" id="tier-nav" style="font-family:var(--mono);font-size:22px;font-weight:700;">—</div></div><div class="ext-desc">The headline NAV counts <strong>every distributable bucket that is available today</strong>, not just the Treasury Safe. Value that is time-locked, and the OpCo operating account, are held out and shown separately.</div><div class="ext-note"><strong>⚠ OpCo is not freely distributable:</strong> it is the operating account, and part of the balance covers <strong>committed spend</strong>. The committed portion is an OpCo figure and cannot be read on-chain, so the total NAV below is an <strong>upper bound</strong>.</div><div class="tier-grid"><div class="tier"><div class="tier-l">Treasury Safe</div><div class="tier-v" id="tier-treasury">—</div><div class="tier-s">incl. BAL</div></div><div class="tier"><div class="tier-l">Distributable</div><div class="tier-v" id="tier-dist" style="color:var(--green)">—</div><div class="tier-s" id="tier-dist-sub">—</div></div><div class="tier"><div class="tier-l">+ Time-locked</div><div class="tier-v" id="tier-locked">—</div><div class="tier-s">not yet available</div></div><div class="tier"><div class="tier-l">+ OpCo</div><div class="tier-v" id="tier-oper">—</div><div class="tier-s">partly committed</div></div><div class="tier"><div class="tier-l">Total non-BAL</div><div class="tier-v" id="tier-total">—</div><div class="tier-s">all buckets</div></div><div class="tier"><div class="tier-l">Total NAV / BAL</div><div class="tier-v" id="tier-total-nav">—</div><div class="tier-s">upper bound</div></div><div class="tier"><div class="tier-l">Total NAV / Price</div><div class="tier-v" id="tier-ratio">—</div><div class="tier-s">adjusted ratio</div></div></div><div id="tier-pd"></div></div></div><div class="sep"></div>
+<div class="section"><div class="sec-head"><div class="sec-title">NAV Tiers</div></div><div class="ext-card"><div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px;flex-wrap:wrap;"><div class="ext-title">Distributable NAV per BAL</div><div class="nc-val" id="tier-nav" style="font-family:var(--mono);font-size:22px;font-weight:700;">—</div></div><div class="ext-desc">The headline NAV counts <strong>every distributable bucket that is available today</strong> — the Treasury Safe, the v3 buffers, the Innovation Fund, the MerkleRedeem LDO, BizDev and <strong>Balancer Onchain Ltd</strong>. Time-locked value is held out until it unlocks.</div><div class="ext-note"><strong>⚠ OpCo is excluded from NAV:</strong> it is the operating account rather than a reserve, and part of the balance covers <strong>committed spend</strong> that cannot be read on-chain. It is shown below for completeness only and feeds <strong>no NAV figure</strong>.</div><div class="tier-grid"><div class="tier"><div class="tier-l">Treasury Safe</div><div class="tier-v" id="tier-treasury">—</div><div class="tier-s">incl. BAL</div></div><div class="tier"><div class="tier-l">Distributable</div><div class="tier-v" id="tier-dist" style="color:var(--green)">—</div><div class="tier-s" id="tier-dist-sub">—</div></div><div class="tier"><div class="tier-l">+ Time-locked</div><div class="tier-v" id="tier-locked">—</div><div class="tier-s">not yet available</div></div><div class="tier"><div class="tier-l">OpCo (excluded)</div><div class="tier-v" id="tier-oper" style="color:var(--t3)">—</div><div class="tier-s">memo only, not in NAV</div></div><div class="tier"><div class="tier-l">Total non-BAL</div><div class="tier-v" id="tier-total">—</div><div class="tier-s">all buckets incl. OpCo</div></div><div class="tier"><div class="tier-l">NAV incl. time-locked</div><div class="tier-v" id="tier-total-nav">—</div><div class="tier-s">once Aura unlocks</div></div><div class="tier"><div class="tier-l">That NAV / Price</div><div class="tier-v" id="tier-ratio">—</div><div class="tier-s">adjusted ratio</div></div></div><div id="tier-pd"></div></div></div><div class="sep"></div>
 
 <div class="section"><div class="sec-head"><div class="sec-title">Buckets &amp; Addresses</div></div><div class="dq" id="dq">Loading…</div><div class="tbl-wrap"><table><thead><tr><th>Bucket</th><th>Address</th><th>Chains</th><th>Tier</th><th class="r">Non-BAL</th><th class="r">Attested</th><th class="r">Status</th></tr></thead><tbody id="bkbody"><tr><td colspan="7" style="text-align:center;color:var(--t3);padding:28px;">Loading buckets…</td></tr></tbody></table></div></div><div class="sep"></div>
 
-<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for token balances, DeFi positions and USD prices. Etherscan for on-chain BAL supply. Where no source covers a chain or a contract, the dashboard falls back to the <strong>attested address list</strong> (measured on-chain 18 September 2026, DefiLlama prices) and labels the row as such.</p><div class="formula">Distributable NAV = Σ non-BAL value of every available distributable bucket ÷ Circ. Supply</div><div class="formula">Circ. Supply = totalSupply() − BAL held by every DAO-controlled address − tetuBAL permalocked</div><p><strong>Tiers.</strong> <em>Distributable</em> is what the DAO could send to the main Treasury and distribute today. <em>Time-locked</em> value exists but is not yet available and is excluded from the headline NAV until its unlock date. <em>Operating</em> is the OpCo account, which is partly committed spend and is never blended into the headline.</p><p><strong>BAL exclusion is fractional.</strong> Native BAL is excluded outright. Anything that resolves into BAL — the 80/20 BAL/WETH pool token, rAURA and auraBAL — is exited proportionally, so only its ETH leg (20.45% of value) counts toward NAV.</p><p><strong>Double counting.</strong> Wallet and DeFi positions are fetched separately per bucket and merged with receipt-token dedup, so a wrapped position is never counted twice. The v3 buffers are held by the Vault contract rather than the Treasury Safe, which is why they need their own bucket.</p><p><strong>Excluded by policy</strong> — this is why the total will not tie to DeBank or DefiLlama:</p><ul class="excl-list" id="excl-list"></ul><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
+<div class="section"><div class="sec-head"><div class="sec-title">Methodology</div></div><div class="mbox"><p><strong>Data sources:</strong> Zerion API (via Cloudflare Worker proxy) for token balances, DeFi positions and USD prices. Etherscan for on-chain BAL supply. Where no source covers a chain or a contract, the dashboard falls back to the <strong>attested address list</strong> (measured on-chain 18 September 2026, DefiLlama prices) and labels the row as such.</p><div class="formula">Distributable NAV = Σ non-BAL value of every available distributable bucket ÷ Circ. Supply</div><div class="formula">Circ. Supply = totalSupply() − BAL held by every DAO-controlled address − tetuBAL permalocked</div><p><strong>Tiers.</strong> <em>Distributable</em> is what the DAO could send to the main Treasury and distribute today; Balancer Onchain Ltd counts here, as its collected fees are treasury property. <em>Time-locked</em> value exists but is not yet available and is excluded from the headline NAV until its unlock date. <em>Excluded</em> is the OpCo operating account, which is partly committed spend and feeds no NAV figure at all — it appears only so the address map is complete.</p><p><strong>BAL exclusion is fractional.</strong> Native BAL is excluded outright. Anything that resolves into BAL — the 80/20 BAL/WETH pool token, rAURA and auraBAL — is exited proportionally, so only its ETH leg (20.45% of value) counts toward NAV.</p><p><strong>Double counting.</strong> Wallet and DeFi positions are fetched separately per bucket and merged with receipt-token dedup, so a wrapped position is never counted twice. The v3 buffers are held by the Vault contract rather than the Treasury Safe, which is why they need their own bucket.</p><p><strong>Excluded by policy</strong> — this is why the total will not tie to DeBank or DefiLlama:</p><ul class="excl-list" id="excl-list"></ul><p style="color:var(--t3);font-size:10px;">See <a href="https://reports.kpk.io/balancer" target="_blank" style="color:var(--blue)">Karpatkey</a> and <a href="https://balancer.octav.fi/app/balancer-treasury" target="_blank" style="color:var(--blue)">Octav</a> for additional reporting.</p></div></div><div class="sep"></div>
 
 <div class="section"><div class="sec-head"><div class="sec-title">All Addresses</div></div><div class="addr-list" id="addr-list"></div></div>
 <div class="footer"><div class="footer-t">Data: <a href="https://zerion.io/api" target="_blank">Zerion API</a> (positions + prices) · <a href="https://etherscan.io" target="_blank">Etherscan</a> (supply)<br>Not financial advice · All data live</div><div class="footer-t">Logo: <a href="https://github.com/balancer/brand-assets" target="_blank">balancer/brand-assets</a></div></div></div>
@@ -92,7 +92,8 @@ const ATTESTED_AS_OF='2026-09-18';
 // supply exclusions are all derived from this array.
 //
 //   tier         'distributable' counts toward the headline NAV.
-//                'operating' is OpCo: real value, but partly committed spend.
+//                'excluded' is real value that feeds no NAV figure — OpCo,
+//                whose balance is operating capital and partly committed.
 //   fetch        'zerion'   read balances from the Zerion API
 //                'attested' no live reader yet — use attestedUsd
 //   defi         also issue the only_complex Zerion call (LP / staked positions)
@@ -140,7 +141,7 @@ const BUCKETS=[
    address:'0x16b0056636Fcc85f92C49cD49a24bc519d4A1941',
    chains:'Ethereum', tier:'distributable',
    fetch:'zerion', holdsBal:true, attestedUsd:66154,
-   explorer:'debank', note:'Collected protocol fees.'},
+   explorer:'debank', note:'Collected protocol fees. Counted as treasury.'},
 
   {key:'aura', label:'Aura', tag:'Locked', tagClass:'tag-op',
    address:'0x928966752dc0cc0D7babe343Fc2937BA13a5120c',
@@ -152,10 +153,10 @@ const BUCKETS=[
 
   {key:'opco', label:'Balancer OpCo Ltd', tag:'OpCo', tagClass:'tag-op',
    address:'0x3B8910F378034FD6E103Df958863e5c684072693',
-   chains:'Ethereum', tier:'operating',
+   chains:'Ethereum', tier:'excluded',
    fetch:'zerion', holdsBal:true, attestedUsd:763019,
    explorer:'debank',
-   note:'Operating account, not a reserve. Part of the balance covers committed spend; the committed portion is an OpCo figure, not readable on-chain.'}
+   note:'Operating account, not a reserve, and excluded from every NAV figure. Listed so the address map is complete.'}
 ];
 
 // Addresses that hold BAL but no distributable non-BAL value. They only ever
@@ -471,7 +472,7 @@ function buildBuckets(res){
     else{status='live';scls='var(--green)';}
     const tierLabel=st==='locked'
       ? 'locked until '+new Date(b.availableFrom).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'})
-      : (st==='operating'?'operating':'distributable');
+      : (st==='excluded'?'excluded from NAV':'distributable');
     const tr=document.createElement('tr');
     tr.innerHTML=
       '<td><div class="tk-name">'+b.label+'</div>'
@@ -535,20 +536,20 @@ async function main(){
     //    every distributable bucket that is actually available. Locked value
     //    and the operating account are shown separately, never blended in.
     msg.textContent='Processing...';
-    let distX=0, lockedX=0, operX=0, treasuryTotal=0, balResolved=0, failed=[], attested=[];
+    let distX=0, lockedX=0, excludedX=0, treasuryTotal=0, balResolved=0, failed=[], attested=[];
     const allItems=[];
     BUCKETS.forEach(b=>{
       const r=res[b.key];
       const st=bucketState(b);
       if(st==='distributable') distX+=r.nonBal;
       else if(st==='locked') lockedX+=r.nonBal;
-      else operX+=r.nonBal;
+      else excludedX+=r.nonBal;
       if(b.key==='treasury') treasuryTotal=r.total;
       balResolved+=r.total-r.nonBal;
       if(!r.ok) failed.push(b.label);
       else if(r.attested) attested.push(b.label);
       // Tag every position with its bucket so the holdings table can show it
-      if(st!=='operating') r.items.forEach(p=>allItems.push({...p,bucket:b.label}));
+      if(st!=='excluded') r.items.forEach(p=>allItems.push({...p,bucket:b.label}));
     });
 
     // BAL price
@@ -565,7 +566,7 @@ async function main(){
       document.getElementById('nav-price').textContent='Supply error';
       document.getElementById('total-supply').textContent=totalSup>0?fN(totalSup)+' BAL':'Etherscan failed';
       buildTbl(allItems);buildBar(allItems);buildBuckets(res);
-      document.getElementById('total-val').textContent=fmt(distX+lockedX+operX);
+      document.getElementById('total-val').textContent=fmt(distX+lockedX+excludedX);
       document.getElementById('ex-bal-val').textContent=fmt(distX);
       throw new Error('Supply=0. Test: '+PROXY+'/eth?to='+BAL_ADDR+'&data=0x18160ddd');
     }
@@ -581,14 +582,16 @@ async function main(){
     document.getElementById('circ-supply').textContent=fN(cs)+' BAL';
     const mc=bp*cs;
     const nav=distX/cs;
-    const totalNav=(distX+operX)/cs;
+    // OpCo is excluded from every NAV figure. The second tier is what the
+    // headline becomes once time-locked value unlocks.
+    const unlockedNav=(distX+lockedX)/cs;
 
     document.getElementById('nav-price').textContent='$'+nav.toFixed(4);
     document.getElementById('bal-price').textContent='$'+bp.toFixed(4);
     const ce=document.getElementById('bal-change');ce.textContent=(bc>=0?'+':'')+bc.toFixed(2)+'% (24h)';ce.style.color=bc>=0?'var(--green)':'var(--red)';
     document.getElementById('nav-ratio').textContent=(nav/bp).toFixed(4)+'x';
     badge(document.getElementById('pd-area'),((bp-nav)/nav*100),'NAV');
-    document.getElementById('total-val').textContent=fmt(distX+lockedX+operX);
+    document.getElementById('total-val').textContent=fmt(distX+lockedX+excludedX);
     document.getElementById('ex-bal-val').textContent=fmt(distX);
     document.getElementById('mcap').textContent=fmt(mc);
     document.getElementById('t-mcap').textContent=(distX/mc*100).toFixed(2)+'%';
@@ -600,13 +603,13 @@ async function main(){
     document.getElementById('tier-dist').textContent=fmt(distX);
     document.getElementById('tier-dist-sub').textContent='vs '+fmt(attSum)+' attested';
     document.getElementById('tier-locked').textContent=fmt(lockedX);
-    document.getElementById('tier-oper').textContent=fmt(operX);
-    document.getElementById('tier-total').textContent=fmt(distX+lockedX+operX);
+    document.getElementById('tier-oper').textContent=fmt(excludedX);
+    document.getElementById('tier-total').textContent=fmt(distX+lockedX+excludedX);
     document.getElementById('tier-treasury').textContent=fmt(treasuryTotal);
     document.getElementById('tier-nav').textContent='$'+nav.toFixed(4);
-    document.getElementById('tier-total-nav').textContent='$'+totalNav.toFixed(4);
-    document.getElementById('tier-ratio').textContent=(totalNav/bp).toFixed(4)+'x';
-    badge(document.getElementById('tier-pd'),((bp-totalNav)/totalNav*100),'total NAV');
+    document.getElementById('tier-total-nav').textContent='$'+unlockedNav.toFixed(4);
+    document.getElementById('tier-ratio').textContent=(unlockedNav/bp).toFixed(4)+'x';
+    badge(document.getElementById('tier-pd'),((bp-unlockedNav)/unlockedNav*100),'NAV incl. time-locked');
 
     // Data-quality banner. Never let a partial read masquerade as a full one.
     const warn=document.getElementById('dq');
